@@ -1,0 +1,22 @@
+{
+  "name": "sentigen-social",
+  "version": "1.0.0",
+  "description": "AI-powered social media management platform",
+  "private": true,
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm run start",
+    "lint": "cd frontend && npm run lint",
+    "vibe": "npx vibe-tools",
+    "vibe:repo": "npx vibe-tools repo",
+    "vibe:doc": "npx vibe-tools doc",
+    "vibe:ask": "npx vibe-tools ask"
+  },
+  "workspaces": [
+    "frontend"
+  ],
+  "devDependencies": {
+    "vibe-tools": "latest"
+  }
+}

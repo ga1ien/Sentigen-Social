@@ -1,0 +1,60 @@
+# Core Framework (REQUIRED - from standards)
+pydantic-ai==0.3.2
+pydantic==2.11.7
+langgraph
+fastapi==0.115.13
+uvicorn==0.34.3
+sse-starlette==2.3.6
+
+# HTTP Clients
+httpx==0.28.1
+aiohttp==3.11.11
+
+# Database (REQUIRED)
+supabase
+asyncpg==0.30.0
+pgvector
+
+# Environment Management (REQUIRED)
+python-dotenv==1.1.0
+
+# Testing (REQUIRED)
+pytest==8.4.1
+pytest-asyncio==1.0.0
+
+# LLM Providers (as specified in standards)
+anthropic==0.54.0
+openai>=1.76.0
+groq==0.28.0
+mistralai==1.8.2
+
+# Social Media APIs
+tweepy==4.14.0
+python-linkedin-v2==0.9.4
+facebook-sdk==3.1.0
+requests>=2.32.2
+
+# Image/Media Processing
+pillow==10.4.0
+aiofiles==24.1.0
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+python-multipart==0.0.9
+
+# Utilities
+tiktoken==0.8.0
+python-dateutil==2.9.0
+pytz==2024.2
+structlog==24.4.0
+pandas==2.2.3
+
+# Optional Dependencies (uncomment if needed)
+# graphiti==0.1.13
+# neo4j==5.28.1
+# redis[hiredis]==5.0.1
+
+# Development Tools
+black==24.10.0
+isort==5.13.2
+mypy==1.13.0
