@@ -4,28 +4,16 @@
     {
       "src": "frontend/package.json",
       "use": "@vercel/next"
-    },
-    {
-      "src": "social-media-module/backend/vercel_app.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "50mb"
-      }
     }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "social-media-module/backend/vercel_app.py"
-    },
     {
       "src": "/(.*)",
       "dest": "frontend/$1"
     }
   ],
   "env": {
-    "NODE_ENV": "production",
-    "PYTHONPATH": "/var/task"
+    "NODE_ENV": "production"
   },
   "build": {
     "env": {

@@ -1,0 +1,9 @@
+# Minimal requirements for Vercel deployment
+fastapi==0.115.6
+uvicorn==0.32.1
+python-dotenv==1.0.1
+structlog==24.4.0
+pydantic==2.10.3
+httpx==0.28.1
+python-multipart==0.0.20
+sse-starlette==2.1.3
