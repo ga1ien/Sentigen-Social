@@ -24,6 +24,29 @@ def check_imports():
         import uvicorn
         print(f"✅ Uvicorn {uvicorn.__version__}")
         
+        # First try to import models directly
+        print("🔍 Testing models import...")
+        try:
+            from models.social_media import SocialMediaPostRequest
+            print("✅ models.social_media imported successfully")
+        except ImportError as e:
+            print(f"❌ models.social_media import failed: {e}")
+            # Let's try to understand why
+            print("🔍 Checking if models directory exists...")
+            if os.path.exists("models"):
+                print("✅ models directory exists")
+                if os.path.exists("models/__init__.py"):
+                    print("✅ models/__init__.py exists")
+                else:
+                    print("❌ models/__init__.py missing")
+                if os.path.exists("models/social_media.py"):
+                    print("✅ models/social_media.py exists")
+                else:
+                    print("❌ models/social_media.py missing")
+            else:
+                print("❌ models directory does not exist")
+            return False
+        
         # Try to import the main app
         print("🔍 Importing main application...")
         from main import app
@@ -52,10 +75,34 @@ def main():
         for item in sorted(contents):
             if os.path.isdir(item):
                 print(f"   📁 {item}/")
+                # If it's the models directory, show its contents too
+                if item == "models":
+                    try:
+                        model_contents = os.listdir(item)
+                        for model_file in sorted(model_contents):
+                            print(f"      📄 {model_file}")
+                    except Exception as e:
+                        print(f"      ❌ Error listing models: {e}")
             else:
                 print(f"   📄 {item}")
     except Exception as e:
         print(f"   ❌ Error listing directory: {e}")
+    
+    # Also check if we can import models directly
+    print(f"🔍 Testing direct model import...")
+    try:
+        import models
+        print(f"   ✅ models package imported successfully")
+        print(f"   📍 models location: {models.__file__}")
+    except Exception as e:
+        print(f"   ❌ Direct models import failed: {e}")
+        
+    # Try importing the specific module
+    try:
+        import models.social_media
+        print(f"   ✅ models.social_media imported successfully")
+    except Exception as e:
+        print(f"   ❌ models.social_media import failed: {e}")
     
     print(f"🌍 Environment variables:")
     
