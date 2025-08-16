@@ -106,10 +106,34 @@ def main():
     
 
     
+    # Debug Pydantic AI version compatibility
+    print("🔍 Checking Pydantic AI version...")
+    try:
+        import pydantic_ai
+        print(f"✅ Pydantic AI version: {pydantic_ai.__version__}")
+    except Exception as e:
+        print(f"❌ Pydantic AI version check failed: {e}")
+
+    print("🔍 Checking Anthropic...")
+    try:
+        import anthropic
+        print(f"✅ Anthropic version: {anthropic.__version__}")
+    except Exception as e:
+        print(f"❌ Anthropic version check failed: {e}")
+
+    # Check the AnthropicModel signature
+    try:
+        from pydantic_ai.models.anthropic import AnthropicModel
+        import inspect
+        sig = inspect.signature(AnthropicModel.__init__)
+        print(f"📋 AnthropicModel parameters: {list(sig.parameters.keys())}")
+    except Exception as e:
+        print(f"❌ Could not inspect AnthropicModel: {e}")
+    
     print(f"🌍 Environment variables:")
     
     # Print relevant environment variables (without sensitive data)
-    env_vars = ["PORT", "LOG_LEVEL", "APP_ENV", "SUPABASE_URL"]
+    env_vars = ["PORT", "LOG_LEVEL", "APP_ENV", "SUPABASE_URL", "LLM_PROVIDER", "LLM_CHOICE"]
     for var in env_vars:
         value = os.environ.get(var, "Not set")
         if var == "SUPABASE_URL" and value != "Not set":

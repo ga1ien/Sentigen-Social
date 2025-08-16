@@ -3,6 +3,7 @@ Centralized model configuration for Pydantic AI agents.
 """
 
 import os
+import inspect
 from typing import Any
 from dotenv import load_dotenv
 
@@ -53,8 +54,28 @@ def get_smart_model() -> Any:
             )
         elif llm_provider == "anthropic" or "claude" in model_name.lower():
             from pydantic_ai.models.anthropic import AnthropicModel
-            # Use environment variable for API key (pydantic-ai will pick it up automatically)
-            return AnthropicModel(model_name)
+            
+            # Set environment variable for Anthropic (required by newer versions)
+            os.environ["ANTHROPIC_API_KEY"] = api_key
+            
+            # Check if AnthropicModel accepts api_key parameter (version compatibility)
+            try:
+                init_signature = inspect.signature(AnthropicModel.__init__)
+                if 'api_key' in init_signature.parameters:
+                    # Old version syntax
+                    print("🔧 Using old AnthropicModel syntax with api_key parameter")
+                    return AnthropicModel(
+                        model_name=model_name,
+                        api_key=api_key
+                    )
+                else:
+                    # New version syntax - uses environment variable
+                    print("🔧 Using new AnthropicModel syntax with environment variable")
+                    return AnthropicModel(model_name=model_name)
+            except Exception as e:
+                print(f"⚠️  Could not inspect AnthropicModel signature: {e}")
+                # Fallback to environment variable approach
+                return AnthropicModel(model_name=model_name)
         elif llm_provider == "groq" or "groq" in model_name.lower():
             from pydantic_ai.models.groq import GroqModel
             return GroqModel(
