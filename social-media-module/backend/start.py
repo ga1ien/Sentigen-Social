@@ -79,34 +79,32 @@ def main():
     except Exception as e:
         print(f"   ❌ Error listing directory: {e}")
     
-    # Check if models directory is missing and try to understand why
-    if not os.path.exists("models"):
-        print(f"🚨 CRITICAL: models directory is missing!")
-        print(f"🔍 Let's check what Railway actually copied...")
-        
-        # Check if there are any Python files that might contain our models
-        python_files = [f for f in os.listdir(".") if f.endswith(".py")]
-        print(f"📄 Python files found: {python_files}")
-        
-        # Check if there are any directories that might contain models
-        dirs = [d for d in os.listdir(".") if os.path.isdir(d)]
-        print(f"📁 Directories found: {dirs}")
-        
-        # This is a critical error - we can't proceed without models
-        print(f"❌ Cannot proceed without models directory. This is a Railway deployment issue.")
+    # Check if our flattened model files exist (we no longer need the models/ directory)
+    print(f"🔍 Checking for flattened model files...")
+    python_files = [f for f in os.listdir(".") if f.endswith(".py")]
+    print(f"📄 Python files found: {python_files}")
+    
+    dirs = [d for d in os.listdir(".") if os.path.isdir(d)]
+    print(f"📁 Directories found: {dirs}")
+    
+    # Check for our specific model files
+    required_files = ["models_social_media.py", "models_content.py"]
+    missing_files = []
+    
+    for file in required_files:
+        if os.path.exists(file):
+            print(f"✅ {file} exists")
+        else:
+            print(f"❌ {file} missing")
+            missing_files.append(file)
+    
+    if missing_files:
+        print(f"🚨 CRITICAL: Missing required model files: {missing_files}")
         return False
     
-    # Test if the new models files exist
-    print(f"🔍 Checking for models files...")
-    if os.path.exists("models_social_media.py"):
-        print(f"   ✅ models_social_media.py exists")
-    else:
-        print(f"   ❌ models_social_media.py missing")
-        
-    if os.path.exists("models_content.py"):
-        print(f"   ✅ models_content.py exists")
-    else:
-        print(f"   ❌ models_content.py missing")
+    print(f"✅ All required model files are present!")
+    
+
     
     print(f"🌍 Environment variables:")
     
