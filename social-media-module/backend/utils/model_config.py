@@ -40,9 +40,7 @@ def get_smart_model() -> Any:
         model_name = llm_choice
     
     if not api_key:
-        # Return None if no API key is available - allows app to start without AI features
-        print(f"⚠️  Warning: No API key found for {llm_provider}. AI features will be disabled.")
-        return None
+        raise ValueError(f"API key required for {llm_provider}. Set {llm_provider.upper()}_API_KEY or LLM_API_KEY environment variable.")
     
     # Import here to avoid circular imports
     try:
@@ -55,10 +53,8 @@ def get_smart_model() -> Any:
             )
         elif llm_provider == "anthropic" or "claude" in model_name.lower():
             from pydantic_ai.models.anthropic import AnthropicModel
-            return AnthropicModel(
-                model_name=model_name,
-                api_key=api_key
-            )
+            # Use environment variable for API key (pydantic-ai will pick it up automatically)
+            return AnthropicModel(model_name)
         elif llm_provider == "groq" or "groq" in model_name.lower():
             from pydantic_ai.models.groq import GroqModel
             return GroqModel(
