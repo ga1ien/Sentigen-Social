@@ -24,7 +24,7 @@ export default function VerifyEmailPage() {
         try {
           const { error } = await supabase.auth.verifyOtp({
             token_hash,
-            type: type as 'signup' | 'email_change' | 'sms' | 'phone_change',
+            type: type as 'signup' | 'email_change',
           })
 
           if (error) {
