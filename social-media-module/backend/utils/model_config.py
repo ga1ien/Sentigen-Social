@@ -40,7 +40,9 @@ def get_smart_model() -> Any:
         model_name = llm_choice
     
     if not api_key:
-        raise ValueError(f"API key required for {llm_provider}. Set {llm_provider.upper()}_API_KEY or LLM_API_KEY environment variable.")
+        # Return None if no API key is available - allows app to start without AI features
+        print(f"⚠️  Warning: No API key found for {llm_provider}. AI features will be disabled.")
+        return None
     
     # Import here to avoid circular imports
     try:
