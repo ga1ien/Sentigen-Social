@@ -331,3 +331,13 @@ mcp-chrome/
 
 # Vibe tools
 .vibe-tools/
+
+# Python virtual environments (local development only)
+venv/
+.venv/
+env/
+.env/
+**/venv/
+**/.venv/
+**/env/
+**/.env/
