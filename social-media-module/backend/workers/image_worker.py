@@ -12,7 +12,7 @@ import structlog
 from dotenv import load_dotenv
 import httpx
 
-from .base_worker import BaseWorker, WorkerTask, WorkerResult
+from workers.base_worker import BaseWorker, WorkerTask, WorkerResult
 
 load_dotenv()
 

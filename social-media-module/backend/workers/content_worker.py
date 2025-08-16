@@ -10,8 +10,8 @@ from dotenv import load_dotenv
 from pydantic_ai import Agent, RunContext
 from dataclasses import dataclass
 
-from .base_worker import BaseWorker, WorkerTask, WorkerResult
-from ..utils import get_smart_model
+from workers.base_worker import BaseWorker, WorkerTask, WorkerResult
+from utils.model_config import get_smart_model
 
 load_dotenv()
 

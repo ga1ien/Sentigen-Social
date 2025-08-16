@@ -11,13 +11,13 @@ Specialized workers for different AI tasks:
 - Video Worker (Google Veo3)
 """
 
-from .research_worker import ResearchWorker
-from .content_worker import ContentWorker
-from .tool_worker import ToolWorker
-from .image_worker import ImageWorker
-from .midjourney_worker import MidjourneyWorker
-from .avatar_video_worker import AvatarVideoWorker
-from .video_worker import VideoWorker
+from workers.research_worker import ResearchWorker
+from workers.content_worker import ContentWorker
+from workers.tool_worker import ToolWorker
+from workers.image_worker import ImageWorker
+from workers.midjourney_worker import MidjourneyWorker
+from workers.avatar_video_worker import AvatarVideoWorker
+from workers.video_worker import VideoWorker
 
 __all__ = [
     "ResearchWorker",

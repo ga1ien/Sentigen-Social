@@ -9,7 +9,7 @@ from datetime import datetime
 import structlog
 from dotenv import load_dotenv
 
-from .base_worker import BaseWorker, WorkerTask, WorkerResult
+from workers.base_worker import BaseWorker, WorkerTask, WorkerResult
 
 load_dotenv()
 

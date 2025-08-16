@@ -8,8 +8,8 @@ from datetime import datetime
 import structlog
 from dotenv import load_dotenv
 
-from .base_worker import BaseWorker, WorkerTask, WorkerResult
-from ..utils import HeyGenClient
+from workers.base_worker import BaseWorker, WorkerTask, WorkerResult
+from utils.heygen_client import HeyGenClient
 
 load_dotenv()
 

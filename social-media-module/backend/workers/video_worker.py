@@ -11,7 +11,7 @@ import httpx
 from google.auth import default
 from google.auth.transport.requests import Request
 
-from .base_worker import BaseWorker, WorkerTask, WorkerResult
+from workers.base_worker import BaseWorker, WorkerTask, WorkerResult
 
 load_dotenv()
 

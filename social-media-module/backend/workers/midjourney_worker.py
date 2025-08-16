@@ -10,7 +10,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional, List
 import structlog
 
-from .base_worker import BaseWorker, WorkerTask, WorkerResult
+from workers.base_worker import BaseWorker, WorkerTask, WorkerResult
 
 logger = structlog.get_logger(__name__)
 

@@ -11,8 +11,9 @@ from dotenv import load_dotenv
 from pydantic_ai import Agent, RunContext
 from dataclasses import dataclass
 
-from .base_worker import BaseWorker, WorkerTask, WorkerResult
-from ..utils import get_smart_model, AyrshareClient
+from workers.base_worker import BaseWorker, WorkerTask, WorkerResult
+from utils.model_config import get_smart_model
+from utils.ayrshare_client import AyrshareClient
 
 load_dotenv()
 

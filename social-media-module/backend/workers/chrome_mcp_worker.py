@@ -17,7 +17,7 @@ import structlog
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent, RunContext
 
-from .base_worker import BaseWorker, WorkerTask, WorkerResult
+from workers.base_worker import BaseWorker, WorkerTask, WorkerResult
 
 logger = structlog.get_logger(__name__)
 
