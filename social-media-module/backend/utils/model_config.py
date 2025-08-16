@@ -47,11 +47,14 @@ def get_smart_model() -> Any:
     try:
         if llm_provider == "openai" or "gpt" in model_name.lower():
             from pydantic_ai.models.openai import OpenAIModel
-            return OpenAIModel(
-                model_name=model_name,
-                api_key=api_key,
-                base_url=base_url if base_url != "https://api.openai.com/v1" else None
-            )
+            
+            # Set environment variables for OpenAI (Pydantic AI 0.3.2 uses env vars)
+            os.environ["OPENAI_API_KEY"] = api_key
+            if base_url and base_url != "https://api.openai.com/v1":
+                os.environ["OPENAI_BASE_URL"] = base_url
+            
+            print(f"🔧 Using OpenAI model with environment variables")
+            return OpenAIModel(model_name=model_name)
         elif llm_provider == "anthropic" or "claude" in model_name.lower():
             from pydantic_ai.models.anthropic import AnthropicModel
             
@@ -78,26 +81,27 @@ def get_smart_model() -> Any:
                 return AnthropicModel(model_name=model_name)
         elif llm_provider == "groq" or "groq" in model_name.lower():
             from pydantic_ai.models.groq import GroqModel
-            return GroqModel(
-                model_name=model_name,
-                api_key=api_key
-            )
+            # Set environment variable for Groq
+            os.environ["GROQ_API_KEY"] = api_key
+            print(f"🔧 Using Groq model with environment variables")
+            return GroqModel(model_name=model_name)
         elif llm_provider == "perplexity" or "sonar" in model_name.lower():
             # Perplexity uses OpenAI-compatible API
             from pydantic_ai.models.openai import OpenAIModel
-            return OpenAIModel(
-                model_name=model_name,
-                api_key=api_key,
-                base_url=base_url
-            )
+            # Set environment variables for Perplexity
+            os.environ["OPENAI_API_KEY"] = api_key
+            os.environ["OPENAI_BASE_URL"] = base_url
+            print(f"🔧 Using Perplexity model with environment variables")
+            return OpenAIModel(model_name=model_name)
         else:
             # Default to OpenAI-compatible for unknown providers
             from pydantic_ai.models.openai import OpenAIModel
-            return OpenAIModel(
-                model_name=model_name,
-                api_key=api_key,
-                base_url=base_url
-            )
+            # Set environment variables for generic OpenAI-compatible
+            os.environ["OPENAI_API_KEY"] = api_key
+            if base_url:
+                os.environ["OPENAI_BASE_URL"] = base_url
+            print(f"🔧 Using generic OpenAI-compatible model with environment variables")
+            return OpenAIModel(model_name=model_name)
     except ImportError as e:
         raise ImportError(f"Required model library not installed for {llm_provider}: {e}")
 
