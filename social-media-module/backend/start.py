@@ -27,24 +27,15 @@ def check_imports():
         # First try to import models directly
         print("🔍 Testing models import...")
         try:
-            from models.social_media import SocialMediaPostRequest
-            print("✅ models.social_media imported successfully")
+            from models_social_media import SocialMediaPostRequest
+            print("✅ models_social_media imported successfully")
         except ImportError as e:
-            print(f"❌ models.social_media import failed: {e}")
-            # Let's try to understand why
-            print("🔍 Checking if models directory exists...")
-            if os.path.exists("models"):
-                print("✅ models directory exists")
-                if os.path.exists("models/__init__.py"):
-                    print("✅ models/__init__.py exists")
-                else:
-                    print("❌ models/__init__.py missing")
-                if os.path.exists("models/social_media.py"):
-                    print("✅ models/social_media.py exists")
-                else:
-                    print("❌ models/social_media.py missing")
+            print(f"❌ models_social_media import failed: {e}")
+            # Check if the file exists
+            if os.path.exists("models_social_media.py"):
+                print("✅ models_social_media.py exists")
             else:
-                print("❌ models directory does not exist")
+                print("❌ models_social_media.py missing")
             return False
         
         # Try to import the main app
@@ -105,21 +96,17 @@ def main():
         print(f"❌ Cannot proceed without models directory. This is a Railway deployment issue.")
         return False
     
-    # Also check if we can import models directly
-    print(f"🔍 Testing direct model import...")
-    try:
-        import models
-        print(f"   ✅ models package imported successfully")
-        print(f"   📍 models location: {models.__file__}")
-    except Exception as e:
-        print(f"   ❌ Direct models import failed: {e}")
+    # Test if the new models files exist
+    print(f"🔍 Checking for models files...")
+    if os.path.exists("models_social_media.py"):
+        print(f"   ✅ models_social_media.py exists")
+    else:
+        print(f"   ❌ models_social_media.py missing")
         
-    # Try importing the specific module
-    try:
-        import models.social_media
-        print(f"   ✅ models.social_media imported successfully")
-    except Exception as e:
-        print(f"   ❌ models.social_media import failed: {e}")
+    if os.path.exists("models_content.py"):
+        print(f"   ✅ models_content.py exists")
+    else:
+        print(f"   ❌ models_content.py missing")
     
     print(f"🌍 Environment variables:")
     

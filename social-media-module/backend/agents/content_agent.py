@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from pydantic_ai import Agent, RunContext
 from pydantic import BaseModel, Field
 
-from models.content import (
+from models_content import (
     ContentGenerationRequest, 
     ContentGenerationResponse,
     ContentVariation,

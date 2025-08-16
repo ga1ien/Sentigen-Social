@@ -11,7 +11,7 @@ import structlog
 from dotenv import load_dotenv
 
 from utils import get_smart_model, AyrshareClient, HeyGenClient
-from models.social_media import SupportedPlatform, PostStatus
+from models_social_media import SupportedPlatform, PostStatus
 
 load_dotenv()
 

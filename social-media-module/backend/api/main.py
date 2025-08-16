@@ -20,7 +20,7 @@ import structlog
 from dotenv import load_dotenv
 
 # Import models
-from models.content import (
+from models_content import (
     ContentGenerationRequest,
     ContentGenerationResponse,
     PostCreateRequest,
@@ -35,7 +35,7 @@ from models.content import (
     Platform,
     PostStatus
 )
-from models.social_media import HealthCheckResponse
+from models_social_media import HealthCheckResponse
 
 # Import agents and services
 from agents.content_agent import ContentGenerationAgent
@@ -348,7 +348,7 @@ async def create_post(
             raise HTTPException(status_code=500, detail="Failed to create post")
         
         # Convert to response model (simplified for now)
-        from models.content import SocialMediaPost
+        from models_content import SocialMediaPost
         post = SocialMediaPost(**created_post)
         
         return PostResponse(post=post, media_assets=[])
@@ -378,7 +378,7 @@ async def list_posts(
         )
         
         # Convert to response models (simplified)
-        from models.content import SocialMediaPost
+        from models_content import SocialMediaPost
         post_models = []
         for post_data in posts:
             try:
@@ -420,7 +420,7 @@ async def get_post(
         if post_data.get("workspace_id") != current_user["workspace_id"]:
             raise HTTPException(status_code=403, detail="Access denied")
         
-        from models.content import SocialMediaPost
+        from models_content import SocialMediaPost
         post = SocialMediaPost(**post_data)
         
         return PostResponse(post=post, media_assets=[])
@@ -471,7 +471,7 @@ async def update_post(
         if not updated_post:
             raise HTTPException(status_code=500, detail="Failed to update post")
         
-        from models.content import SocialMediaPost
+        from models_content import SocialMediaPost
         post = SocialMediaPost(**updated_post)
         
         return PostResponse(post=post, media_assets=[])

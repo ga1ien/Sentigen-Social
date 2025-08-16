@@ -16,7 +16,7 @@ from sse_starlette.sse import EventSourceResponse
 import structlog
 from dotenv import load_dotenv
 
-from models.social_media import (
+from models_social_media import (
     SocialMediaPostRequest,
     SocialMediaPostResponse,
     SocialMediaAnalyticsRequest,
