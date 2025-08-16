@@ -35,3 +35,7 @@ pytz==2024.2
 # Media Processing (Essential)
 pillow==10.4.0
 aiofiles==24.1.0
+
+# Additional dependencies that might be needed
+tiktoken==0.8.0
+pandas==2.2.3
