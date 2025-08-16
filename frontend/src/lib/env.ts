@@ -16,7 +16,7 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional(),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1).optional(),
-    NEXT_PUBLIC_API_URL: z.string().default("/api"),
+    NEXT_PUBLIC_API_URL: z.string().default("https://sentigen-social-production.up.railway.app"),
     NEXT_PUBLIC_APP_NAME: z.string().default("AI Social Media Platform"),
     NEXT_PUBLIC_APP_DESCRIPTION: z.string().default("AI-powered social media content creation and scheduling"),
     NEXT_PUBLIC_ENABLE_ANALYTICS: z.string().transform((val) => val === "true").default("true"),
