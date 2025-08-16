@@ -9,6 +9,11 @@ import subprocess
 import sys
 import traceback
 
+# Add current directory to Python path to ensure local imports work
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
+
 def check_imports():
     """Check if critical imports are available."""
     try:
@@ -38,6 +43,20 @@ def main():
     print("🚀 Starting Railway FastAPI deployment...")
     print(f"🐍 Python version: {sys.version}")
     print(f"📁 Working directory: {os.getcwd()}")
+    print(f"🔍 Python path: {sys.path[:3]}...")  # Show first 3 entries
+    
+    # List directory contents to verify files are present
+    print(f"📋 Directory contents:")
+    try:
+        contents = os.listdir(".")
+        for item in sorted(contents):
+            if os.path.isdir(item):
+                print(f"   📁 {item}/")
+            else:
+                print(f"   📄 {item}")
+    except Exception as e:
+        print(f"   ❌ Error listing directory: {e}")
+    
     print(f"🌍 Environment variables:")
     
     # Print relevant environment variables (without sensitive data)
