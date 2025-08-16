@@ -88,6 +88,23 @@ def main():
     except Exception as e:
         print(f"   ❌ Error listing directory: {e}")
     
+    # Check if models directory is missing and try to understand why
+    if not os.path.exists("models"):
+        print(f"🚨 CRITICAL: models directory is missing!")
+        print(f"🔍 Let's check what Railway actually copied...")
+        
+        # Check if there are any Python files that might contain our models
+        python_files = [f for f in os.listdir(".") if f.endswith(".py")]
+        print(f"📄 Python files found: {python_files}")
+        
+        # Check if there are any directories that might contain models
+        dirs = [d for d in os.listdir(".") if os.path.isdir(d)]
+        print(f"📁 Directories found: {dirs}")
+        
+        # This is a critical error - we can't proceed without models
+        print(f"❌ Cannot proceed without models directory. This is a Railway deployment issue.")
+        return False
+    
     # Also check if we can import models directly
     print(f"🔍 Testing direct model import...")
     try:
