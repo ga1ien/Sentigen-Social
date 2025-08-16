@@ -5,16 +5,25 @@
     {
       "src": "frontend/package.json",
       "use": "@vercel/next"
+    },
+    {
+      "src": "social-media-module/backend/vercel_app.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "social-media-module/backend/vercel_app.py"
+    },
     {
       "src": "/(.*)",
       "dest": "frontend/$1"
     }
   ],
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "PYTHONPATH": "/var/task"
   },
   "build": {
     "env": {
@@ -24,6 +33,9 @@
   "functions": {
     "frontend/src/app/**/*.tsx": {
       "maxDuration": 30
+    },
+    "social-media-module/backend/vercel_app.py": {
+      "maxDuration": 60
     }
   }
 }
