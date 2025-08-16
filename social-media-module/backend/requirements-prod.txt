@@ -1,0 +1,37 @@
+# Core Framework - Production Only
+fastapi==0.115.13
+uvicorn==0.34.3
+sse-starlette==2.3.6
+
+# Pydantic
+pydantic==2.11.7
+pydantic-ai==0.3.2
+
+# HTTP Clients
+httpx==0.28.1
+aiohttp==3.11.11
+requests>=2.32.2
+
+# Database
+supabase
+asyncpg==0.30.0
+
+# Environment Management
+python-dotenv==1.1.0
+
+# AI Providers (Core)
+openai>=1.76.0
+anthropic==0.54.0
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+python-multipart==0.0.9
+
+# Utilities
+structlog==24.4.0
+python-dateutil==2.9.0
+pytz==2024.2
+
+# Media Processing (Essential)
+pillow==10.4.0
+aiofiles==24.1.0
