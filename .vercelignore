@@ -1,39 +1,14 @@
-# Ignore Python virtual environments
-social-media-module/backend/venv/
-social-media-module/backend/.venv/
-social-media-module/backend/env/
-social-media-module/backend/__pycache__/
-social-media-module/backend/**/__pycache__/
+# Ignore backend directory entirely (deployed separately on Railway)
+social-media-module/
 
-# Ignore large development files
+# Ignore Python files
 *.pyc
 *.pyo
 *.pyd
 __pycache__/
-.pytest_cache/
-.coverage
-.tox/
 
-# Ignore documentation and test files
-*.md
-test_*.py
-*_test.py
-tests/
-
-# Ignore development scripts
-setup.sh
-run.sh
-
-# Ignore Docker files
-Dockerfile
-docker-compose.yml
-
-# Ignore IDE files
+# Ignore development files
 .vscode/
 .idea/
 *.swp
-*.swo
-
-# Ignore OS files
 .DS_Store
-Thumbs.db
