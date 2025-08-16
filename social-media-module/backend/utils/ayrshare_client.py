@@ -209,10 +209,13 @@ class AyrshareClient:
         """
         try:
             async with httpx.AsyncClient(timeout=10.0) as client:
-                response = await client.get(
-                    f"{self.base_url}/profiles",
+                # Use a simple POST test instead of profiles (which requires Business Plan)
+                response = await client.post(
+                    f"{self.base_url}/post",
+                    json={"post": "health check", "platforms": ["test"], "validate": True},
                     headers=self.headers
                 )
-                return response.status_code == 200
+                # API is accessible if we get any response (even errors about platforms)
+                return response.status_code in [200, 400]
         except:
             return False
