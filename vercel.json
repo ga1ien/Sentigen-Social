@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "sentigen-social",
   "builds": [
     {
       "src": "frontend/package.json",
@@ -8,7 +7,10 @@
     },
     {
       "src": "social-media-module/backend/vercel_app.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
     }
   ],
   "routes": [
@@ -28,14 +30,6 @@
   "build": {
     "env": {
       "NEXT_TELEMETRY_DISABLED": "1"
-    }
-  },
-  "functions": {
-    "frontend/src/app/**/*.tsx": {
-      "maxDuration": 30
-    },
-    "social-media-module/backend/vercel_app.py": {
-      "maxDuration": 60
     }
   }
 }
