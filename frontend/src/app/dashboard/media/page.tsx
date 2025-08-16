@@ -249,7 +249,7 @@ export default function MediaLibraryPage() {
             className="pl-10"
           />
         </div>
-        <Tabs value={selectedType} onValueChange={(value: any) => setSelectedType(value)}>
+        <Tabs value={selectedType} onValueChange={(value: string) => setSelectedType(value)}>
           <TabsList>
             <TabsTrigger value="all">All</TabsTrigger>
             <TabsTrigger value="image">Images</TabsTrigger>

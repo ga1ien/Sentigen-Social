@@ -113,7 +113,7 @@ export default function CalendarPage() {
   const calendarRef = useRef<FullCalendar>(null)
   const { toast } = useToast()
 
-  const handleDateClick = (arg: any) => {
+  const handleDateClick = (arg: { dateStr: string }) => {
     setSelectedDate(arg.dateStr)
     setNewEvent({
       ...newEvent,
@@ -123,7 +123,7 @@ export default function CalendarPage() {
     setIsCreateDialogOpen(true)
   }
 
-  const handleEventClick = (arg: any) => {
+  const handleEventClick = (arg: { event: { id: string } }) => {
     const event = events.find(e => e.id === arg.event.id)
     if (event) {
       setSelectedEvent(event)
@@ -131,7 +131,7 @@ export default function CalendarPage() {
     }
   }
 
-  const handleEventDrop = (arg: any) => {
+  const handleEventDrop = (arg: { event: { id: string; start: Date } }) => {
     const eventId = arg.event.id
     const newStart = arg.event.start.toISOString()
     

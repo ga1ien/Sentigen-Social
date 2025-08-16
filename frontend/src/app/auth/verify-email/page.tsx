@@ -24,7 +24,7 @@ export default function VerifyEmailPage() {
         try {
           const { error } = await supabase.auth.verifyOtp({
             token_hash,
-            type: type as any,
+            type: type as 'signup' | 'email_change' | 'sms' | 'phone_change',
           })
 
           if (error) {
@@ -95,7 +95,7 @@ export default function VerifyEmailPage() {
           {status === 'pending' && (
             <>
               <p className="text-sm text-gray-600 text-center">
-                We've sent a verification link to your email address. Please click the link to verify your account.
+                We&apos;ve sent a verification link to your email address. Please click the link to verify your account.
               </p>
               <Button onClick={resendVerification} variant="outline" className="w-full">
                 Resend Verification Email

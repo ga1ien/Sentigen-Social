@@ -110,10 +110,10 @@ export default function ContentIntelligencePage() {
   const [insights, setInsights] = useState<ContentInsight[]>([])
   const [recommendations, setRecommendations] = useState<ContentRecommendation[]>([])
   const [trendingTopics, setTrendingTopics] = useState<Record<string, number>>({})
-  const [engagementPatterns, setEngagementPatterns] = useState<any>({})
+  const [engagementPatterns, setEngagementPatterns] = useState<Record<string, unknown>>({})
   const [isScanning, setIsScanning] = useState(false)
   const [scanProgress, setScanProgress] = useState(0)
-  const [scheduledScans, setScheduledScans] = useState<any[]>([])
+  const [scheduledScans, setScheduledScans] = useState<Record<string, unknown>[]>([])
   const [chromeMcpStatus, setChromeMcpStatus] = useState<'connected' | 'disconnected' | 'unknown'>('unknown')
   
   // Scan configuration
@@ -151,7 +151,7 @@ export default function ContentIntelligencePage() {
       const topicsResponse = await fetch('/api/content-intelligence/analytics/trending-topics')
       if (topicsResponse.ok) {
         const topicsData = await topicsResponse.json()
-        const topics = topicsData.trending_topics.reduce((acc: any, item: any) => {
+        const topics = topicsData.trending_topics.reduce((acc: Record<string, number>, item: { topic: string; count: number }) => {
           acc[item.topic] = item.count
           return acc
         }, {})

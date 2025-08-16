@@ -287,7 +287,7 @@ export default function TeamPage() {
               </div>
               <div>
                 <Label htmlFor="role">Role</Label>
-                <Select value={inviteRole} onValueChange={(value: any) => setInviteRole(value)}>
+                <Select value={inviteRole} onValueChange={(value: string) => setInviteRole(value)}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
