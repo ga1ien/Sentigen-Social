@@ -30,6 +30,7 @@ from utils.ayrshare_client import AyrshareClient
 from utils.heygen_client import HeyGenClient
 from workers.midjourney_worker import MidjourneyWorker
 from api.research_video_api import router as research_video_router
+from api.avatar_api import router as avatar_router
 
 # Load environment variables
 load_dotenv()
@@ -142,6 +143,7 @@ app.add_middleware(
 
 # Include research-video workflow routes
 app.include_router(research_video_router)
+app.include_router(avatar_router)
 
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 
