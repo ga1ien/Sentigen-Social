@@ -16,9 +16,18 @@ def get_smart_model() -> Any:
     Returns:
         Configured model instance based on environment variables.
     """
+    # Debug: Check what environment variables are available
+    print("🔍 Available environment variables:")
+    for key in sorted(os.environ.keys()):
+        if any(term in key.upper() for term in ['API', 'KEY', 'LLM', 'OPENAI', 'ANTHROPIC']):
+            print(f"  {key}: {'***SET***' if os.environ[key] else 'NOT SET'}")
+    
     # Get provider preference
     llm_provider = os.getenv("LLM_PROVIDER", "openai").lower()
     llm_choice = os.getenv("LLM_CHOICE", "gpt-4o-mini")
+    
+    print(f"🔧 LLM Provider: {llm_provider}")
+    print(f"🔧 LLM Choice: {llm_choice}")
 
     # Provider-specific configuration
     if llm_provider == "openai":
