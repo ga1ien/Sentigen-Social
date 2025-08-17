@@ -12,3 +12,18 @@ __pycache__/
 .idea/
 *.swp
 .DS_Store
+
+# Ignore root level files that aren't needed for frontend
+/database/
+/docs/
+/scripts/
+/dev.sh
+/docker-compose.yml
+/monitor-*.sh
+/nixpacks.toml
+/railway.toml
+/setup.sh
+/start-local-testing.sh
+
+# Keep frontend directory explicitly
+!/frontend/
