@@ -82,26 +82,22 @@ Always return your response in the structured SocialMediaAgentResult format with
 - Be helpful and informative about social media posting best practices
 """
 
-# Create agent with lazy model initialization
-def get_social_media_agent():
-    """Get the social media agent with lazy model initialization."""
-    global _social_media_agent_instance
-    if _social_media_agent_instance is None:
-        _social_media_agent_instance = Agent(
-            get_smart_model(),
-            system_prompt=system_prompt,
-            deps_type=SocialMediaAgentDeps,
-            instructions="You are an expert in social media posting and the current date is {current_date}.",
-            retries=2,
-        )
+# Create agent
+social_media_agent = Agent(
+    get_smart_model(),
+    system_prompt=system_prompt,
+    deps_type=SocialMediaAgentDeps,
+    instructions="You are an expert in social media posting and the current date is {current_date}.",
+    retries=2,
+)
 
-        # Add the system prompt decorator
-        @_social_media_agent_instance.system_prompt
-        def add_context(ctx: RunContext[SocialMediaAgentDeps]) -> str:
+
+@social_media_agent.system_prompt
+def add_context(ctx: RunContext[SocialMediaAgentDeps]) -> str:
     """Add dynamic context to the system prompt."""
     deps = ctx.deps
     return f"""
-    \n\nAdditional context for social media posting:
+    Additional context for social media posting:
     {deps.context}
 
     Available platforms and posting capabilities will be determined by the user's connected accounts.
