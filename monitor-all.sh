@@ -38,11 +38,11 @@ check_command() {
 # Function to get git status
 get_git_status() {
     print_section "Git Status"
-    
+
     # Current branch
     branch=$(git branch --show-current 2>/dev/null || echo "unknown")
     echo -e "${BLUE}Branch:${NC} $branch"
-    
+
     # Uncommitted changes
     if [[ -n $(git status --porcelain 2>/dev/null) ]]; then
         echo -e "${YELLOW}📝 Uncommitted changes:${NC}"
@@ -50,11 +50,11 @@ get_git_status() {
     else
         echo -e "${GREEN}✅ Working directory clean${NC}"
     fi
-    
+
     # Last commit
     echo -e "${BLUE}Last commit:${NC}"
     git log -1 --oneline 2>/dev/null || echo "No commits found"
-    
+
     # Remote status
     echo -e "${BLUE}Remote status:${NC}"
     git status -b --porcelain=v1 2>/dev/null | head -1 || echo "No remote configured"
@@ -63,14 +63,14 @@ get_git_status() {
 # Function to get Vercel status
 get_vercel_status() {
     print_section "Vercel Status"
-    
+
     if check_command "vercel"; then
         echo -e "${BLUE}Project info:${NC}"
         vercel project ls 2>/dev/null | grep -E "(sentigen|Sentigen)" || echo "No projects found"
-        
+
         echo -e "${BLUE}Recent deployments:${NC}"
         vercel list --limit 3 2>/dev/null || echo "No deployments found"
-        
+
         echo -e "${BLUE}Current deployment status:${NC}"
         vercel inspect --wait 2>/dev/null || echo "No active deployment"
     fi
@@ -79,14 +79,14 @@ get_vercel_status() {
 # Function to get Railway status
 get_railway_status() {
     print_section "Railway Status"
-    
+
     if check_command "railway"; then
         echo -e "${BLUE}Project info:${NC}"
         railway status 2>/dev/null || echo "Not connected to Railway project"
-        
+
         echo -e "${BLUE}Recent deployments:${NC}"
         railway logs --limit 5 2>/dev/null || echo "No logs available"
-        
+
         echo -e "${BLUE}Service health:${NC}"
         curl -s -o /dev/null -w "Status: %{http_code} | Time: %{time_total}s" \
             https://sentigen-social-production.up.railway.app/health 2>/dev/null || echo "Service unreachable"
@@ -97,10 +97,10 @@ get_railway_status() {
 # Function to get system status
 get_system_status() {
     print_section "System Status"
-    
+
     echo -e "${BLUE}Current time:${NC} $(date)"
     echo -e "${BLUE}Uptime:${NC} $(uptime | awk '{print $3,$4}' | sed 's/,//')"
-    
+
     # Memory usage
     if [[ "$OSTYPE" == "darwin"* ]]; then
         # macOS
@@ -109,10 +109,10 @@ get_system_status() {
         # Linux
         echo -e "${BLUE}Memory:${NC} $(free -h | grep Mem | awk '{print $3"/"$2}')"
     fi
-    
+
     # Disk usage
     echo -e "${BLUE}Disk usage:${NC} $(df -h . | tail -1 | awk '{print $3"/"$2" ("$5" used)"}')"
-    
+
     # Network connectivity
     echo -e "${BLUE}Network:${NC}"
     if ping -c 1 google.com &> /dev/null; then
@@ -125,10 +125,10 @@ get_system_status() {
 # Function to get process status
 get_process_status() {
     print_section "Development Processes"
-    
+
     # Check for common development processes
     processes=("node" "npm" "next" "python" "uvicorn" "railway" "vercel")
-    
+
     for proc in "${processes[@]}"; do
         count=$(pgrep -f "$proc" | wc -l | tr -d ' ')
         if [[ $count -gt 0 ]]; then
@@ -142,27 +142,27 @@ get_process_status() {
 # Function to monitor logs in real-time
 monitor_logs() {
     print_section "Live Logs"
-    
+
     echo -e "${BLUE}Monitoring logs... (Press Ctrl+C to stop)${NC}"
-    
+
     # Try to tail various log files
     if [[ -f "frontend/.next/trace" ]]; then
         echo -e "${CYAN}Next.js trace:${NC}"
         tail -f frontend/.next/trace &
     fi
-    
+
     # Monitor Railway logs if available
     if command -v railway &> /dev/null; then
         echo -e "${CYAN}Railway logs:${NC}"
         railway logs --follow &
     fi
-    
+
     # Monitor Vercel logs if available
     if command -v vercel &> /dev/null; then
         echo -e "${CYAN}Vercel logs:${NC}"
         vercel logs --follow &
     fi
-    
+
     wait
 }
 
@@ -173,28 +173,28 @@ run_monitor() {
         print_header "🚀 SENTIGEN SOCIAL - REAL-TIME MONITOR"
         echo -e "${WHITE}$(date)${NC}"
         echo ""
-        
+
         get_git_status
         echo ""
-        
+
         get_vercel_status
         echo ""
-        
+
         get_railway_status
         echo ""
-        
+
         get_system_status
         echo ""
-        
+
         get_process_status
         echo ""
-        
+
         echo -e "${WHITE}Press Ctrl+C to exit | Refreshing in 10 seconds...${NC}"
         echo -e "${YELLOW}Commands: [c]ommit [p]ush [d]eploy [l]ogs [q]uit${NC}"
-        
+
         # Wait for 10 seconds or user input
         read -t 10 -n 1 input
-        
+
         case $input in
             c|C)
                 echo ""
