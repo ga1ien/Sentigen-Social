@@ -23,8 +23,8 @@ def get_smart_model() -> Any:
             print(f"  {key}: {'***SET***' if os.environ[key] else 'NOT SET'}")
     
     # Get provider preference
-    llm_provider = os.getenv("LLM_PROVIDER", "openai").lower()
-    llm_choice = os.getenv("LLM_CHOICE", "gpt-4o-mini")
+    llm_provider = os.getenv("LLM_PROVIDER", "anthropic").lower()
+    llm_choice = os.getenv("LLM_CHOICE", "claude-4-sonnet")
     
     print(f"🔧 LLM Provider: {llm_provider}")
     print(f"🔧 LLM Choice: {llm_choice}")
