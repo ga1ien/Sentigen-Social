@@ -65,6 +65,12 @@ const sidebarItems = [
     badge: "AI",
   },
   {
+    title: "Research-to-Video",
+    href: "/dashboard/research-video",
+    icon: Zap,
+    badge: "New",
+  },
+  {
     title: "Team",
     href: "/dashboard/team",
     icon: Users,
