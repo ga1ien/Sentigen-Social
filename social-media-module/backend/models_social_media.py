@@ -45,7 +45,6 @@ class SocialMediaPostRequest(BaseModel):
     
     media_urls: Optional[List[HttpUrl]] = Field(
         None,
-        alias="mediaUrls",
         description="URLs of images or videos to include in the post",
         max_items=10
     )
@@ -53,39 +52,33 @@ class SocialMediaPostRequest(BaseModel):
     # Scheduling options
     schedule_date: Optional[datetime] = Field(
         None,
-        alias="scheduleDate",
         description="Schedule the post for a future date/time"
     )
     
     # Testing options
     random_post: Optional[bool] = Field(
         False,
-        alias="randomPost",
         description="Use a random quote for testing"
     )
     
     random_media_url: Optional[bool] = Field(
         False,
-        alias="randomMediaUrl", 
         description="Use a random image/video for testing"
     )
     
     is_landscape_video: Optional[bool] = Field(
         False,
-        alias="isLandscapeVideo",
         description="Use landscape video format"
     )
     
     is_portrait_video: Optional[bool] = Field(
         False,
-        alias="isPortraitVideo",
         description="Use portrait video format (required for TikTok/Reels)"
     )
     
     # Platform-specific options
     platform_options: Optional[Dict[str, Dict[str, Any]]] = Field(
         None,
-        alias="platformOptions",
         description="Platform-specific posting options"
     )
     
@@ -149,25 +142,21 @@ class PlatformResult(BaseModel):
     
     post_url: Optional[HttpUrl] = Field(
         None,
-        alias="postUrl",
         description="Direct URL to view the post"
     )
     
     error_message: Optional[str] = Field(
         None,
-        alias="errorMessage",
         description="Error message if posting failed"
     )
     
     used_quota: Optional[int] = Field(
         None,
-        alias="usedQuota",
         description="API quota used for this post"
     )
     
     additional_info: Optional[Dict[str, Any]] = Field(
         None,
-        alias="additionalInfo",
         description="Additional platform-specific information"
     )
 
@@ -198,19 +187,16 @@ class SocialMediaPostResponse(BaseModel):
     
     ref_id: Optional[str] = Field(
         None,
-        alias="refId",
         description="Reference ID from Ayrshare"
     )
     
     post_content: Optional[str] = Field(
         None,
-        alias="post",
         description="The actual content that was posted"
     )
     
     platform_results: List[PlatformResult] = Field(
         default_factory=list,
-        alias="postIds",
         description="Results for each platform"
     )
     
@@ -221,13 +207,11 @@ class SocialMediaPostResponse(BaseModel):
     
     created_at: datetime = Field(
         default_factory=datetime.utcnow,
-        alias="createdAt",
         description="Timestamp when the post was created"
     )
     
     scheduled_for: Optional[datetime] = Field(
         None,
-        alias="scheduledFor",
         description="Scheduled posting time if applicable"
     )
 
