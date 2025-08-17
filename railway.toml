@@ -8,11 +8,5 @@ healthcheckTimeout = 30
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
 
-[variables]
-PYTHONUNBUFFERED = "1"
-PYTHONDONTWRITEBYTECODE = "1"
-WEB_CONCURRENCY = "2"
-PORT = "8000"
-
 [observability]
 enabled = true
