@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["python311", "pip"]
+
+[phases.install]
+cmds = ["pip install --no-cache-dir -r requirements-prod.txt"]
+
+[phases.build]
+cmds = ["echo 'Python backend build complete'"]
+
+[start]
+cmd = "uvicorn api.main:app --host 0.0.0.0 --port $PORT --workers 2 --worker-class uvicorn.workers.UvicornWorker --access-log --log-level info"

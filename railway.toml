@@ -1,9 +1,9 @@
 [build]
 builder = "nixpacks"
-buildCommand = "cd social-media-module/backend && pip install --no-cache-dir -r requirements-prod.txt"
+workingDirectory = "social-media-module/backend"
 
 [deploy]
-startCommand = "cd social-media-module/backend && uvicorn api.main:app --host 0.0.0.0 --port $PORT --workers 2 --worker-class uvicorn.workers.UvicornWorker --access-log --log-level info"
+startCommand = "uvicorn api.main:app --host 0.0.0.0 --port $PORT --workers 2 --worker-class uvicorn.workers.UvicornWorker --access-log --log-level info"
 healthcheckPath = "/health"
 healthcheckTimeout = 30
 restartPolicyType = "on_failure"

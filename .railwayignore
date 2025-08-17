@@ -1,15 +1,24 @@
-# For frontend deployment, ignore backend files
-social-media-module/backend/
-*.py
-*.pyc
-__pycache__/
-venv/
-.env
-*.log
-
-# For backend deployment, ignore frontend files when deploying from backend directory
-node_modules/
-.next/
+# Ignore frontend directory entirely (deployed on Vercel)
 frontend/
-*.js.map
-*.ts.map
+node_modules/
+package.json
+package-lock.json
+public/
+
+# Ignore other non-backend files
+docs/
+database/
+scripts/
+*.md
+.env
+.git/
+.gitignore
+.vercel/
+.vercelignore
+vercel.json
+
+# Development files
+.vscode/
+.idea/
+*.swp
+.DS_Store
