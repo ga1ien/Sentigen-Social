@@ -2,16 +2,7 @@
   "version": 2,
   "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/.next",
-  "framework": "nextjs",
-  "installCommand": "cd frontend && npm install --production=false",
-  "devCommand": "cd frontend && npm run dev",
-  "projectSettings": {
-    "framework": "nextjs",
-    "buildCommand": "cd frontend && npm run build",
-    "outputDirectory": "frontend/.next",
-    "installCommand": "cd frontend && npm install",
-    "nodeVersion": "18.x"
-  },
+  "installCommand": "cd frontend && npm install",
   "functions": {
     "frontend/src/app/api/**/*.ts": {
       "runtime": "nodejs18.x"
@@ -32,31 +23,6 @@
         {
           "key": "X-XSS-Protection",
           "value": "1; mode=block"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "origin-when-cross-origin"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
-        }
-      ]
-    },
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, PUT, DELETE, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization"
         }
       ]
     }
@@ -76,6 +42,5 @@
     "env": {
       "NEXT_TELEMETRY_DISABLED": "1"
     }
-  },
-  "crons": []
+  }
 }

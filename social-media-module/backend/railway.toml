@@ -16,5 +16,4 @@ PYTHONDONTWRITEBYTECODE = "1"
 WEB_CONCURRENCY = "2"
 
 [observability]
-# Enable Railway's built-in observability
 enabled = true

@@ -1,0 +1,17 @@
+[build]
+builder = "nixpacks"
+buildCommand = "npm install && cd frontend && npm install && npm run build"
+
+[deploy]
+startCommand = "cd frontend && npm run start"
+healthcheckPath = "/"
+healthcheckTimeout = 30
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+
+[variables]
+NODE_ENV = "production"
+PORT = "3000"
+
+[observability]
+enabled = true
