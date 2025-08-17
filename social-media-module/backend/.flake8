@@ -1,0 +1,27 @@
+[flake8]
+max-line-length = 120
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    .env,
+    migrations,
+    .pytest_cache
+ignore =
+    E203,  # whitespace before ':'
+    W503,  # line break before binary operator
+    F401,  # imported but unused (handled by isort)
+per-file-ignores =
+    __init__.py:F401
+
+# Custom rules for naming conventions
+# N802: function name should be lowercase
+# N803: argument name should be lowercase
+# N806: variable in function should be lowercase
+# N815: mixedCase variable in class scope
+# N816: mixedCase variable in global scope
+select = E,W,F,N802,N803,N806,N815,N816
+
+# Enforce snake_case naming
+naming-convention = snake_case

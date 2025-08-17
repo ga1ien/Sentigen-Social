@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "validate-naming": "eslint src/**/*.{ts,tsx} --rule '@typescript-eslint/naming-convention: error'"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

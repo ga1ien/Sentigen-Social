@@ -1,0 +1,62 @@
+repos:
+  # Python Backend Linting
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        files: ^social-media-module/backend/
+        language_version: python3.11
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        files: ^social-media-module/backend/
+        args: ["--profile", "black", "--line-length", "120"]
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        files: ^social-media-module/backend/
+
+  # Frontend Linting
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v8.56.0
+    hooks:
+      - id: eslint
+        files: ^frontend/src/.*\.(ts|tsx|js|jsx)$
+        additional_dependencies:
+          - eslint@8.56.0
+          - "@typescript-eslint/eslint-plugin@6.21.0"
+          - "@typescript-eslint/parser@6.21.0"
+          - eslint-config-next@14.0.4
+
+  # General Formatting
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+
+  # Custom Snake Case Validation
+  - repo: local
+    hooks:
+      - id: validate-snake-case-backend
+        name: Validate Snake Case in Backend Models
+        entry: python scripts/validate_snake_case.py
+        language: python
+        files: ^social-media-module/backend/.*\.py$
+        pass_filenames: true
+
+      - id: validate-snake-case-database
+        name: Validate Snake Case in Database Migrations
+        entry: python scripts/validate_snake_case.py --database
+        language: python
+        files: ^database/.*\.sql$
+        pass_filenames: true
