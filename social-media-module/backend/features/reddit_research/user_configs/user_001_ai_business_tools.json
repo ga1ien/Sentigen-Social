@@ -1,0 +1,93 @@
+{
+  "user_id": "user_001",
+  "workspace_id": "workspace_001",
+  "config_name": "ai_business_tools",
+  "description": "Daily research on AI automation and business productivity tools",
+  "enabled_sources": [
+    "ContentSource.REDDIT",
+    "ContentSource.LINKEDIN"
+  ],
+  "reddit_config": {
+    "subreddits": [
+      "artificial",
+      "productivity",
+      "Entrepreneur",
+      "SaaS",
+      "MachineLearning"
+    ],
+    "search_topics": [
+      "AI automation",
+      "business tools",
+      "productivity software",
+      "workflow automation"
+    ],
+    "max_posts_per_subreddit": 8,
+    "max_comments_per_post": 30,
+    "sort_by": "hot",
+    "time_filter": "week",
+    "min_score": 20,
+    "exclude_nsfw": true,
+    "include_stickied": false
+  },
+  "linkedin_config": {
+    "search_topics": [
+      "AI automation",
+      "business productivity",
+      "workflow tools"
+    ],
+    "company_pages": [
+      "openai",
+      "microsoft",
+      "google",
+      "notion"
+    ],
+    "industry_hashtags": [
+      "#AI",
+      "#automation",
+      "#productivity",
+      "#SaaS"
+    ],
+    "max_posts_per_topic": 12,
+    "include_comments": true,
+    "max_comments_per_post": 20,
+    "post_types": [
+      "article",
+      "video",
+      "image"
+    ]
+  },
+  "twitter_config": null,
+  "analysis_depth": "AnalysisDepth.COMPREHENSIVE",
+  "ai_model": "gpt-5-mini",
+  "focus_areas": [
+    "business_intelligence",
+    "competitive_analysis",
+    "trend_analysis"
+  ],
+  "schedule": {
+    "frequency": "ResearchFrequency.DAILY",
+    "time_of_day": "08:00",
+    "timezone": "America/New_York",
+    "days_of_week": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "custom_cron": null
+  },
+  "auto_run_enabled": true,
+  "generate_summary": true,
+  "generate_insights": true,
+  "generate_content_ideas": true,
+  "export_formats": [
+    "json",
+    "markdown"
+  ],
+  "created_at": "2025-08-16T23:46:05.645212",
+  "updated_at": "2025-08-16T23:46:05.645212",
+  "last_run_at": null
+}

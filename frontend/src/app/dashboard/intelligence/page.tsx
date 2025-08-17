@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
+import { useUser } from '@/contexts/user-context'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -9,308 +10,283 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { Switch } from '@/components/ui/switch'
-import { Progress } from '@/components/ui/progress'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { useToast } from '@/hooks/use-toast'
-import { 
-  LineChart, 
-  Line, 
-  BarChart, 
-  Bar, 
-  PieChart, 
-  Pie, 
-  Cell,
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  Legend, 
-  ResponsiveContainer 
-} from 'recharts'
-import { 
-  Brain, 
-  TrendingUp, 
-  RefreshCw, 
-  Settings, 
-  Play, 
-  Pause, 
-  Calendar,
-  Eye,
-  Heart,
-  MessageCircle,
-  Share,
-  Chrome,
-  Zap,
-  Target,
-  Clock,
-  Users,
-  BarChart3,
-  Lightbulb,
+import api from '@/lib/api'
+import {
   Search,
-  Filter,
-  Download,
-  ExternalLink
+  Play,
+  Clock,
+  CheckCircle,
+  XCircle,
+  Eye,
+  Trash2,
+  RefreshCw,
+  BarChart3,
+  TrendingUp,
+  Users,
+  MessageSquare,
+  Star,
+  GitBranch,
+  Github,
+  Zap,
+  Plus,
+  Globe,
+  Hash
 } from 'lucide-react'
 
-interface ContentInsight {
+interface ResearchSession {
   id: string
-  platform: string
-  title: string
-  content: string
-  url: string
-  engagement_score: number
-  trending_topics: string[]
-  sentiment: string
-  author?: string
-  extracted_at: string
+  source: string
+  query: string
+  status: string
+  results_count: number
+  created_at: string
+  completed_at?: string
 }
 
-interface ContentRecommendation {
+interface ResearchResult {
   id: string
-  title: string
-  description: string
-  platforms: string[]
-  estimated_engagement: string
-  content_type: string
-  keywords: string[]
-  target_audience: string
-  content_angle: string
+  status: string
+  source: string
+  query: string
+  results_count: number
+  insights: any
+  raw_data: any[]
+  created_at: string
+  completed_at?: string
 }
 
-interface ScanConfig {
-  platforms: string[]
-  search_queries: string[]
-  time_window_hours: number
-  max_posts_per_platform: number
+const sourceIcons = {
+  reddit: Hash, // Using Hash icon instead of Reddit
+  hackernews: Zap,
+  github: Github,
+  google_trends: Globe
 }
 
-const platformIcons = {
-  reddit: '🔴',
-  linkedin: '💼',
-  twitter: '🐦',
-  hackernews: '🟠',
-  producthunt: '🚀',
-  medium: '📝',
-  'dev.to': '👨‍💻',
-  youtube: '📺'
-}
-
-const platformColors = {
+const sourceColors = {
   reddit: '#FF4500',
-  linkedin: '#0077B5',
-  twitter: '#1DA1F2',
   hackernews: '#FF6600',
-  producthunt: '#DA552F',
-  medium: '#00AB6C',
-  'dev.to': '#0A0A0A',
-  youtube: '#FF0000'
+  github: '#333333',
+  google_trends: '#4285F4'
 }
 
 export default function ContentIntelligencePage() {
-  const [insights, setInsights] = useState<ContentInsight[]>([])
-  const [recommendations, setRecommendations] = useState<ContentRecommendation[]>([])
-  const [trendingTopics, setTrendingTopics] = useState<Record<string, number>>({})
-  const [engagementPatterns, setEngagementPatterns] = useState<Record<string, unknown>>({})
-  const [isScanning, setIsScanning] = useState(false)
-  const [scanProgress, setScanProgress] = useState(0)
-  const [scheduledScans, setScheduledScans] = useState<Record<string, unknown>[]>([])
-  const [chromeMcpStatus, setChromeMcpStatus] = useState<'connected' | 'disconnected' | 'unknown'>('unknown')
-  
-  // Scan configuration
-  const [scanConfig, setScanConfig] = useState<ScanConfig>({
-    platforms: ['reddit', 'linkedin', 'twitter'],
-    search_queries: ['AI', 'artificial intelligence', 'machine learning', 'automation'],
-    time_window_hours: 24,
-    max_posts_per_platform: 20
-  })
-  
+  const { user, loading } = useUser()
   const { toast } = useToast()
+  const [sessions, setSessions] = useState<ResearchSession[]>([])
+  const [loadingSessions, setLoadingSessions] = useState(true)
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+  const [selectedResult, setSelectedResult] = useState<ResearchResult | null>(null)
+  const [isResultDialogOpen, setIsResultDialogOpen] = useState(false)
+  const [isGeneratingContent, setIsGeneratingContent] = useState(false)
+  const [generatedContent, setGeneratedContent] = useState<any>(null)
+
+  // New research form state
+  const [newResearch, setNewResearch] = useState({
+    query: '',
+    source: 'reddit',
+    max_items: 10,
+    analysis_depth: 'standard'
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
-    loadInitialData()
-    checkChromeMcpStatus()
-  }, [])
-
-  const loadInitialData = async () => {
-    try {
-      // Load recent insights
-      const insightsResponse = await fetch('/api/content-intelligence/insights/trending?limit=20')
-      if (insightsResponse.ok) {
-        const insightsData = await insightsResponse.json()
-        setInsights(insightsData.insights)
-      }
-
-      // Load recommendations
-      const recResponse = await fetch('/api/content-intelligence/recommendations?limit=10')
-      if (recResponse.ok) {
-        const recData = await recResponse.json()
-        setRecommendations(recData.recommendations)
-      }
-
-      // Load trending topics
-      const topicsResponse = await fetch('/api/content-intelligence/analytics/trending-topics')
-      if (topicsResponse.ok) {
-        const topicsData = await topicsResponse.json()
-        const topics = topicsData.trending_topics.reduce((acc: Record<string, number>, item: { topic: string; count: number }) => {
-          acc[item.topic] = item.count
-          return acc
-        }, {})
-        setTrendingTopics(topics)
-      }
-
-      // Load engagement patterns
-      const patternsResponse = await fetch('/api/content-intelligence/analytics/engagement-patterns')
-      if (patternsResponse.ok) {
-        const patternsData = await patternsResponse.json()
-        setEngagementPatterns(patternsData)
-      }
-
-      // Load scheduled scans
-      const scheduledResponse = await fetch('/api/content-intelligence/scheduled-scans')
-      if (scheduledResponse.ok) {
-        const scheduledData = await scheduledResponse.json()
-        setScheduledScans(scheduledData.scheduled_scans)
-      }
-
-    } catch (error) {
-      console.error('Failed to load initial data:', error)
+    if (user && !loading) {
+      loadResearchSessions()
     }
-  }
+  }, [user, loading])
 
-  const checkChromeMcpStatus = async () => {
+  const loadResearchSessions = async () => {
     try {
-      const response = await fetch('/api/content-intelligence/health')
-      if (response.ok) {
-        const data = await response.json()
-        setChromeMcpStatus(data.chrome_mcp_connected ? 'connected' : 'disconnected')
-      } else {
-        setChromeMcpStatus('disconnected')
-      }
+      setLoadingSessions(true)
+      const response = await api.get('/research/sessions?limit=20')
+      setSessions(response.data.sessions || [])
     } catch (error) {
-      setChromeMcpStatus('disconnected')
-    }
-  }
-
-  const triggerScan = async () => {
-    setIsScanning(true)
-    setScanProgress(0)
-    
-    try {
-      // Simulate progress updates
-      const progressInterval = setInterval(() => {
-        setScanProgress(prev => Math.min(prev + 10, 90))
-      }, 1000)
-
-      const response = await fetch('/api/content-intelligence/scan', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(scanConfig)
-      })
-
-      clearInterval(progressInterval)
-      setScanProgress(100)
-
-      if (response.ok) {
-        const data = await response.json()
-        
-        toast({
-          title: "Scan Completed!",
-          description: `Found ${data.results.total_insights} insights across ${scanConfig.platforms.length} platforms`,
-        })
-
-        // Reload data
-        await loadInitialData()
-      } else {
-        throw new Error('Scan failed')
-      }
-    } catch (error) {
+      console.error('Error loading research sessions:', error)
       toast({
-        title: "Scan Failed",
-        description: "Failed to scan platforms. Check Chrome MCP connection.",
+        title: "Error",
+        description: "Failed to load research sessions",
         variant: "destructive"
       })
     } finally {
-      setIsScanning(false)
-      setScanProgress(0)
+      setLoadingSessions(false)
     }
   }
 
-  const scheduleRecurringScan = async () => {
+  const startResearch = async () => {
+    if (!newResearch.query.trim()) {
+      toast({
+        title: "Missing Query",
+        description: "Please enter a research query",
+        variant: "destructive"
+      })
+      return
+    }
+
     try {
-      const response = await fetch('/api/content-intelligence/schedule-scan', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          platforms: scanConfig.platforms,
-          search_queries: scanConfig.search_queries,
-          interval_hours: 6,
-          max_posts_per_platform: scanConfig.max_posts_per_platform
-        })
+      setIsSubmitting(true)
+
+      const response = await api.post('/research/start', newResearch)
+
+      toast({
+        title: "Research Started",
+        description: `${newResearch.source} research has been started for "${newResearch.query}"`
       })
 
-      if (response.ok) {
-        const data = await response.json()
-        toast({
-          title: "Scan Scheduled",
-          description: `Recurring scan scheduled every 6 hours for ${scanConfig.platforms.length} platforms`,
-        })
-        
-        // Reload scheduled scans
-        const scheduledResponse = await fetch('/api/content-intelligence/scheduled-scans')
-        if (scheduledResponse.ok) {
-          const scheduledData = await scheduledResponse.json()
-          setScheduledScans(scheduledData.scheduled_scans)
-        }
-      }
-    } catch (error) {
+      // Reset form
+      setNewResearch({
+        query: '',
+        source: 'reddit',
+        max_items: 10,
+        analysis_depth: 'standard'
+      })
+      setIsCreateDialogOpen(false)
+
+      // Reload sessions
+      loadResearchSessions()
+
+    } catch (error: any) {
+      console.error('Error starting research:', error)
       toast({
-        title: "Scheduling Failed",
-        description: "Failed to schedule recurring scan",
+        title: "Error",
+        description: error.response?.data?.detail || "Failed to start research",
+        variant: "destructive"
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const viewResults = async (sessionId: string) => {
+    try {
+      const response = await api.get(`/research/sessions/${sessionId}`)
+      setSelectedResult(response.data)
+      setIsResultDialogOpen(true)
+    } catch (error) {
+      console.error('Error loading research results:', error)
+      toast({
+        title: "Error",
+        description: "Failed to load research results",
         variant: "destructive"
       })
     }
   }
 
-  const generateRecommendations = async () => {
+  const deleteSession = async (sessionId: string) => {
     try {
-      const response = await fetch('/api/content-intelligence/recommendations?regenerate=true')
-      if (response.ok) {
-        const data = await response.json()
-        setRecommendations(data.recommendations)
-        
-        toast({
-          title: "Recommendations Updated",
-          description: `Generated ${data.recommendations.length} new content recommendations`,
-        })
-      }
-    } catch (error) {
+      await api.delete(`/research/sessions/${sessionId}`)
       toast({
-        title: "Generation Failed",
-        description: "Failed to generate new recommendations",
+        title: "Session Deleted",
+        description: "Research session has been deleted"
+      })
+      loadResearchSessions()
+    } catch (error) {
+      console.error('Error deleting session:', error)
+      toast({
+        title: "Error",
+        description: "Failed to delete research session",
         variant: "destructive"
       })
     }
   }
 
-  const handlePlatformToggle = (platform: string) => {
-    setScanConfig(prev => ({
-      ...prev,
-      platforms: prev.platforms.includes(platform)
-        ? prev.platforms.filter(p => p !== platform)
-        : [...prev.platforms, platform]
-    }))
+  const generateContent = async (contentType: string, platform?: string) => {
+    if (!selectedResult) return
+
+    try {
+      setIsGeneratingContent(true)
+
+      const response = await api.post('/research/generate-content', {
+        research_session_id: selectedResult.id,
+        content_type: contentType,
+        platform: platform,
+        tone: 'professional',
+        length: 'medium'
+      })
+
+      setGeneratedContent(response.data)
+
+      toast({
+        title: "Content Generated",
+        description: `${contentType} content has been generated successfully!`
+      })
+
+    } catch (error: any) {
+      console.error('Error generating content:', error)
+      toast({
+        title: "Error",
+        description: error.response?.data?.detail || "Failed to generate content",
+        variant: "destructive"
+      })
+    } finally {
+      setIsGeneratingContent(false)
+    }
   }
 
-  const formatEngagementScore = (score: number) => {
-    if (score >= 100) return 'High'
-    if (score >= 50) return 'Medium'
-    return 'Low'
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return <CheckCircle className="h-4 w-4 text-green-500" />
+      case 'running':
+        return <RefreshCw className="h-4 w-4 text-blue-500 animate-spin" />
+      case 'failed':
+        return <XCircle className="h-4 w-4 text-red-500" />
+      default:
+        return <Clock className="h-4 w-4 text-yellow-500" />
+    }
   }
 
-  const getEngagementColor = (score: number) => {
-    if (score >= 100) return 'text-green-600'
-    if (score >= 50) return 'text-yellow-600'
-    return 'text-red-600'
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return 'bg-green-100 text-green-800'
+      case 'running':
+        return 'bg-blue-100 text-blue-800'
+      case 'failed':
+        return 'bg-red-100 text-red-800'
+      default:
+        return 'bg-yellow-100 text-yellow-800'
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="space-y-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">Content Intelligence</h1>
+            <p className="text-muted-foreground">Loading research tools...</p>
+          </div>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {[...Array(3)].map((_, i) => (
+            <Card key={i}>
+              <CardHeader>
+                <div className="h-4 w-20 bg-muted animate-pulse rounded" />
+              </CardHeader>
+              <CardContent>
+                <div className="h-8 w-16 bg-muted animate-pulse rounded mb-2" />
+                <div className="h-3 w-24 bg-muted animate-pulse rounded" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return (
+      <div className="space-y-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">Content Intelligence</h1>
+            <p className="text-muted-foreground">Please log in to access research tools.</p>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -318,442 +294,410 @@ export default function ContentIntelligencePage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold flex items-center gap-2">
-            <Brain className="h-8 w-8" />
-            Content Intelligence
-          </h1>
+          <h1 className="text-3xl font-bold">Content Intelligence</h1>
           <p className="text-muted-foreground">
-            AI-powered insights from social media monitoring via Chrome MCP
+            Research trending topics and generate content insights
           </p>
         </div>
-        <div className="flex items-center space-x-2">
-          <Badge 
-            variant={chromeMcpStatus === 'connected' ? 'default' : 'destructive'}
-            className="flex items-center gap-1"
-          >
-            <Chrome className="h-3 w-3" />
-            Chrome MCP {chromeMcpStatus}
-          </Badge>
-          <Button onClick={generateRecommendations} variant="outline">
-            <Lightbulb className="mr-2 h-4 w-4" />
-            Generate Ideas
-          </Button>
-          <Button onClick={triggerScan} disabled={isScanning}>
-            <RefreshCw className={`mr-2 h-4 w-4 ${isScanning ? 'animate-spin' : ''}`} />
-            {isScanning ? 'Scanning...' : 'Scan Now'}
-          </Button>
-        </div>
-      </div>
-
-      {/* Scan Progress */}
-      {isScanning && (
-        <Card>
-          <CardContent className="pt-6">
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>Scanning {scanConfig.platforms.length} platforms...</span>
-                <span>{scanProgress}%</span>
+        <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+          <DialogTrigger asChild>
+            <Button>
+              <Plus className="mr-2 h-4 w-4" />
+              New Research
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Start New Research</DialogTitle>
+              <DialogDescription>
+                Research trending topics from Reddit, Hacker News, or GitHub
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="query">Research Query</Label>
+                <Input
+                  id="query"
+                  placeholder="e.g., AI automation tools, startup trends, React libraries"
+                  value={newResearch.query}
+                  onChange={(e) => setNewResearch(prev => ({ ...prev, query: e.target.value }))}
+                />
               </div>
-              <Progress value={scanProgress} className="w-full" />
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
-      {/* Key Metrics */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Insights</CardTitle>
-            <Eye className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{insights.length}</div>
-            <p className="text-xs text-muted-foreground">
-              From {Object.keys(trendingTopics).length} trending topics
-            </p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Recommendations</CardTitle>
-            <Lightbulb className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{recommendations.length}</div>
-            <p className="text-xs text-muted-foreground">
-              AI-generated content ideas
-            </p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Scheduled Scans</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{scheduledScans.length}</div>
-            <p className="text-xs text-muted-foreground">
-              Automated monitoring
-            </p>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Avg Engagement</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {insights.length > 0 
-                ? Math.round(insights.reduce((sum, i) => sum + i.engagement_score, 0) / insights.length)
-                : 0
-              }
+              <div>
+                <Label htmlFor="source">Source</Label>
+                <Select value={newResearch.source} onValueChange={(value) => setNewResearch(prev => ({ ...prev, source: value }))}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="reddit">Reddit - Community discussions</SelectItem>
+                    <SelectItem value="hackernews">Hacker News - Tech trends</SelectItem>
+                    <SelectItem value="github">GitHub - Open source projects</SelectItem>
+                    <SelectItem value="google_trends">Google Trends - Search trends</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="max_items">Max Items</Label>
+                  <Select value={newResearch.max_items.toString()} onValueChange={(value) => setNewResearch(prev => ({ ...prev, max_items: parseInt(value) }))}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="5">5 items</SelectItem>
+                      <SelectItem value="10">10 items</SelectItem>
+                      <SelectItem value="20">20 items</SelectItem>
+                      <SelectItem value="50">50 items</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="analysis_depth">Analysis Depth</Label>
+                  <Select value={newResearch.analysis_depth} onValueChange={(value) => setNewResearch(prev => ({ ...prev, analysis_depth: value }))}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="quick">Quick</SelectItem>
+                      <SelectItem value="standard">Standard</SelectItem>
+                      <SelectItem value="comprehensive">Comprehensive</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="flex justify-end space-x-2">
+                <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={startResearch} disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                      Starting...
+                    </>
+                  ) : (
+                    <>
+                      <Play className="mr-2 h-4 w-4" />
+                      Start Research
+                    </>
+                  )}
+                </Button>
+              </div>
             </div>
-            <p className="text-xs text-muted-foreground">
-              Across all platforms
-            </p>
-          </CardContent>
-        </Card>
+          </DialogContent>
+        </Dialog>
       </div>
 
-      <Tabs defaultValue="insights" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="insights">Insights</TabsTrigger>
-          <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
-          <TabsTrigger value="trending">Trending</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          <TabsTrigger value="settings">Settings</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="insights" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Latest Content Insights</CardTitle>
-              <CardDescription>
-                High-engagement content discovered across social platforms
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {insights.map((insight) => (
-                  <div key={insight.id} className="border rounded-lg p-4">
-                    <div className="flex justify-between items-start">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-lg">{platformIcons[insight.platform as keyof typeof platformIcons]}</span>
-                          <Badge variant="outline">{insight.platform}</Badge>
-                          <Badge 
-                            variant={insight.sentiment === 'positive' ? 'default' : 
-                                   insight.sentiment === 'negative' ? 'destructive' : 'secondary'}
-                          >
-                            {insight.sentiment}
-                          </Badge>
-                        </div>
-                        <h3 className="font-semibold mb-2">{insight.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-3">
-                          {insight.content.substring(0, 200)}...
-                        </p>
-                        <div className="flex items-center gap-4 text-sm">
-                          <span className={`font-medium ${getEngagementColor(insight.engagement_score)}`}>
-                            Engagement: {formatEngagementScore(insight.engagement_score)}
-                          </span>
-                          {insight.author && (
-                            <span>By: {insight.author}</span>
-                          )}
-                          <span>{new Date(insight.extracted_at).toLocaleDateString()}</span>
-                        </div>
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {insight.trending_topics.slice(0, 5).map((topic) => (
-                            <Badge key={topic} variant="outline" className="text-xs">
-                              {topic}
-                            </Badge>
-                          ))}
-                        </div>
+      {/* Research Sessions */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Research Sessions</CardTitle>
+              <CardDescription>Your recent research activities</CardDescription>
+            </div>
+            <Button variant="outline" size="sm" onClick={loadResearchSessions}>
+              <RefreshCw className="h-4 w-4" />
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {loadingSessions ? (
+            <div className="space-y-4">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="flex items-center space-x-4 p-4 border rounded-lg">
+                  <div className="h-8 w-8 bg-muted animate-pulse rounded" />
+                  <div className="flex-1">
+                    <div className="h-4 w-48 bg-muted animate-pulse rounded mb-2" />
+                    <div className="h-3 w-32 bg-muted animate-pulse rounded" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : sessions.length === 0 ? (
+            <div className="text-center py-8">
+              <Search className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+              <h3 className="text-lg font-semibold mb-2">No research sessions yet</h3>
+              <p className="text-muted-foreground mb-4">
+                Start your first research to discover trending topics and insights.
+              </p>
+              <Button onClick={() => setIsCreateDialogOpen(true)}>
+                <Plus className="mr-2 h-4 w-4" />
+                Start Research
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {sessions.map((session) => {
+                const SourceIcon = sourceIcons[session.source as keyof typeof sourceIcons]
+                return (
+                  <div key={session.id} className="flex items-center space-x-4 p-4 border rounded-lg hover:bg-muted/50">
+                    <div className="flex-shrink-0">
+                      <SourceIcon
+                        className="h-8 w-8"
+                        style={{ color: sourceColors[session.source as keyof typeof sourceColors] }}
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <h4 className="font-medium truncate">{session.query}</h4>
+                        <Badge className={getStatusColor(session.status)}>
+                          {getStatusIcon(session.status)}
+                          <span className="ml-1">{session.status}</span>
+                        </Badge>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm" asChild>
-                          <a href={insight.url} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="h-3 w-3" />
-                          </a>
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          Create Content
-                        </Button>
+                      <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                        <span className="capitalize">{session.source}</span>
+                        <span>{session.results_count} results</span>
+                        <span>{new Date(session.created_at).toLocaleDateString()}</span>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="recommendations" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>AI Content Recommendations</CardTitle>
-              <CardDescription>
-                Data-driven content ideas based on trending insights
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {recommendations.map((rec, idx) => (
-                  <div key={rec.id || idx} className="border rounded-lg p-4">
-                    <div className="flex justify-between items-start">
-                      <div className="flex-1">
-                        <h3 className="font-semibold mb-2">{rec.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-3">
-                          {rec.description}
-                        </p>
-                        <div className="flex items-center gap-4 mb-3">
-                          <Badge variant="outline">{rec.content_type}</Badge>
-                          <Badge 
-                            variant={rec.estimated_engagement === 'high' ? 'default' : 
-                                   rec.estimated_engagement === 'low' ? 'secondary' : 'outline'}
-                          >
-                            {rec.estimated_engagement} engagement
-                          </Badge>
-                          <span className="text-sm text-muted-foreground">
-                            Target: {rec.target_audience}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-sm font-medium">Platforms:</span>
-                          {rec.platforms.map((platform) => (
-                            <Badge key={platform} variant="outline" className="text-xs">
-                              {platformIcons[platform as keyof typeof platformIcons]} {platform}
-                            </Badge>
-                          ))}
-                        </div>
-                        <div className="flex flex-wrap gap-1">
-                          {rec.keywords.slice(0, 6).map((keyword) => (
-                            <Badge key={keyword} variant="outline" className="text-xs">
-                              #{keyword}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                      <Button>
-                        Create Post
+                    <div className="flex items-center space-x-2">
+                      {session.status === 'completed' && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => viewResults(session.id)}
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      )}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => deleteSession(session.id)}
+                      >
+                        <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+                )
+              })}
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
-        <TabsContent value="trending" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Trending Topics</CardTitle>
-                <CardDescription>
-                  Most mentioned topics across platforms
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {Object.entries(trendingTopics)
-                    .sort(([,a], [,b]) => b - a)
-                    .slice(0, 10)
-                    .map(([topic, count]) => (
-                      <div key={topic} className="flex items-center justify-between">
-                        <span className="font-medium">{topic}</span>
-                        <div className="flex items-center gap-2">
-                          <div className="w-20 bg-muted rounded-full h-2">
-                            <div 
-                              className="bg-primary h-2 rounded-full" 
-                              style={{ 
-                                width: `${Math.min((count / Math.max(...Object.values(trendingTopics))) * 100, 100)}%` 
-                              }}
-                            />
-                          </div>
-                          <span className="text-sm text-muted-foreground w-8">{count}</span>
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              </CardContent>
-            </Card>
+      {/* Results Dialog */}
+      <Dialog open={isResultDialogOpen} onOpenChange={setIsResultDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Research Results: {selectedResult?.query}</DialogTitle>
+            <DialogDescription>
+              {selectedResult?.source} research completed with {selectedResult?.results_count} results
+            </DialogDescription>
+          </DialogHeader>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Platform Distribution</CardTitle>
-                <CardDescription>
-                  Content sources by platform
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={200}>
-                  <PieChart>
-                    <Pie
-                      data={Object.entries(
-                        insights.reduce((acc, insight) => {
-                          acc[insight.platform] = (acc[insight.platform] || 0) + 1
-                          return acc
-                        }, {} as Record<string, number>)
-                      ).map(([platform, count]) => ({ platform, count }))}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="count"
-                      label={({ platform, count }) => `${platform}: ${count}`}
-                    >
-                      {Object.keys(platformColors).map((platform, index) => (
-                        <Cell 
-                          key={`cell-${index}`} 
-                          fill={platformColors[platform as keyof typeof platformColors]} 
-                        />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
+          {selectedResult && (
+            <Tabs defaultValue="insights" className="w-full">
+              <TabsList>
+                <TabsTrigger value="insights">Insights</TabsTrigger>
+                <TabsTrigger value="raw-data">Raw Data</TabsTrigger>
+                <TabsTrigger value="generate">Generate Content</TabsTrigger>
+              </TabsList>
 
-        <TabsContent value="analytics" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Engagement Analytics</CardTitle>
-              <CardDescription>
-                Performance metrics across platforms
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={Object.entries(engagementPatterns.avg_engagement_by_platform || {}).map(([platform, avg]) => ({ platform, avg }))}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="platform" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="avg" fill="#8884d8" />
-                </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="settings" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Scan Configuration</CardTitle>
-                <CardDescription>
-                  Configure platforms and search parameters
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label>Platforms to Monitor</Label>
-                  <div className="grid grid-cols-2 gap-2 mt-2">
-                    {Object.keys(platformIcons).map((platform) => (
-                      <div key={platform} className="flex items-center space-x-2">
-                        <Switch
-                          checked={scanConfig.platforms.includes(platform)}
-                          onCheckedChange={() => handlePlatformToggle(platform)}
-                        />
-                        <span className="text-sm">
-                          {platformIcons[platform as keyof typeof platformIcons]} {platform}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="search-queries">Search Queries</Label>
-                  <Textarea
-                    id="search-queries"
-                    placeholder="Enter search queries, one per line"
-                    value={scanConfig.search_queries.join('\n')}
-                    onChange={(e) => setScanConfig(prev => ({
-                      ...prev,
-                      search_queries: e.target.value.split('\n').filter(q => q.trim())
-                    }))}
-                    rows={4}
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="time-window">Time Window (hours)</Label>
-                    <Input
-                      id="time-window"
-                      type="number"
-                      value={scanConfig.time_window_hours}
-                      onChange={(e) => setScanConfig(prev => ({
-                        ...prev,
-                        time_window_hours: parseInt(e.target.value) || 24
-                      }))}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="max-posts">Max Posts per Platform</Label>
-                    <Input
-                      id="max-posts"
-                      type="number"
-                      value={scanConfig.max_posts_per_platform}
-                      onChange={(e) => setScanConfig(prev => ({
-                        ...prev,
-                        max_posts_per_platform: parseInt(e.target.value) || 20
-                      }))}
-                    />
-                  </div>
-                </div>
-
-                <Button onClick={scheduleRecurringScan} className="w-full">
-                  <Calendar className="mr-2 h-4 w-4" />
-                  Schedule Recurring Scan
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Scheduled Scans</CardTitle>
-                <CardDescription>
-                  Manage automated monitoring
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {scheduledScans.map((scan) => (
-                    <div key={scan.scan_id} className="flex items-center justify-between p-3 border rounded-lg">
+              <TabsContent value="insights" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>AI-Generated Insights</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
                       <div>
-                        <div className="font-medium">
-                          {scan.platforms.join(', ')}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          Next run: {new Date(scan.next_run).toLocaleString()}
-                        </div>
+                        <h4 className="font-semibold mb-2">Summary</h4>
+                        <p className="text-sm text-muted-foreground">
+                          {selectedResult.insights?.summary || 'No summary available'}
+                        </p>
                       </div>
-                      <Badge variant={scan.status === 'scheduled' ? 'default' : 'secondary'}>
-                        {scan.status}
-                      </Badge>
+
+                      {selectedResult.insights?.key_themes && (
+                        <div>
+                          <h4 className="font-semibold mb-2">Key Themes</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedResult.insights.key_themes.map((theme: string, index: number) => (
+                              <Badge key={index} variant="secondary">{theme}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {selectedResult.insights?.recommendations && (
+                        <div>
+                          <h4 className="font-semibold mb-2">Recommendations</h4>
+                          <ul className="list-disc list-inside space-y-1">
+                            {selectedResult.insights.recommendations.map((rec: string, index: number) => (
+                              <li key={index} className="text-sm text-muted-foreground">{rec}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="raw-data" className="space-y-4">
+                <div className="grid gap-4">
+                  {selectedResult.raw_data?.map((item: any, index: number) => (
+                    <Card key={index}>
+                      <CardContent className="pt-4">
+                        <div className="space-y-2">
+                          <h4 className="font-medium">{item.title || item.name || 'Untitled'}</h4>
+                          {item.url && (
+                            <a
+                              href={item.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:underline text-sm"
+                            >
+                              View Source
+                            </a>
+                          )}
+                          {item.content && (
+                            <p className="text-sm text-muted-foreground line-clamp-3">
+                              {item.content}
+                            </p>
+                          )}
+                          <div className="flex items-center space-x-4 text-xs text-muted-foreground">
+                            {item.score && <span>Score: {item.score}</span>}
+                            {item.comments && <span>Comments: {item.comments}</span>}
+                            {item.stars && <span>Stars: {item.stars}</span>}
+                            {item.language && <span>Language: {item.language}</span>}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
                   ))}
-                  {scheduledScans.length === 0 && (
-                    <p className="text-sm text-muted-foreground text-center py-4">
-                      No scheduled scans configured
-                    </p>
-                  )}
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
+              </TabsContent>
+
+              <TabsContent value="generate" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Generate Content from Research</CardTitle>
+                    <CardDescription>
+                      Create social media posts, articles, or summaries based on your research insights
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-4 md:grid-cols-2">
+                      <Button
+                        onClick={() => generateContent('post', 'linkedin')}
+                        disabled={isGeneratingContent}
+                        className="h-20 flex-col space-y-2"
+                      >
+                        <MessageSquare className="h-6 w-6" />
+                        <span>LinkedIn Post</span>
+                      </Button>
+
+                      <Button
+                        onClick={() => generateContent('post', 'twitter')}
+                        disabled={isGeneratingContent}
+                        className="h-20 flex-col space-y-2"
+                        variant="outline"
+                      >
+                        <MessageSquare className="h-6 w-6" />
+                        <span>Twitter Post</span>
+                      </Button>
+
+                      <Button
+                        onClick={() => generateContent('thread', 'twitter')}
+                        disabled={isGeneratingContent}
+                        className="h-20 flex-col space-y-2"
+                        variant="outline"
+                      >
+                        <MessageSquare className="h-6 w-6" />
+                        <span>Twitter Thread</span>
+                      </Button>
+
+                      <Button
+                        onClick={() => generateContent('article')}
+                        disabled={isGeneratingContent}
+                        className="h-20 flex-col space-y-2"
+                        variant="outline"
+                      >
+                        <BarChart3 className="h-6 w-6" />
+                        <span>Article</span>
+                      </Button>
+
+                      <Button
+                        onClick={() => generateContent('summary')}
+                        disabled={isGeneratingContent}
+                        className="h-20 flex-col space-y-2"
+                        variant="outline"
+                      >
+                        <TrendingUp className="h-6 w-6" />
+                        <span>Summary</span>
+                      </Button>
+                    </div>
+
+                    {isGeneratingContent && (
+                      <div className="flex items-center justify-center py-8">
+                        <RefreshCw className="h-6 w-6 animate-spin mr-2" />
+                        <span>Generating content...</span>
+                      </div>
+                    )}
+
+                    {generatedContent && (
+                      <div className="mt-6">
+                        <Card>
+                          <CardHeader>
+                            <CardTitle>{generatedContent.title}</CardTitle>
+                            <CardDescription>
+                              Generated {generatedContent.content_type} content
+                            </CardDescription>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="space-y-4">
+                              <Textarea
+                                value={generatedContent.content}
+                                readOnly
+                                className="min-h-[200px]"
+                              />
+                              <div className="flex space-x-2">
+                                <Button
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(generatedContent.content)
+                                    toast({
+                                      title: "Copied!",
+                                      description: "Content copied to clipboard"
+                                    })
+                                  }}
+                                  variant="outline"
+                                  size="sm"
+                                >
+                                  Copy to Clipboard
+                                </Button>
+                                <Button
+                                  onClick={() => {
+                                    // TODO: Integrate with social posting API
+                                    toast({
+                                      title: "Coming Soon",
+                                      description: "Direct posting integration coming soon!"
+                                    })
+                                  }}
+                                  size="sm"
+                                >
+                                  Post to Social Media
+                                </Button>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

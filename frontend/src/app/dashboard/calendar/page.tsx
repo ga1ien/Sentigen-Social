@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import { useUser } from '@/contexts/user-context'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -14,15 +15,15 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useToast } from '@/hooks/use-toast'
-import { 
-  Plus, 
-  Calendar as CalendarIcon, 
-  Clock, 
-  Edit, 
-  Trash2, 
-  Twitter, 
-  Linkedin, 
-  Facebook, 
+import {
+  Plus,
+  Calendar as CalendarIcon,
+  Clock,
+  Edit,
+  Trash2,
+  Twitter,
+  Linkedin,
+  Facebook,
   Instagram,
   Youtube,
   Eye,
@@ -65,38 +66,28 @@ const statusColors = {
 }
 
 export default function CalendarPage() {
-  const [events, setEvents] = useState<CalendarEvent[]>([
-    {
-      id: '1',
-      title: 'LinkedIn Post: Productivity Tips',
-      start: '2024-08-17T10:00:00',
-      content: 'Share productivity tips for remote workers...',
-      platforms: ['linkedin'],
-      status: 'scheduled',
-      backgroundColor: platformColors.linkedin,
-      borderColor: platformColors.linkedin,
-    },
-    {
-      id: '2',
-      title: 'Multi-platform: Weekly Update',
-      start: '2024-08-18T14:00:00',
-      content: 'Weekly company update and achievements...',
-      platforms: ['twitter', 'linkedin', 'facebook'],
-      status: 'scheduled',
-      backgroundColor: '#8B5CF6',
-      borderColor: '#8B5CF6',
-    },
-    {
-      id: '3',
-      title: 'Instagram Story: Behind the Scenes',
-      start: '2024-08-19T16:30:00',
-      content: 'Behind the scenes content from our office...',
-      platforms: ['instagram'],
-      status: 'draft',
-      backgroundColor: statusColors.draft,
-      borderColor: statusColors.draft,
-    },
-  ])
+  const { user, loading } = useUser()
+  const [events, setEvents] = useState<CalendarEvent[]>([])
+  const [loadingEvents, setLoadingEvents] = useState(true)
+
+  useEffect(() => {
+    if (user && !loading) {
+      loadScheduledPosts()
+    }
+  }, [user, loading])
+
+  const loadScheduledPosts = async () => {
+    try {
+      setLoadingEvents(true)
+      // TODO: Load real scheduled posts from database
+      // For now, show empty state
+      setEvents([])
+    } catch (error) {
+      console.error('Error loading scheduled posts:', error)
+    } finally {
+      setLoadingEvents(false)
+    }
+  }
 
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
   const [isEventDialogOpen, setIsEventDialogOpen] = useState(false)
@@ -131,23 +122,25 @@ export default function CalendarPage() {
     }
   }
 
-  const handleEventDrop = (arg: { event: { id: string; start: Date } }) => {
+  const handleEventDrop = (arg: { event: { id: string; start: Date | null } }) => {
     const eventId = arg.event.id
-    const newStart = arg.event.start.toISOString()
-    
-    setEvents(prev => prev.map(event => 
-      event.id === eventId 
-        ? { ...event, start: newStart }
-        : event
-    ))
+    const newStart = arg.event.start?.toISOString()
 
-    toast({
-      title: "Event Moved",
-      description: "Post has been rescheduled successfully.",
-    })
+    if (newStart) {
+      setEvents(prev => prev.map(event =>
+        event.id === eventId
+          ? { ...event, start: newStart }
+          : event
+      ))
+
+      toast({
+        title: "Event Moved",
+        description: "Post has been rescheduled successfully.",
+      })
+    }
   }
 
-  const handleCreateEvent = () => {
+  const handleCreateEvent = async () => {
     if (!newEvent.title || !newEvent.content || newEvent.platforms.length === 0) {
       toast({
         title: "Missing Information",
@@ -157,43 +150,52 @@ export default function CalendarPage() {
       return
     }
 
-    const eventDateTime = `${newEvent.date}T${newEvent.time}:00`
-    const backgroundColor = newEvent.platforms.length === 1 
-      ? platformColors[newEvent.platforms[0] as keyof typeof platformColors]
-      : '#8B5CF6'
+    try {
+      const eventDateTime = `${newEvent.date}T${newEvent.time}:00`
+      const backgroundColor = newEvent.platforms.length === 1
+        ? platformColors[newEvent.platforms[0] as keyof typeof platformColors]
+        : '#8B5CF6'
 
-    const event: CalendarEvent = {
-      id: Date.now().toString(),
-      title: newEvent.title,
-      start: eventDateTime,
-      content: newEvent.content,
-      platforms: newEvent.platforms,
-      status: 'scheduled',
-      backgroundColor,
-      borderColor: backgroundColor,
+      // TODO: Save to database via API
+      const event: CalendarEvent = {
+        id: Date.now().toString(),
+        title: newEvent.title,
+        start: eventDateTime,
+        content: newEvent.content,
+        platforms: newEvent.platforms,
+        status: 'scheduled',
+        backgroundColor,
+        borderColor: backgroundColor,
+      }
+
+      setEvents(prev => [...prev, event])
+      setIsCreateDialogOpen(false)
+      setNewEvent({
+        title: '',
+        content: '',
+        platforms: [],
+        date: '',
+        time: '',
+      })
+
+      toast({
+        title: "Post Scheduled",
+        description: "Your post has been added to the calendar.",
+      })
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to schedule post. Please try again.",
+        variant: "destructive"
+      })
     }
-
-    setEvents(prev => [...prev, event])
-    setIsCreateDialogOpen(false)
-    setNewEvent({
-      title: '',
-      content: '',
-      platforms: [],
-      date: '',
-      time: '',
-    })
-
-    toast({
-      title: "Post Scheduled",
-      description: "Your post has been added to the calendar.",
-    })
   }
 
   const handleDeleteEvent = (eventId: string) => {
     setEvents(prev => prev.filter(event => event.id !== eventId))
     setIsEventDialogOpen(false)
     setSelectedEvent(null)
-    
+
     toast({
       title: "Post Deleted",
       description: "The scheduled post has been removed.",
@@ -201,10 +203,10 @@ export default function CalendarPage() {
   }
 
   const handlePublishNow = (eventId: string) => {
-    setEvents(prev => prev.map(event => 
-      event.id === eventId 
-        ? { 
-            ...event, 
+    setEvents(prev => prev.map(event =>
+      event.id === eventId
+        ? {
+            ...event,
             status: 'published',
             backgroundColor: statusColors.published,
             borderColor: statusColors.published,
@@ -212,7 +214,7 @@ export default function CalendarPage() {
         : event
     ))
     setIsEventDialogOpen(false)
-    
+
     toast({
       title: "Post Published",
       description: "Your post has been published immediately.",
@@ -350,7 +352,7 @@ export default function CalendarPage() {
               View and manage your scheduled post
             </DialogDescription>
           </DialogHeader>
-          
+
           {selectedEvent && (
             <div className="space-y-6">
               <div>
@@ -397,7 +399,7 @@ export default function CalendarPage() {
                   <Trash2 className="mr-2 h-4 w-4" />
                   Delete
                 </Button>
-                
+
                 <div className="space-x-2">
                   <Button variant="outline">
                     <Edit className="mr-2 h-4 w-4" />
@@ -425,7 +427,7 @@ export default function CalendarPage() {
               Create and schedule a new social media post
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -476,8 +478,8 @@ export default function CalendarPage() {
                   <div
                     key={platform}
                     className={`flex items-center space-x-2 p-3 rounded-lg border cursor-pointer transition-colors ${
-                      newEvent.platforms.includes(platform) 
-                        ? 'border-primary bg-primary/5' 
+                      newEvent.platforms.includes(platform)
+                        ? 'border-primary bg-primary/5'
                         : 'border-border hover:bg-muted/50'
                     }`}
                     onClick={() => handlePlatformToggle(platform)}

@@ -1,0 +1,81 @@
+{
+  "user_id": "user_001",
+  "workspace_id": "workspace_001",
+  "config_name": "competitive_intelligence",
+  "description": "Weekly deep dive into competitor activities and market trends",
+  "enabled_sources": [
+    "ContentSource.REDDIT",
+    "ContentSource.TWITTER",
+    "ContentSource.LINKEDIN"
+  ],
+  "reddit_config": {
+    "subreddits": [
+      "startups",
+      "Entrepreneur",
+      "SaaS",
+      "business"
+    ],
+    "search_topics": [
+      "competitor analysis",
+      "market research",
+      "business strategy"
+    ],
+    "max_posts_per_subreddit": 15,
+    "max_comments_per_post": 50,
+    "sort_by": "top",
+    "time_filter": "week",
+    "min_score": 10,
+    "exclude_nsfw": true,
+    "include_stickied": false
+  },
+  "linkedin_config": null,
+  "twitter_config": {
+    "search_topics": [
+      "startup funding",
+      "SaaS metrics",
+      "business growth"
+    ],
+    "hashtags": [
+      "#startup",
+      "#SaaS",
+      "#growth"
+    ],
+    "accounts_to_monitor": [
+      "paulg",
+      "naval",
+      "dhh",
+      "patio11"
+    ],
+    "max_tweets_per_topic": 30,
+    "include_replies": true,
+    "include_retweets": false,
+    "min_engagement": 10
+  },
+  "analysis_depth": "AnalysisDepth.COMPREHENSIVE",
+  "ai_model": "gpt-5-mini",
+  "focus_areas": [
+    "competitive_analysis",
+    "market_intelligence",
+    "business_strategy"
+  ],
+  "schedule": {
+    "frequency": "ResearchFrequency.WEEKLY",
+    "time_of_day": "09:00",
+    "timezone": "UTC",
+    "days_of_week": [
+      0
+    ],
+    "custom_cron": null
+  },
+  "auto_run_enabled": true,
+  "generate_summary": true,
+  "generate_insights": true,
+  "generate_content_ideas": true,
+  "export_formats": [
+    "json",
+    "markdown"
+  ],
+  "created_at": "2025-08-16T23:46:05.645671",
+  "updated_at": "2025-08-16T23:46:05.645671",
+  "last_run_at": null
+}

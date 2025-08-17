@@ -1,0 +1,84 @@
+{
+  "user_id": "user_002",
+  "workspace_id": "workspace_002",
+  "config_name": "content_inspiration",
+  "description": "Bi-weekly research for LinkedIn content ideas and trending topics",
+  "enabled_sources": [
+    "ContentSource.REDDIT",
+    "ContentSource.LINKEDIN",
+    "ContentSource.MEDIUM"
+  ],
+  "reddit_config": {
+    "subreddits": [
+      "marketing",
+      "socialmedia",
+      "content",
+      "copywriting"
+    ],
+    "search_topics": [
+      "content marketing",
+      "LinkedIn tips",
+      "social media strategy"
+    ],
+    "max_posts_per_subreddit": 12,
+    "max_comments_per_post": 20,
+    "sort_by": "hot",
+    "time_filter": "week",
+    "min_score": 10,
+    "exclude_nsfw": true,
+    "include_stickied": false
+  },
+  "linkedin_config": {
+    "search_topics": [
+      "content strategy",
+      "LinkedIn growth",
+      "personal branding"
+    ],
+    "company_pages": [
+      "linkedin",
+      "hubspot",
+      "buffer"
+    ],
+    "industry_hashtags": [
+      "#contentmarketing",
+      "#LinkedIn",
+      "#personalbranding"
+    ],
+    "max_posts_per_topic": 20,
+    "include_comments": true,
+    "max_comments_per_post": 20,
+    "post_types": [
+      "article",
+      "video"
+    ]
+  },
+  "twitter_config": null,
+  "analysis_depth": "AnalysisDepth.STANDARD",
+  "ai_model": "gpt-5-mini",
+  "focus_areas": [
+    "trend_analysis",
+    "content_opportunities"
+  ],
+  "schedule": {
+    "frequency": "ResearchFrequency.BIWEEKLY",
+    "time_of_day": "10:00",
+    "timezone": "UTC",
+    "days_of_week": [
+      0,
+      3
+    ],
+    "custom_cron": null
+  },
+  "auto_run_enabled": true,
+  "generate_summary": true,
+  "generate_insights": true,
+  "generate_content_ideas": true,
+  "export_formats": [
+    "json",
+    "markdown",
+    "csv"
+  ],
+  "created_at": "2025-08-16T23:46:05.645905",
+  "updated_at": "2025-08-16T23:46:05.645905",
+  "last_run_at": null
+}

@@ -1,0 +1,22 @@
+{
+  "session_info": {
+    "session_id": null,
+    "timestamp": "2025-08-16T22:59:51.183536",
+    "config": {
+      "workspace_id": "00000000-0000-0000-0000-000000000001",
+      "user_id": "00000000-0000-0000-0000-000000000001",
+      "session_name": "Background CLI Research 2025-08-16 22:59",
+      "search_query": "AI automation tools business productivity",
+      "subreddits": [
+        "artificial",
+        "productivity",
+        "Entrepreneur",
+        "SaaS"
+      ],
+      "max_posts_per_subreddit": 15
+    }
+  },
+  "results": {
+    "error": "{'message': 'invalid input syntax for type uuid: \"None\"', 'code': '22P02', 'hint': None, 'details': None}"
+  }
+}

@@ -5,7 +5,7 @@ import { env } from '@/lib/env'
 export const createClient = () => {
   const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  
+
   if (!supabaseUrl || !supabaseAnonKey) {
     // Return a mock client for build time
     return {
@@ -19,21 +19,21 @@ export const createClient = () => {
         update: () => Promise.resolve({ data: null, error: new Error('Supabase not configured') }),
         delete: () => Promise.resolve({ data: null, error: new Error('Supabase not configured') }),
       }),
-    } as any
+    } as ReturnType<typeof createServerClient>
   }
-
-  const cookieStore = cookies()
 
   return createServerClient(
     supabaseUrl,
     supabaseAnonKey,
     {
       cookies: {
-        getAll() {
+        async getAll() {
+          const cookieStore = await cookies()
           return cookieStore.getAll()
         },
-        setAll(cookiesToSet) {
+        async setAll(cookiesToSet) {
           try {
+            const cookieStore = await cookies()
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
             )

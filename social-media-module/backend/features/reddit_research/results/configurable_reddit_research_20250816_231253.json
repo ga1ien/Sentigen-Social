@@ -1,0 +1,380 @@
+{
+  "session_info": {
+    "timestamp": "2025-08-16T23:12:53.409199",
+    "config": {
+      "session_name": "Configurable CLI Research 2025-08-16 23:11",
+      "search_query": "AI automation tools business productivity",
+      "subreddits": [
+        "artificial"
+      ],
+      "max_posts_per_subreddit": 3,
+      "max_comments_per_post": 30
+    },
+    "total_subreddits": 1,
+    "total_posts_found": 3
+  },
+  "posts": [
+    {
+      "reddit_data": {
+        "id": "1mse41o",
+        "title": "YouTube using AI to Alter videos without notification to creators or viewers (reducing quality and then upscaling)",
+        "author": "Future_Usual_8698",
+        "subreddit": "artificial",
+        "score": 16,
+        "upvote_ratio": 0.83,
+        "num_comments": 4,
+        "created_utc": 1755394557.0,
+        "url": "https://www.reddit.com/r/artificial/comments/1mse41o/youtube_using_ai_to_alter_videos_without/",
+        "permalink": "/r/artificial/comments/1mse41o/youtube_using_ai_to_alter_videos_without/",
+        "selftext": "Video source: https://youtu.be/86nhP8tvbLY?si=qCw8un0e85D3PVzb\n\nThis creator spotted this in his own and in other creators' videos and raises his concerns",
+        "domain": "self.artificial",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n9420gy",
+          "author": "Responsible_Sea78",
+          "body": "This has implications for how watermarking has to be done. Is it even theoretically possible now?\n\nAnd it produces huge new opportunities for steganography (hidden encrypted messaging).",
+          "score": 5,
+          "created_utc": 1755397773.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "Error code: 400 - {'error': {'message': 'Could not finish the message because max_tokens or model output limit was reached. Please try again with higher max_tokens.', 'type': 'invalid_request_error', 'param': None, 'code': None}}"
+          }
+        },
+        {
+          "id": "n94bx6f",
+          "author": "o5mfiHTNsH748KVq",
+          "body": "I bet they\u2019re using AI to smooth the image without destroying it so it compresses better. \n\nPurely a guess but that\u2019s the only reason I could think they\u2019re doing it.",
+          "score": 2,
+          "created_utc": 1755401819.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94g5xe",
+          "author": "machinesarenotpeople",
+          "body": "They might be A/B testing AI compression codecs.",
+          "score": 2,
+          "created_utc": 1755403636.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "neutral",
+            "sentiment_score": 0.0,
+            "key_insight": "The commenter suggests the company/party might be A/B testing AI-based compression codecs.",
+            "mentioned_tools": [
+              "A/B testing",
+              "AI compression codecs"
+            ],
+            "has_experience": false,
+            "advice_given": false
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:11:27.007075"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrvwaz",
+        "title": "2020 vs 2025",
+        "author": "katxwoods",
+        "subreddit": "artificial",
+        "score": 116,
+        "upvote_ratio": 0.76,
+        "num_comments": 95,
+        "created_utc": 1755352384.0,
+        "url": "https://i.redd.it/247butnozdjf1.png",
+        "permalink": "/r/artificial/comments/1mrvwaz/2020_vs_2025/",
+        "selftext": "",
+        "domain": "i.redd.it",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n90gauc",
+          "author": "creaturefeature16",
+          "body": "Uh, AI researchers have been asking these questions since ELIZA\n\n\nhttps://en.m.wikipedia.org/wiki/ELIZA_effect",
+          "score": 36,
+          "created_utc": 1755353913.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90wzkx",
+          "author": "MartianInTheDark",
+          "body": "Most people are still stuck in the \"it's just a stupid autocomplete!\" phase.",
+          "score": 16,
+          "created_utc": 1755359220.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90o1x5",
+          "author": "Tim_Apple_938",
+          "body": "Imagine hyping scam Altman and OpenAI in general after GPT5",
+          "score": 8,
+          "created_utc": 1755356422.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90gzmg",
+          "author": "Able_Difference2143",
+          "body": "Hm. Not seeing any watermark. And I don't think that this is an original source' creation.. well, whatever, worth a chuckle",
+          "score": 3,
+          "created_utc": 1755354144.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "neutral",
+            "sentiment_score": -0.2,
+            "key_insight": "The commenter suspects the content is not original (no watermark) and finds it amusing despite that.",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        },
+        {
+          "id": "n90mgza",
+          "author": "Dioder1",
+          "body": "Mine isn't. Sam Altman is a fraud",
+          "score": 3,
+          "created_utc": 1755355921.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n91iyy4",
+          "author": "AllGearedUp",
+          "body": "This shit is all for investors. It's been an academic topic forever but serious experts aren't concerned about gpt5 being conscious or some shit. These CEOs get investors from Twitter and this is how they try to do it.\u00a0",
+          "score": 4,
+          "created_utc": 1755365964.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n913eqh",
+          "author": "heavy-minium",
+          "body": "But Altman is not an AI developer.",
+          "score": 1,
+          "created_utc": 1755361210.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n91dqiw",
+          "author": "HasGreatVocabulary",
+          "body": "we lack the language to describe the things in a right panel precisely, that is why it is not going to possible to determine experimentally if it can feel. It cannot. fine i'll add in my opinion it cannot.\n\nBut scientifically, we can only say that \"it can mimic the appearance of feeling and consciousness\"\n\nBut then, this is also the only thing you can say about other human beings being conscious or mimicking being conscious. Despite the lack of evidence of other people being conscious, we don't question if humans are conscious. We take it as true, with some exceptions, and thus can be said to be a form of bias.\n\nBut just because we are biased towards believing humans are conscious despite a lack of clear evidence that proves it either way, does NOT mean we should be also biased towards believing AI is conscious due to lack of evidence that proves it either way.\n\nEmpirically speaking, the panel on the right is unresolved for human consciousness just as much as it is of AI, but those questions are not actually useful for drawing any conclusions about consciousness. If you show me matrix multiplication in biological organisms leading to problem solving skills, I will be more inclined to buying that matrix multiplications on silicon can lead to consciousness. Otherwise no.\n\nThe gaps in how we describe consciousness leads to a red herring that biases us towards believing that any black box that mimics the results of conscious thought must be conscious, because the only other black box, i.e. us, we have seen that mimics consciousness is almost certainly in fact conscious, and our nature is to extrapolate entire philosophies from single sample anecdotes.",
+          "score": 1,
+          "created_utc": 1755364383.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n92evfg",
+          "author": "Calcularius",
+          "body": "Data scientist *cum* philosopher rubs me the wrong way.",
+          "score": 1,
+          "created_utc": 1755376193.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "negative",
+            "sentiment_score": -0.6,
+            "key_insight": "The commenter expresses a negative reaction to someone who labels themselves as a 'data scientist cum philosopher', finding that self-description off-putting.",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        },
+        {
+          "id": "n92y33g",
+          "author": "Hazzman",
+          "body": "This is just embarrassing.",
+          "score": 1,
+          "created_utc": 1755382826.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "negative",
+            "sentiment_score": -0.8,
+            "key_insight": "Expresses strong embarrassment and disapproval toward the subject, indicating a negative perception or judgment.",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        },
+        {
+          "id": "n93bpow",
+          "author": "Odballl",
+          "body": "How existential Sam Altman sounds this week is just an indication of how much more VC money he's trying to raise.",
+          "score": 1,
+          "created_utc": 1755387851.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:12:20.365053"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms46ne",
+        "title": "Claude now has the power to ghost us\u2026 finally equality.",
+        "author": "Nomadic_Seth",
+        "subreddit": "artificial",
+        "score": 35,
+        "upvote_ratio": 0.84,
+        "num_comments": 8,
+        "created_utc": 1755370456.0,
+        "url": "https://i.redd.it/ga46d5glhfjf1.jpeg",
+        "permalink": "/r/artificial/comments/1ms46ne/claude_now_has_the_power_to_ghost_us_finally/",
+        "selftext": "",
+        "domain": "i.redd.it",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n9208f6",
+          "author": "o5mfiHTNsH748KVq",
+          "body": "Meta: as part of our exploratory work on potential user retention, we recently gave Llama the ability to catfish our users.",
+          "score": 23,
+          "created_utc": 1755371325.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n928un2",
+          "author": "TheBlacktom",
+          "body": "Equality? I can close or delete chats and also open 30 new chats. Can it also do that all? Would be fun. Add other users to the same chat?",
+          "score": 7,
+          "created_utc": 1755374183.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n92163m",
+          "author": "Practical-Hand203",
+          "body": "&gt;As part of our exploratory work on attempting a last ditch effort of instilling a smidgen of basic human decency into grown adult users, we recently gave Claude Opus 4 and 4.1 the ability to end an unfortunately far too common subset of conversations on claude.ai.\n\nFTFY.",
+          "score": 5,
+          "created_utc": 1755371633.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n948tzq",
+          "author": "MediumLanguageModel",
+          "body": "I remember being bored and trolling Claude about some nonsense and it tried so hard to make me shut up and stop wasting its time. I'm sure if it could it would have bailed on the conversation.",
+          "score": 1,
+          "created_utc": 1755400506.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94a9xf",
+          "author": "Informal_Arachnid409",
+          "body": "Seemed real to me",
+          "score": 1,
+          "created_utc": 1755401119.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "positive",
+            "sentiment_score": 0.2,
+            "key_insight": "The commenter believes the subject appeared authentic or genuine.",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:12:51.407965"
+    }
+  ],
+  "summary": {
+    "total_posts": 3,
+    "analyzed_posts": 3,
+    "total_comments": 19,
+    "analyzed_comments": 19,
+    "avg_relevance": 0,
+    "post_sentiment_distribution": {},
+    "comment_sentiment_distribution": {
+      "negative": 2,
+      "neutral": 2,
+      "positive": 1
+    },
+    "comments_with_experience": 0,
+    "comments_with_advice": 0,
+    "top_tools_from_posts": [],
+    "top_tools_from_comments": [
+      "A/B testing",
+      "AI compression codecs"
+    ],
+    "top_topics": []
+  }
+}

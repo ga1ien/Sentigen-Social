@@ -1,0 +1,65 @@
+{
+  "user_id": "user_002",
+  "workspace_id": "workspace_002",
+  "config_name": "opensource_monitoring",
+  "description": "Monitor open source projects for community insights and contribution opportunities",
+  "github_config": {
+    "content_types": [
+      "GitHubContentType.ISSUES",
+      "GitHubContentType.DISCUSSIONS",
+      "GitHubContentType.PULL_REQUESTS"
+    ],
+    "search_topics": [
+      "open source",
+      "community",
+      "contribution",
+      "maintainer"
+    ],
+    "languages": [
+      "Python",
+      "JavaScript",
+      "Java",
+      "C++"
+    ],
+    "max_repos_per_search": 25,
+    "min_stars": 2000,
+    "min_forks": 200,
+    "time_range": "GitHubTimeRange.WEEKLY",
+    "include_readme": true,
+    "include_issues": true,
+    "include_discussions": true,
+    "max_issues_per_repo": 20,
+    "viral_threshold_stars_per_day": 50,
+    "exclude_archived": true,
+    "exclude_forks": true
+  },
+  "analysis_depth": "AnalysisDepth.STANDARD",
+  "ai_model": "gpt-5-mini",
+  "focus_areas": [
+    "community_insights",
+    "contribution_opportunities",
+    "maintainer_challenges"
+  ],
+  "schedule": {
+    "frequency": "ResearchFrequency.BIWEEKLY",
+    "time_of_day": "10:00",
+    "timezone": "UTC",
+    "days_of_week": [
+      1,
+      4
+    ],
+    "custom_cron": null
+  },
+  "auto_run_enabled": true,
+  "generate_summary": true,
+  "generate_insights": true,
+  "generate_content_ideas": true,
+  "export_formats": [
+    "json",
+    "markdown",
+    "csv"
+  ],
+  "created_at": "2025-08-17T00:13:04.670844",
+  "updated_at": "2025-08-17T00:13:04.670844",
+  "last_run_at": null
+}

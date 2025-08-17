@@ -1,0 +1,53 @@
+{
+  "user_id": "user_002",
+  "workspace_id": "workspace_002",
+  "config_name": "product_launches",
+  "description": "Bi-weekly Show HN research for new product launches and innovations",
+  "hackernews_config": {
+    "story_types": [
+      "HNStoryType.SHOW"
+    ],
+    "search_topics": [
+      "product launch",
+      "new tool",
+      "open source",
+      "SaaS"
+    ],
+    "max_stories_per_type": 15,
+    "max_comments_per_story": 30,
+    "min_score": 30,
+    "min_comments": 8,
+    "comment_depth": 2,
+    "exclude_jobs": true,
+    "time_range_hours": 24
+  },
+  "analysis_depth": "AnalysisDepth.STANDARD",
+  "ai_model": "gpt-5-mini",
+  "focus_areas": [
+    "product_intelligence",
+    "market_opportunities",
+    "innovation_trends"
+  ],
+  "schedule": {
+    "frequency": "ResearchFrequency.BIWEEKLY",
+    "time_of_day": "10:00",
+    "timezone": "UTC",
+    "days_of_week": [
+      1,
+      4
+    ],
+    "custom_cron": null
+  },
+  "auto_run_enabled": true,
+  "generate_summary": true,
+  "generate_insights": true,
+  "generate_content_ideas": true,
+  "export_formats": [
+    "json",
+    "markdown",
+    "csv"
+  ],
+  "created_at": "2025-08-17T00:00:27.345075",
+  "updated_at": "2025-08-17T00:00:27.345075",
+  "last_run_at": null
+}

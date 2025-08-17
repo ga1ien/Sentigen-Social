@@ -1,0 +1,51 @@
+{
+  "user_id": "user_001",
+  "workspace_id": "workspace_001",
+  "config_name": "ask_hn_insights",
+  "description": "Weekly Ask HN research for community insights and Q&A content",
+  "hackernews_config": {
+    "story_types": [
+      "HNStoryType.ASK"
+    ],
+    "search_topics": [
+      "career",
+      "startup advice",
+      "technical questions",
+      "business"
+    ],
+    "max_stories_per_type": 20,
+    "max_comments_per_story": 40,
+    "min_score": 20,
+    "min_comments": 15,
+    "comment_depth": 3,
+    "exclude_jobs": true,
+    "time_range_hours": 24
+  },
+  "analysis_depth": "AnalysisDepth.COMPREHENSIVE",
+  "ai_model": "gpt-5-mini",
+  "focus_areas": [
+    "community_insights",
+    "career_advice",
+    "business_strategy"
+  ],
+  "schedule": {
+    "frequency": "ResearchFrequency.WEEKLY",
+    "time_of_day": "09:00",
+    "timezone": "UTC",
+    "days_of_week": [
+      0
+    ],
+    "custom_cron": null
+  },
+  "auto_run_enabled": true,
+  "generate_summary": true,
+  "generate_insights": true,
+  "generate_content_ideas": true,
+  "export_formats": [
+    "json",
+    "markdown"
+  ],
+  "created_at": "2025-08-17T00:00:27.344645",
+  "updated_at": "2025-08-17T00:00:27.344645",
+  "last_run_at": null
+}

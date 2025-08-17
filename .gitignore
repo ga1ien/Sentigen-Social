@@ -1,14 +1,41 @@
+# Environment files
+.env
+.env.local
+.env.production
+.env.staging
+*.env
+
 # Dependencies
 node_modules/
 */node_modules/
+venv/
+*/venv/
+__pycache__/
+*/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+*.egg-info/
+
+# Logs
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
 lerna-debug.log*
+scraper_logs/
+*/logs/
 
 # Runtime data
-pids
+pids/
 *.pid
 *.seed
 *.pid.lock
@@ -19,18 +46,6 @@ coverage/
 
 # nyc test coverage
 .nyc_output
-
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
-
-# Bower dependency directory (https://bower.io/)
-bower_components
-
-# node-waf configuration
-.lock-wscript
-
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
 
 # Dependency directories
 jspm_packages/
@@ -44,15 +59,6 @@ jspm_packages/
 # Optional eslint cache
 .eslintcache
 
-# Optional stylelint cache
-.stylelintcache
-
-# Microbundle cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
-
 # Optional REPL history
 .node_repl_history
 
@@ -62,20 +68,15 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+# dotenv environment variables file
+.env.test
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
 
 # Next.js build output
-.next/
-out/
+.next
 
 # Nuxt.js build / generate output
 .nuxt
@@ -85,173 +86,15 @@ dist
 .cache/
 public
 
-# Vuepress build output
-.vuepress/dist
+# Storybook build outputs
+.out
+.storybook-out
 
-# Serverless directories
-.serverless/
+# Temporary folders
+tmp/
+temp/
 
-# FuseBox cache
-.fusebox/
-
-# DynamoDB Local files
-.dynamodb/
-
-# TernJS port file
-.tern-port
-
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
-
-# yarn v2
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-# Python build directories (not frontend/src/lib)
-**/venv/lib/
-**/venv/lib64/
-build/lib/
-dist/lib/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# PyInstaller
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-.pybuilder/
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-Pipfile.lock
-
-# poetry
-poetry.lock
-
-# pdm
-.pdm.toml
-
-# PEP 582
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Python virtual environments (ensure they're ignored)
-**/venv/
-**/.venv/
-**/env/
-**/.env/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-# IDEs
+# Editor directories and files
 .vscode/
 .idea/
 *.swp
@@ -267,77 +110,58 @@ cython_debug/
 ehthumbs.db
 Thumbs.db
 
-# Logs
-logs
-*.log
-
-# Temporary files
-tmp/
-temp/
+# Python specific
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
 # Database
 *.db
 *.sqlite
+*.sqlite3
+
+# Configuration validation reports
+config_validation_report.json
+
+# Backup files
+*.backup
+*.bak
+.backup/
+
+# Test files
+test_*.py
+*_test.py
+tests/
+
+# Archive directories
+.archive/
+archive/
+
+# Sensitive data
+api_keys.txt
+secrets.txt
+credentials.json
+
+# Local development
+.local/
+local/
 
 # Docker
 .dockerignore
+docker-compose.override.yml
 
 # Vercel
 .vercel
 
+# Railway
+.railway/
+
 # Supabase
-.supabase
-
-# AI/ML models and data
-*.pkl
-*.model
-*.h5
-*.pb
-models/
-data/
-
-# API keys and secrets (additional protection)
-**/secrets/
-**/*secret*
-**/*key*
-**/*token*
-.env*
-!.env.template
-!.env.example
-
-# Build artifacts
-build/
-dist/
-*.tgz
-*.tar.gz
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Local development
-.local
-.cache
-
-# Chrome MCP specific
-chrome-mcp-server/
-mcp-chrome/
-
-# Vibe tools
-.vibe-tools/
-
-# Python virtual environments (local development only)
-venv/
-.venv/
-env/
-.env/
-**/venv/
-**/.venv/
-**/env/
-**/.env/
+.supabase/

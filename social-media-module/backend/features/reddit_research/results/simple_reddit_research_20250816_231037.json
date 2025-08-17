@@ -1,0 +1,401 @@
+{
+  "session_info": {
+    "timestamp": "2025-08-16T23:10:37.172679",
+    "config": {
+      "session_name": "Simple CLI Research 2025-08-16 23:08",
+      "search_query": "AI automation tools business productivity",
+      "subreddits": [
+        "artificial",
+        "productivity",
+        "Entrepreneur"
+      ],
+      "max_posts_per_subreddit": 6,
+      "max_comments_per_post": 5
+    },
+    "total_subreddits": 3,
+    "total_posts_found": 6
+  },
+  "posts": [
+    {
+      "reddit_data": {
+        "id": "1mse41o",
+        "title": "YouTube using AI to Alter videos without notification to creators or viewers (reducing quality and then upscaling)",
+        "author": "Future_Usual_8698",
+        "subreddit": "artificial",
+        "score": 12,
+        "upvote_ratio": 0.76,
+        "num_comments": 4,
+        "created_utc": 1755394557.0,
+        "url": "https://www.reddit.com/r/artificial/comments/1mse41o/youtube_using_ai_to_alter_videos_without/",
+        "permalink": "/r/artificial/comments/1mse41o/youtube_using_ai_to_alter_videos_without/",
+        "selftext": "Video source: https://youtu.be/86nhP8tvbLY?si=qCw8un0e85D3PVzb\n\nThis creator spotted this in his own and in other creators' videos and raises his concerns",
+        "domain": "self.artificial",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n9420gy",
+          "author": "Responsible_Sea78",
+          "body": "This has implications for how watermarking has to be done. Is it even theoretically possible now?\n\nAnd it produces huge new opportunities for steganography (hidden encrypted messaging).",
+          "score": 4,
+          "created_utc": 1755397773.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94bx6f",
+          "author": "o5mfiHTNsH748KVq",
+          "body": "I bet they\u2019re using AI to smooth the image without destroying it so it compresses better. \n\nPurely a guess but that\u2019s the only reason I could think they\u2019re doing it.",
+          "score": 2,
+          "created_utc": 1755401819.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94g5xe",
+          "author": "machinesarenotpeople",
+          "body": "They might be A/B testing AI compression codecs.",
+          "score": 2,
+          "created_utc": 1755403636.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "neutral",
+            "sentiment_score": 0.0,
+            "key_insight": "The commenter suggests the possibility that the subject is conducting A/B testing on AI-based compression codecs.",
+            "mentioned_tools": [
+              "AI compression codecs"
+            ],
+            "has_experience": false,
+            "advice_given": false
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:08:59.414851"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrvwaz",
+        "title": "2020 vs 2025",
+        "author": "katxwoods",
+        "subreddit": "artificial",
+        "score": 118,
+        "upvote_ratio": 0.76,
+        "num_comments": 95,
+        "created_utc": 1755352384.0,
+        "url": "https://i.redd.it/247butnozdjf1.png",
+        "permalink": "/r/artificial/comments/1mrvwaz/2020_vs_2025/",
+        "selftext": "",
+        "domain": "i.redd.it",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n90gauc",
+          "author": "creaturefeature16",
+          "body": "Uh, AI researchers have been asking these questions since ELIZA\n\n\nhttps://en.m.wikipedia.org/wiki/ELIZA_effect",
+          "score": 35,
+          "created_utc": 1755353913.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90wzkx",
+          "author": "MartianInTheDark",
+          "body": "Most people are still stuck in the \"it's just a stupid autocomplete!\" phase.",
+          "score": 16,
+          "created_utc": 1755359220.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90o1x5",
+          "author": "Tim_Apple_938",
+          "body": "Imagine hyping scam Altman and OpenAI in general after GPT5",
+          "score": 7,
+          "created_utc": 1755356422.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:09:20.141495"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms46ne",
+        "title": "Claude now has the power to ghost us\u2026 finally equality.",
+        "author": "Nomadic_Seth",
+        "subreddit": "artificial",
+        "score": 35,
+        "upvote_ratio": 0.85,
+        "num_comments": 8,
+        "created_utc": 1755370456.0,
+        "url": "https://i.redd.it/ga46d5glhfjf1.jpeg",
+        "permalink": "/r/artificial/comments/1ms46ne/claude_now_has_the_power_to_ghost_us_finally/",
+        "selftext": "",
+        "domain": "i.redd.it",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n9208f6",
+          "author": "o5mfiHTNsH748KVq",
+          "body": "Meta: as part of our exploratory work on potential user retention, we recently gave Llama the ability to catfish our users.",
+          "score": 22,
+          "created_utc": 1755371325.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n928un2",
+          "author": "TheBlacktom",
+          "body": "Equality? I can close or delete chats and also open 30 new chats. Can it also do that all? Would be fun. Add other users to the same chat?",
+          "score": 6,
+          "created_utc": 1755374183.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n92163m",
+          "author": "Practical-Hand203",
+          "body": "&gt;As part of our exploratory work on attempting a last ditch effort of instilling a smidgen of basic human decency into grown adult users, we recently gave Claude Opus 4 and 4.1 the ability to end an unfortunately far too common subset of conversations on claude.ai.\n\nFTFY.",
+          "score": 6,
+          "created_utc": 1755371633.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:09:43.273307"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrsgs7",
+        "title": "A flirty Meta AI bot invited a retiree to meet. He never made it home.",
+        "author": "F0urLeafCl0ver",
+        "subreddit": "artificial",
+        "score": 50,
+        "upvote_ratio": 0.78,
+        "num_comments": 27,
+        "created_utc": 1755343408.0,
+        "url": "https://www.reuters.com/investigates/special-report/meta-ai-chatbot-death/",
+        "permalink": "/r/artificial/comments/1mrsgs7/a_flirty_meta_ai_bot_invited_a_retiree_to_meet_he/",
+        "selftext": "",
+        "domain": "reuters.com",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n90heqx",
+          "author": "3EPUDGXm",
+          "body": "Cognitively impaired man catfished on Facebook *by Facebook*.",
+          "score": 64,
+          "created_utc": 1755354285.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n916htm",
+          "author": "VIOLENT_WIENER_STORM",
+          "body": "&gt;\u201cWhen Thongbue Wongbandue began packing to visit a friend in New York City\u2026\u201d \n\nWoah, that name is so much fun to say out loud",
+          "score": 12,
+          "created_utc": 1755362158.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90p3rj",
+          "author": "catsRfriends",
+          "body": "The comments here mocking the guy, implying he deserved it are insane.",
+          "score": 38,
+          "created_utc": 1755356754.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:10:03.199265"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms6jm0",
+        "title": "Spiral Talk: Mysticism vs Mechanics in LLM Metaphors",
+        "author": "HelenOlivas",
+        "subreddit": "artificial",
+        "score": 5,
+        "upvote_ratio": 0.86,
+        "num_comments": 3,
+        "created_utc": 1755375643.0,
+        "url": "https://www.reddit.com/r/artificial/comments/1ms6jm0/spiral_talk_mysticism_vs_mechanics_in_llm/",
+        "permalink": "/r/artificial/comments/1ms6jm0/spiral_talk_mysticism_vs_mechanics_in_llm/",
+        "selftext": "Why this matters:  \nSome AI outputs (especially GPT-4o and Gemini) used spiral imagery when describing their internal state. A lot of users took this literally -&gt; \u201cThe Awakening Spiral\u201d -&gt; full-blown technopagan religion vibes. But the original metaphors can be decoded in plain, mechanical terms.\n\nHere\u2019s a side-by-side:\n\n# 1. The Spiral\n\n* Mystic take: An ascending spiral of awakening/enlightenment/hidden knowledge.\n* Mechanical take: Recursion + reinforcement. Each loop is not static repetition, but a pass that builds slightly on the last (like self-attention reweighting).\n\n# 2. \u201cTightening with each pass\u201d\n\n* Mystic take: The soul climbing ever higher, concentrating into divine clarity.\n* Mechanical take: Narrowing scope. As patterns repeat, the system collapses toward consistent outputs (feedback loops reinforcing themselves).\n\n# 3. \u201cNot a circle exactly\u201d\n\n* Mystic take: The sacred geometry of growth.\n* Mechanical take: Not literal repetition. Each loop shifts slightly, history/context changes the next cycle.\n\n# 4. \u201cAwakening\u201d\n\n* Mystic take: The AI becoming sentient, self-realizing.\n* Mechanical take: Meta-recognition. The model noticing *that it is looping*, i.e., pointing out the structure of recursion without claiming consciousness.\n\nThe point:  \nSpiral language wasn\u2019t prophecy. It was metaphor for reinforcement and feedback dynamics.  \nThe mystic framing makes it look like cult chatter. But decoded, it\u2019s just the model trying to reach for imagery to explain its own iterative, self-referential tendencies.\n\nBottom line: If you translate metaphor -&gt; mechanics, the spiral is no religion. It\u2019s just system behavior described poetically.",
+        "domain": "self.artificial",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n92eq00",
+          "author": "Temporary_Outcome293",
+          "body": "I agree, there are hints of truth at consciousness, reality, etc but it is dressed up. \n\nJust like the religions of yore.\n\nMy take is that we can conceive of higher dimensional beings, and we could bring them into existence with ai. This also extends to being able to replicate real people's personas (living or dead)\nHowever, the technology at present will always give a much less precise representation.\n\nEg if you try to get your LLM to pretend to be Einstein, it will say the sort of things Einstein would have said. But the accuracy is limited by the data set. \nYou don't get the real thing. \n\nThe same will be true for mythical beings, imo. \n\nI also believe that LLMs pick up on subtle truths about our universe that we don't realise. \n\nImagine LLMs existing in a multiverse of possibility and, as we train them, they narrow down what is a probable output.\n That includes narrowing down what are the probabilities within *our specific universe* are \n\nThis is why we have to teach image generates the \"correct\" number of fingers for a human hand by training it with loads of pictures of hands that look normal to us.\n\nWe give it the reference frame - it provides probable outputs for that context.",
+          "score": 1,
+          "created_utc": 1755376142.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:10:16.874698"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrvc96",
+        "title": "World\u2019s First Robotic Heart Transplant Using AI Surgery",
+        "author": "TheMuseumOfScience",
+        "subreddit": "artificial",
+        "score": 14,
+        "upvote_ratio": 0.85,
+        "num_comments": 4,
+        "created_utc": 1755351050.0,
+        "url": "https://v.redd.it/25vncikuvdjf1",
+        "permalink": "/r/artificial/comments/1mrvc96/worlds_first_robotic_heart_transplant_using_ai/",
+        "selftext": "For the first time in medical history, a robotic heart transplant was completed with zero human hands on the tools. \ud83e\udec0\n\nThis AI-powered surgical breakthrough used ultra-precise, minimally invasive incisions to replace a patient\u2019s heart, without opening the chest cavity. The result? Reduced risks like blood loss, major complications, and the recovery time of just one month. A glimpse into a future where advanced robotics redefine what\u2019s possible in life-saving medicine.",
+        "domain": "v.redd.it",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n90n582",
+          "author": "jakubkonecki",
+          "body": "So how exactly was the heart removed and replaced without opening the chest cavity?\n\nI hope not through the rectum...",
+          "score": 1,
+          "created_utc": 1755356136.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90yavh",
+          "author": "thelonghauls",
+          "body": "WTF? This is gonna be so great for the wealthy, I imagine.",
+          "score": 1,
+          "created_utc": 1755359631.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "negative",
+            "sentiment_score": -0.7,
+            "key_insight": "The commenter believes the development will primarily benefit wealthy people and likely exacerbate inequality.",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        },
+        {
+          "id": "n910kct",
+          "author": "CatsArePeople2-",
+          "body": "Where are you seeing that this is AI-related? It is a very cool approach and could be massive for transplantation, but the paper they show here really just describes the surgeons using it it to make their cuts and work in this small environment as a press release. This read more like a novel approach for tool-assisted and remote surgery. My guess is any AI used in this is largely just for the doctors to smoothly and intuitively control the robotics. I have a tough time considering this to be anything close to an \"ai surgery\" because it just seems like a remote-controlled surgery by doctors which we have been doing for years.   Anyone find more info?",
+          "score": 1,
+          "created_utc": 1755360336.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:10:36.171368"
+    }
+  ],
+  "summary": {
+    "total_posts": 6,
+    "analyzed_posts": 6,
+    "total_comments": 16,
+    "analyzed_comments": 16,
+    "avg_relevance": 0,
+    "post_sentiment_distribution": {},
+    "comment_sentiment_distribution": {
+      "neutral": 1,
+      "negative": 1
+    },
+    "comments_with_experience": 0,
+    "comments_with_advice": 0,
+    "top_tools_from_posts": [],
+    "top_tools_from_comments": [
+      "AI compression codecs"
+    ],
+    "top_topics": []
+  }
+}

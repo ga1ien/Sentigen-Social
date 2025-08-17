@@ -1,0 +1,59 @@
+{
+  "user_id": "user_001",
+  "workspace_id": "workspace_001",
+  "config_name": "tech_trends",
+  "description": "Daily HN research on technology trends and innovations",
+  "hackernews_config": {
+    "story_types": [
+      "HNStoryType.TOP",
+      "HNStoryType.BEST"
+    ],
+    "search_topics": [
+      "AI",
+      "machine learning",
+      "startup",
+      "technology",
+      "programming"
+    ],
+    "max_stories_per_type": 12,
+    "max_comments_per_story": 25,
+    "min_score": 50,
+    "min_comments": 10,
+    "comment_depth": 2,
+    "exclude_jobs": true,
+    "time_range_hours": 24
+  },
+  "analysis_depth": "AnalysisDepth.COMPREHENSIVE",
+  "ai_model": "gpt-5-mini",
+  "focus_areas": [
+    "business_intelligence",
+    "trend_analysis",
+    "technology_insights"
+  ],
+  "schedule": {
+    "frequency": "ResearchFrequency.DAILY",
+    "time_of_day": "08:00",
+    "timezone": "America/New_York",
+    "days_of_week": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "custom_cron": null
+  },
+  "auto_run_enabled": true,
+  "generate_summary": true,
+  "generate_insights": true,
+  "generate_content_ideas": true,
+  "export_formats": [
+    "json",
+    "markdown"
+  ],
+  "created_at": "2025-08-17T00:00:27.344287",
+  "updated_at": "2025-08-17T00:00:27.344287",
+  "last_run_at": null
+}

@@ -13,9 +13,6 @@
     "vibe:doc": "npx vibe-tools doc",
     "vibe:ask": "npx vibe-tools ask"
   },
-  "workspaces": [
-    "frontend"
-  ],
   "devDependencies": {
     "vibe-tools": "latest"
   }

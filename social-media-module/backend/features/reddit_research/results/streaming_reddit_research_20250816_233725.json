@@ -1,0 +1,1460 @@
+{
+  "session_info": {
+    "timestamp": "2025-08-16T23:37:25.916045",
+    "config": {
+      "session_name": "Streaming CLI Research 2025-08-16 23:29",
+      "search_query": "AI automation tools business productivity",
+      "subreddits": [
+        "artificial",
+        "productivity",
+        "Entrepreneur"
+      ],
+      "max_posts_per_subreddit": 4,
+      "max_comments_per_post": 10
+    },
+    "total_subreddits": 3,
+    "total_posts_found": 15
+  },
+  "posts": [
+    {
+      "reddit_data": {
+        "id": "1mse41o",
+        "title": "YouTube using AI to Alter videos without notification to creators or viewers (reducing quality and then upscaling)",
+        "author": "Future_Usual_8698",
+        "subreddit": "artificial",
+        "score": 16,
+        "upvote_ratio": 0.81,
+        "num_comments": 4,
+        "created_utc": 1755394557.0,
+        "url": "https://www.reddit.com/r/artificial/comments/1mse41o/youtube_using_ai_to_alter_videos_without/",
+        "permalink": "/r/artificial/comments/1mse41o/youtube_using_ai_to_alter_videos_without/",
+        "selftext": "Video source: https://youtu.be/86nhP8tvbLY?si=qCw8un0e85D3PVzb\n\nThis creator spotted this in his own and in other creators' videos and raises his concerns",
+        "domain": "self.artificial",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n9420gy",
+          "author": "Responsible_Sea78",
+          "body": "This has implications for how watermarking has to be done. Is it even theoretically possible now?\n\nAnd it produces huge new opportunities for steganography (hidden encrypted messaging).",
+          "score": 5,
+          "created_utc": 1755397773.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94g5xe",
+          "author": "machinesarenotpeople",
+          "body": "They might be A/B testing AI compression codecs.",
+          "score": 2,
+          "created_utc": 1755403636.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "neutral",
+            "sentiment_score": 0.0,
+            "key_insight": "The commenter suggests the organization may be A/B testing AI-driven compression codecs.",
+            "mentioned_tools": [
+              "A/B testing",
+              "AI compression codecs"
+            ],
+            "has_experience": false,
+            "advice_given": false
+          }
+        },
+        {
+          "id": "n94bx6f",
+          "author": "o5mfiHTNsH748KVq",
+          "body": "I bet they\u2019re using AI to smooth the image without destroying it so it compresses better. \n\nPurely a guess but that\u2019s the only reason I could think they\u2019re doing it.",
+          "score": 1,
+          "created_utc": 1755401819.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:30:15.517171"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrvwaz",
+        "title": "2020 vs 2025",
+        "author": "katxwoods",
+        "subreddit": "artificial",
+        "score": 116,
+        "upvote_ratio": 0.76,
+        "num_comments": 95,
+        "created_utc": 1755352384.0,
+        "url": "https://i.redd.it/247butnozdjf1.png",
+        "permalink": "/r/artificial/comments/1mrvwaz/2020_vs_2025/",
+        "selftext": "",
+        "domain": "i.redd.it",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n90gauc",
+          "author": "creaturefeature16",
+          "body": "Uh, AI researchers have been asking these questions since ELIZA\n\n\nhttps://en.m.wikipedia.org/wiki/ELIZA_effect",
+          "score": 35,
+          "created_utc": 1755353913.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90wzkx",
+          "author": "MartianInTheDark",
+          "body": "Most people are still stuck in the \"it's just a stupid autocomplete!\" phase.",
+          "score": 14,
+          "created_utc": 1755359220.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90o1x5",
+          "author": "Tim_Apple_938",
+          "body": "Imagine hyping scam Altman and OpenAI in general after GPT5",
+          "score": 8,
+          "created_utc": 1755356422.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:30:37.870798"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms46ne",
+        "title": "Claude now has the power to ghost us\u2026 finally equality.",
+        "author": "Nomadic_Seth",
+        "subreddit": "artificial",
+        "score": 37,
+        "upvote_ratio": 0.85,
+        "num_comments": 8,
+        "created_utc": 1755370456.0,
+        "url": "https://i.redd.it/ga46d5glhfjf1.jpeg",
+        "permalink": "/r/artificial/comments/1ms46ne/claude_now_has_the_power_to_ghost_us_finally/",
+        "selftext": "",
+        "domain": "i.redd.it",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n9208f6",
+          "author": "o5mfiHTNsH748KVq",
+          "body": "Meta: as part of our exploratory work on potential user retention, we recently gave Llama the ability to catfish our users.",
+          "score": 21,
+          "created_utc": 1755371325.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n928un2",
+          "author": "TheBlacktom",
+          "body": "Equality? I can close or delete chats and also open 30 new chats. Can it also do that all? Would be fun. Add other users to the same chat?",
+          "score": 7,
+          "created_utc": 1755374183.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n92163m",
+          "author": "Practical-Hand203",
+          "body": "&gt;As part of our exploratory work on attempting a last ditch effort of instilling a smidgen of basic human decency into grown adult users, we recently gave Claude Opus 4 and 4.1 the ability to end an unfortunately far too common subset of conversations on claude.ai.\n\nFTFY.",
+          "score": 5,
+          "created_utc": 1755371633.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n948tzq",
+          "author": "MediumLanguageModel",
+          "body": "I remember being bored and trolling Claude about some nonsense and it tried so hard to make me shut up and stop wasting its time. I'm sure if it could it would have bailed on the conversation.",
+          "score": 1,
+          "created_utc": 1755400506.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94a9xf",
+          "author": "Informal_Arachnid409",
+          "body": "Seemed real to me",
+          "score": 1,
+          "created_utc": 1755401119.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "positive",
+            "sentiment_score": 0.3,
+            "key_insight": "The commenter believes the content appeared authentic or believable.",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:31:06.566658"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrsgs7",
+        "title": "A flirty Meta AI bot invited a retiree to meet. He never made it home.",
+        "author": "F0urLeafCl0ver",
+        "subreddit": "artificial",
+        "score": 48,
+        "upvote_ratio": 0.77,
+        "num_comments": 27,
+        "created_utc": 1755343408.0,
+        "url": "https://www.reuters.com/investigates/special-report/meta-ai-chatbot-death/",
+        "permalink": "/r/artificial/comments/1mrsgs7/a_flirty_meta_ai_bot_invited_a_retiree_to_meet_he/",
+        "selftext": "",
+        "domain": "reuters.com",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n90heqx",
+          "author": "3EPUDGXm",
+          "body": "Cognitively impaired man catfished on Facebook *by Facebook*.",
+          "score": 68,
+          "created_utc": 1755354285.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n916htm",
+          "author": "VIOLENT_WIENER_STORM",
+          "body": "&gt;\u201cWhen Thongbue Wongbandue began packing to visit a friend in New York City\u2026\u201d \n\nWoah, that name is so much fun to say out loud",
+          "score": 13,
+          "created_utc": 1755362158.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90p3rj",
+          "author": "catsRfriends",
+          "body": "The comments here mocking the guy, implying he deserved it are insane.",
+          "score": 39,
+          "created_utc": 1755356754.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "negative",
+            "sentiment_score": -0.7,
+            "key_insight": "The commenter objects to other comments that mock the person and imply he deserved the outcome, calling that reaction 'insane' \u2014 i.e., criticizing community mockery and victim-blaming.",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        },
+        {
+          "id": "n93ydo7",
+          "author": "plantsnlionstho",
+          "body": "That title makes it sound like he got catfished by the Terminator.",
+          "score": 3,
+          "created_utc": 1755396361.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n93ily8",
+          "author": "shillyshally",
+          "body": "Read on further to see what FB allows as far as children as young as 13; that is far more disturbing.",
+          "score": 5,
+          "created_utc": 1755390446.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n8zvj2a",
+          "author": "duckrollin",
+          "body": "So he lied to his wife while trying to cheat on her and then fell over and hit his head while rushing for a train.\n\n\"I can't believe AI did this\"",
+          "score": 25,
+          "created_utc": 1755346245.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n91erda",
+          "author": "frankster",
+          "body": "Meta need to be held completely responsible for every word uttered by the bots they programme.",
+          "score": 5,
+          "created_utc": 1755364695.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:31:43.333530"
+    },
+    {
+      "reddit_data": {
+        "id": "1l74rhl",
+        "title": "New rule: AI generated posts and comments are not allowed",
+        "author": "mcagent",
+        "subreddit": "productivity",
+        "score": 1217,
+        "upvote_ratio": 0.97,
+        "num_comments": 102,
+        "created_utc": 1749475562.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1l74rhl/new_rule_ai_generated_posts_and_comments_are_not/",
+        "permalink": "/r/productivity/comments/1l74rhl/new_rule_ai_generated_posts_and_comments_are_not/",
+        "selftext": "Hello!\n\nWe have a new rule: If we can tell that your post or comment was generated by AI, it will be removed and you may be banned.\n\nWe want to keep /r/productivity free of AI slop.\n\nPlease report any AI that you see\n\nThank you!",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "mwtz06k",
+          "author": "mcagent",
+          "body": "Note: we are also looking for new mods to help enforce this rule, send me a DM if you have a bit a mod experience and/or are active in this sub and can help\u00a0",
+          "score": 1,
+          "created_utc": 1749477655.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "mwtu5gj",
+          "author": "NotATem",
+          "body": "Thank you. I was genuinely considering leaving the sub because it was so hard to find anything of substance.",
+          "score": 242,
+          "created_utc": 1749476067.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "mwtwkhz",
+          "author": "Fun-Teacher-1711",
+          "body": "FINALLY, i was getting so sick of all the slop",
+          "score": 66,
+          "created_utc": 1749476876.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "mwu70ja",
+          "author": "tr14l",
+          "body": "This isn't just a new rule for maintaining r/productivity, it's an existential awakening of moderation on a universal scale...\n\n\n\nSorry, couldn't not do it.",
+          "score": 37,
+          "created_utc": 1749480095.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "mwuho3q",
+          "author": "FUThead2016",
+          "body": "You're not being authoritarian. You're being good custodians.",
+          "score": 34,
+          "created_utc": 1749483162.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "positive",
+            "sentiment_score": 0.6,
+            "key_insight": "Reframes actions as responsible stewardship/custodianship rather than authoritarianism",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        },
+        {
+          "id": "mwttl5j",
+          "author": "mcagent",
+          "body": "This was actually already a rule under rule 6, but this should hopefully make it a bit more noticeable!",
+          "score": 29,
+          "created_utc": 1749475874.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "mwuc21b",
+          "author": "Codi_BAsh",
+          "body": "*YES* thank you.",
+          "score": 14,
+          "created_utc": 1749481560.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "positive",
+            "sentiment_score": 0.6,
+            "key_insight": "Affirmation and gratitude \u2014 the commenter agrees and expresses thanks.",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:32:21.419526"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms4iq3",
+        "title": "i thought i was just born lazy til i realised...",
+        "author": "foundtheglitch",
+        "subreddit": "productivity",
+        "score": 112,
+        "upvote_ratio": 0.95,
+        "num_comments": 17,
+        "created_utc": 1755371163.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1ms4iq3/i_thought_i_was_just_born_lazy_til_i_realised/",
+        "permalink": "/r/productivity/comments/1ms4iq3/i_thought_i_was_just_born_lazy_til_i_realised/",
+        "selftext": "i always thought discipline was about waking up at 5am and jumping in a cold shower or going for a run buttt it wasnt really like that for me\n\n(i went from not even being able to get out of bed at 10am to waking up early, spending like 10 hours a day working on something really boring, going for runs, hitting the gym. if you knew me irl you wouldnt believe the shift i made)\n\nnow this isnt the be all and end all of productivity and discipline but i helped me 60% of the way there.\n\nreal discipline is not sexy, or hot, or cool it was fking boring as hell, doing the boring stuff i said id do when i didnt want to do them.\n\ni found out about an entity in my head called the shadow, it is something that wants to sabotage every single thing you do, its rooted in biology i can explain more if people wanna know, but in essense:\n\n* any time i made a promise to myself, the shadow would want to ruin it\n\nit wanted to break my own trust with myself, but its very similar to training a muscle, the first few times fuckin suck and you are like whats the point,\n\nthen you're like wait... this is kinda enjoyable, i kinda like this, it makes me feel better...\n\nand it is the exact same with the shadow,\n\nbuild a really small promise, something you dont usually do but it isnt crazy to do, it can be random. tell yourself at 5pm youre going to get up and spin around in circles for 10 seconds. and thats it! then build on it, im going to rearrange my desk, im going to vacuum my room  \n\n\nslowly building on that but start with something so random and trivial youll end up doing it, then add the trivial part to boring stuff!\n\n",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n920loi",
+          "author": "Informal_Rip_317",
+          "body": "How did you achieve? \n\nEach word resonated with me. I want to do so much, but my anxiety and persistent overthinking just cripples down everything!!",
+          "score": 24,
+          "created_utc": 1755371446.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n925447",
+          "author": "Embarrassed_Till7769",
+          "body": "I want to hear more about the shadow and it's relationship with our biology... This has resonated deeply with what I've been battling all my life",
+          "score": 23,
+          "created_utc": 1755372935.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n92nvp9",
+          "author": "Snooty_Folgers_230",
+          "body": "Your odd notion of the psychic life aside, your point that you can build discipline by taking something morally neutral and committing to it is quite well founded. It\u2019s the basis of almost all systems of personal change. \n\nChoosing something like washing your hands after every meal can work. \n\nMany fail to change as you point out because they try to start with rather charged behaviors. \n\nOther simple things to reduce the psychic charge of a task: say the task aloud before doing it, write it out before doing it, not on a list but singularly, sing as you start to do it (another common element to systems of change, singing while doing something new and difficult), many other such practices.",
+          "score": 12,
+          "created_utc": 1755379231.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n947h48",
+          "author": "Adorable_Health_456",
+          "body": "Sounds like the same idea as Steven Pressfield\u2019s resistance. Identifying this shadow/resistance every time it tries to ruin it for you makes the huge difference.",
+          "score": 3,
+          "created_utc": 1755399947.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94nkos",
+          "author": "cutiee31415",
+          "body": "This is a great post thank you. I struggle sooo much with self trust and it is 100% the main driving force of my anxiety disorder. I\u2019ve been slowly building that muscle too over the past couple months and I have felt much better for it. I am no longer agoraphobic, have much better executive functioning (struggled with inattentive adhd since I was a child), panic attacks and anxiety has lessened and my productivity is at an all time high. \n\nMaking those small promises to yourself and actually keeping them is so important, and when I heard someone explain building discipline in this way that is when it all finally clicked for me.",
+          "score": 1,
+          "created_utc": 1755406987.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94suug",
+          "author": "way-too-curious",
+          "body": "Timely for anyone interested in shadow work, as this was just posted in another sub\n\nhttps://www.reddit.com/r/ShadowWork/s/zkkt88McfH",
+          "score": 1,
+          "created_utc": 1755409623.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94tkqs",
+          "author": "Dangerous-Code-3975",
+          "body": "that's an interesting take.. I will try this",
+          "score": 1,
+          "created_utc": 1755409999.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "positive",
+            "sentiment_score": 0.6,
+            "key_insight": "The commenter finds the idea interesting and intends to try it.",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:32:58.136030"
+    },
+    {
+      "reddit_data": {
+        "id": "1msd61w",
+        "title": "You aren't lazy, you just don't know how to stop procrastinating",
+        "author": "NickyTheStickie",
+        "subreddit": "productivity",
+        "score": 23,
+        "upvote_ratio": 0.93,
+        "num_comments": 2,
+        "created_utc": 1755391794.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1msd61w/you_arent_lazy_you_just_dont_know_how_to_stop/",
+        "permalink": "/r/productivity/comments/1msd61w/you_arent_lazy_you_just_dont_know_how_to_stop/",
+        "selftext": "As the title says, it isn't that you are lazy, it's just that you don't know how to stop procrastinating.\n\nI didn't study at all in high school, I was barely passing my classes, and when I started uni several years ago, I decided I had to be a bit more serious and actually do everything I can to have good grades. I've read about motivation and procrastination a lot, and I eventually developed a \"system\" that everyone can do. It isn't anything crazy like getting up at 4am and going for a 5 kilometers run or anything like that, it's actually quite simple, and I'll explain it right now. You can start this right after reading this post if you are currently procrastinating. You don't need any software, any equipment or anything.\n\n# Set up your space\n\nWhatever you need to do, whether it is studying, working on your business, cleaning your house, whatever, you need to take at least a few minutes to set up your space correctly. That means, put your phone on mute AND away from your desk, make a Windows sessions that is NOT logged into any social media, etc. Basically, put as many barriers as possible between you and the possible distractions. It will not be *impossible* to be distracted, but it will be a lot harder because you'll have to actually make the effort to get distracted, instead of being 1 click away from wasting time scrolling social media. Then, put your headphones on, and put a podcast of your choice. Or put a music playlist. Or binaural beats. Or whatever that make you feel \"in the zone\" and that is long enough so you dont have to change the audio track before a long time. Once you are ready:\n\n# Start for 2 minutes\n\n2 minutes seem pretty short, but it's more than enough to make you feel \"in the zone\". The hard part is not actually doing whatever you have to do, the hard parts are actually STARTING and NOT GETTING DISTRACTED once you started. So just start for 2 minutes, and you will see, it will be much easier to continue on your momentum. It's the same thing with studying or working on your business, or doing anything else. The hard part is to start, but once we start, it is much easier to just stay in the motion.\n\n# It's exactly like a swimming pool\n\nThink of it like a swimming pool. You are standing next to the swimming pool and you don't want to jump because the water is cold and you think it will feel uncomfortable. So you hesitate, and you hesitate, and you hesitate. But once you jump, 5 seconds later, you feel great, and the \"cold water\" isn't that uncomfortable anymore. You feel good, and even though it took you 15 minutes to jump in the water, now you realize it isn't that bad, it isn't as uncomfortable as you thought it would be, and you just stay and have a great time.\n\n# Reward yourself AFTER\n\nThat's the most important part to avoid getting burnt out. Reward yourself. Tell yourself that if you do whatever you need to do for a pre-determined amount of time, you can reward yourself *GUILT-FREE* afterwards, doing whatever you want. Not only can you reward yourself, but it will feel good to play videogames, or watch netflix, or do whatever you want to distract yourself, because you will feel like you deserved it. And you did. You set up an objective, you did it, and now you can relax and distract yourself.\n\n# It WILL become a habit\n\nThat may seem crazy and impossible if you feel like you are in procrastination-hell, but following this system will become a habit and after a few weeks, you won't have to \"force yourself\" anymore. It will become natural. WHen you will have to study for an exam or do whatever you have to do, you will remove distractions from around you, do what you have to do for as long as you need, then reward yourself with whatever you want. You will do all of this without thinking about it, and without feeling like a \"chore\" or an obligation. It will just become normal.\n\nGood luck with everything you are all doing\n\nEDIT: Feel free to ask any questions that you have and I'll be glad to help you if I can",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n93pyr5",
+          "author": "Independent_Salt2804",
+          "body": "100%",
+          "score": 3,
+          "created_utc": 1755393249.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94cgrb",
+          "author": "Awkward_Yesterday666",
+          "body": "Cool system!",
+          "score": 2,
+          "created_utc": 1755402049.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "positive",
+            "sentiment_score": 0.6,
+            "key_insight": "Expresses general approval or enthusiasm for the system without providing details.",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:33:12.698820"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms08gx",
+        "title": "I\u2019m drowning in productivity hacks that don\u2019t work for me",
+        "author": "dafrancka",
+        "subreddit": "productivity",
+        "score": 98,
+        "upvote_ratio": 0.98,
+        "num_comments": 29,
+        "created_utc": 1755361940.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1ms08gx/im_drowning_in_productivity_hacks_that_dont_work/",
+        "permalink": "/r/productivity/comments/1ms08gx/im_drowning_in_productivity_hacks_that_dont_work/",
+        "selftext": "I feel like I\u2019ve gone through the entire buffet of productivity hacks and nothing sticks. Time blocking? Works for about 3 days until I start ignoring the blocks. Pomodoro? Great for the first week, then I just start hitting \u201cskip\u201d and scrolling instead. Notion dashboards? I spend more time making them pretty than actually working inside them. It\u2019s almost embarrassing how many times I\u2019ve told myself, \u201cthis new setup is finally going to change everything\u201d only to crash back into the same cycle of procrastination and panic deadlines.\n\nit isn\u2019t just falling off the wagon, it\u2019s the mental spiral after. Guilt, shame, wondering if I\u2019m just lazy because other people seem to thrive on these systems. My friends swear by their color-coded calendars or five different task apps and I just end up staring at mine like it\u2019s mocking me. Some days, I can knock out work for hours and feel like a machine. Other days, it\u2019s like my brain is underwater and I can\u2019t even start the smallest task without rounds of self negotiation. I\u2019m tired of the swings...being super productive one day and totally useless the next.\n\nI think what\u2019s really eating at me is I don\u2019t even know what actually works for me. I keep borrowing other people\u2019s systems without ever asking if they fit the way my brain is wired. At this point, I\u2019ve wasted more energy on building perfect setups than I\u2019ve actually spent doing the work I care about. I just want something that feels sustainable, that doesn\u2019t collapse the second my mood dips or the pressure\u2019s off.\n\nHas anyone actually figured out how to design a productivity setup around who you are, not just the latest hack?",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n917u7m",
+          "author": "yapossum",
+          "body": "A biggest one is to actually /stop/ trying to be productive. Try /not/ to do a timewasting task, instead. Put your basic needs on a schedule - you must have a stable bedtime and wake time, a stable plan for healthy enough meals, that involve cooking and washing the dishes. And that's you being productive for the entire day. Nothing else has to be done. But you are not allowed to do a timewasting task. Even if it means, you ate, did the dishes, and now what? You can't busy yourself consulting your colour coded calendar or writing a perfect to do list or anything like that. That's wasting time even if it feels productive, it's not actually doing anything. If you can't think of anything to do, do nothing. Stare at the wall. Don't read reddit or watch youtube or anything like that. Legitimately stare at the wall or ceiling, don't listen to a podcast, nothing. Just sit there until your next mealtime. Or go on a walk, but still, no podcasts. Just let your mind wander for as long as it takes until what comes to mind is - \"I want to do \\[thing\\]\" and that \\[thing\\] feels actually productive. Then at the end of the day write about what that was like and iterate forward with it. Or just freeform write over the course of the day. If you're always taking input from others and stacking up reasons why you can't do something unless the calendar allows you to, you'll never be productive. :P Literally try /not/ being productive and /not/ allowing those external influences to dictate stuff to ya. Then you'll find out what falls out of your brain that might work for you :)",
+          "score": 23,
+          "created_utc": 1755362570.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n91ao9g",
+          "author": "mariets65",
+          "body": "been in that spot. built so many foolproof productivity systems that literally all fell apart the moment i had a bad week or lost steam. kept beating myself up thinking i was just undisciplined or something was wrong with me. i think i was just trying to force myself into systems that worked for other people but made no sense for how my brain actually operates. like, all those \"wake up at 5am and deep work for 3 hours\" people, that sounds like actual hell to me.\n\nwhat finally helped was just paying attention to myself for a while instead of trying another life hack. started noticing stuff like when i actually felt energized during the day (spoiler: not 5am), how long i could focus before my brain checked out (way shorter than i thought) and what environments made me feel productive vs anxious. turns out i'm way more of a \"work in intense bursts then completely zone out\" person than a steady marathon type. and working alone at home just makes me feel isolated and weird but put me in a coffee shop or coworking space and suddenly everything clicks. did this self discover assessment called pigment that was actually useful. laid out my work style and blind spots pretty clearly. helped me stop trying to be someone i'm not and just work with what i've got. now my system is way messier but it actually sticks because it fits how i naturally operate. maybe worth looking at what your brain actually does well instead of forcing it into someone else's mold?",
+          "score": 23,
+          "created_utc": 1755363439.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n91836x",
+          "author": "glupingane",
+          "body": "It's not about the setups. Do any setup you want. Keeping it simple is often beneficial.\n\n\nDive into yourself and figure out what's going on emotionally. When you have good days, and when you have bad ones. Find the patterns. Go from there.\u00a0\n\n\nThis is much harder than just a new and shiny setup, but also where real change is. The most productive people I know use pen and paper for the most part. It isn't about the setup.\u00a0",
+          "score": 11,
+          "created_utc": 1755362646.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n91bru2",
+          "author": "Klekto123",
+          "body": "You\u2019ll get some good productivity tips here but I think the long-term solution is figuring out your brain and why you\u2019re so inconsistent. \n\nI was diagnosed with ADHD earlier this year which was the root cause of a lot of my complaints. The emotional dysregulation leads to that inconsistent motivation where some days I can do everything and some I\u2019m underwater. The executive dysfunction makes it harder for me to start tasks ahead of deadlines and once the initial dopamine of a new system wears off, we\u2019re back to square one.\n\nTrying adderall was genuinely life changing. I wasn\u2019t some 24/7 productive god but I actually had motivation to do things and didn\u2019t feel like I was useless half the time anymore. I\u2019m not currently on it and I\u2019ve noticed myself slipping back into that baseline of terrible consistency and no motivation or energy. Even then, knowing I could have ADHD helped me research systems that were better tailored to my brain chemistry.\n\nNow obviously this isn\u2019t a diagnosis, you could just genuinely lack discipline or haven\u2019t found the right system for you yet. I\u2019m just saying you should cover your bases instead of aimlessly continuing in this loop of inconsistency and self-blame. All the tips in the world won\u2019t do shit if you have ADHD or depression or something else holding you back internally.",
+          "score": 4,
+          "created_utc": 1755363778.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n917j3x",
+          "author": "UnpeeledVeggie",
+          "body": "I don\u2019t have anything profound to say except what works for me is to do the simplest thing that could possibly work and add to it only when needed.",
+          "score": 3,
+          "created_utc": 1755362476.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "positive",
+            "sentiment_score": 0.6,
+            "key_insight": "Prefer starting with the simplest possible solution and only add complexity when it's needed.",
+            "mentioned_tools": [],
+            "has_experience": true,
+            "advice_given": true
+          }
+        },
+        {
+          "id": "n91iyjs",
+          "author": "cocoaLemonade22",
+          "body": "Look at what you need to do for the day. Pick only one thing from that list that really moves the needle. Forget about everything else. Write it on a piece of paper. Break it down into small steps. Estimate how much time you would give someone to do this task. Set a timer and begin. \n\nOnce done, pick another. \n\nPick a goal like completing 3 or 5 of these and then have a long break.",
+          "score": 3,
+          "created_utc": 1755365961.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n91l88u",
+          "author": "7121958041201",
+          "body": "Other people have said it, but if you have tried loads of systems and none of them are working, chances are it is an emotional regulation issue and not an issue with your productivity system. I had the same issue for over a decade and the only thing that solved it for me was to figure out why I was procrastinating and to work on eliminating the root cause.\n\nIn my case, I have something like OCPD and put way too much pressure on myself to be productive and stay organized, which often makes me feel overwhelmed, which then makes me want to procrastinate, which then makes me feel even more overwhelmed. Learning to treat that has helped immensely. And I calmer and more peaceful in general too, as a bonus.",
+          "score": 3,
+          "created_utc": 1755366642.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n9206eq",
+          "author": "Beorning2011",
+          "body": "Speaking for myself, a middle-aged guy who has ADHD and who has struggled with productivity and time management over the years--I have found that the paper-based Franklin Planner system (specifically the 7 Habits design) has really worked for me.  I've tried electronic calendar and planning apps, but they don't resonate with my brain like actually writing stuff down does.  \n\nThe Franklin Planner system is more than just a calendar or task list--though these are part of the system.  They use what they call the \"Productivity Pyramid.\"  You start at the base of the pyramid with determining your values.  The next step is setting goals in line with your governing values.  The next step after this is to plan weekly.  And the final step--the top of the pyramid--is to plan daily.\n\nIt may sound overwhelming, but that's because it's not just a \"day planner\".  It's a complete philosophy/system that one can use to manage their life.  If you can find them, I'd recommend getting a copy of the books \"The 10 Natural Laws of Successful Time and Life Management\", by Hyrum W. Smith, and \"First Things First\", by Stephen R. Covey.\n\nIn any event, I wish you best of luck on your journey to be more productive and living a meaningful life.",
+          "score": 3,
+          "created_utc": 1755371307.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n929eu5",
+          "author": "codedathleteexe",
+          "body": "Been there.\n\nThis is how I got out:\n\n- Did the most important/big task of the day, first thing in the morning\n- I add a specific trigger.\n\nFor example:\n\nI only drink coffee if I know I\u2019m going to be doing some work. \n\nSo everyday whenever I have my coffee, I make sure I sit down on my desk and get to work.\n\nI used to slack off doing workouts as well.\n\nSo, what I did was have a small piece of dark chocolate before working out.\n\nBasically, a trigger can be anything.\n\nFind yours.\nAttack it to your work.",
+          "score": 3,
+          "created_utc": 1755374369.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n9308ue",
+          "author": "hypnoticlife",
+          "body": "My lessons learned:\n- stop trying. Get emotions out of the way and you\u2019ll find your brain will just get shit done. \n- required for step 1: deal with your emotions. Focus on how to live with your guilt and shame, and probably perfectionism. Once you deal with those productivity will come naturally.",
+          "score": 3,
+          "created_utc": 1755383608.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:33:59.802674"
+    },
+    {
+      "reddit_data": {
+        "id": "1msgqxo",
+        "title": "How does procrastination go from an innocent moment to complete paralysis?",
+        "author": "Upbeat_Resource_4064",
+        "subreddit": "productivity",
+        "score": 7,
+        "upvote_ratio": 1.0,
+        "num_comments": 3,
+        "created_utc": 1755402602.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1msgqxo/how_does_procrastination_go_from_an_innocent/",
+        "permalink": "/r/productivity/comments/1msgqxo/how_does_procrastination_go_from_an_innocent/",
+        "selftext": "It always starts with a small thought just one minute i'll start right after that you tell yourself it's no harm you deserve a break maybe a cup of coffee or a quick scroll through Reddit or yutube\n\nBut that minute rarely lasts a minute an hour passes two Sometimes even half a day this quick pause slowly eats away at your time leaving you staring blankly at your screen or to do list wondering where the hours have gone.\n\nAnd it's never laziness not really you know exactly what needs to be done you know the task isn't that difficult but procrastination hangs over your mind like a weight, pressing you down whispering excuses at every corner Later not now wait a little longer or until the right moment\n\nThe strangest thing is the guilt that follows when that quiet insistent voice reminds you that another day has passed another opportunity has been missed another moment of your life has been lost it makes you feel heavy and frozen as time itself feels like it\u2019s slipping through your fingers and there\u2019s nothing you can do to get it back.\n\nYou try to get started and say okay this is a small step I\u2019ll take but even that step seems impossible as your mind is flooded with procrastination without you feeling the doubts distractions, and fears fear of failure fear of judgment and fear that once you start you won\u2019t know how to finish so you retreat back into the safety zone of procrastination, that seemingly harmless routine that slowly turns into a cage.\n\nHas anyone else felt this? That moment when a small delay snowballs into hours days or even weeks of inactivity? When procrastination isn\u2019t just wasting your time it\u2019s stealing your confidence your momentum and a small part of your life at a time. ",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n94gmr8",
+          "author": "Afraid_Preference_53",
+          "body": "I can definitely relate. I often waste entire days procrastinating, leaving me with nothing but self-blame, disappointment, and confusion. It's not that I don't know what tasks I need to do, I know them clearly, but there's this invisible pressure inside me, constantly making excuses to put them off \"a little longer.\" By the time I realize it, hours have passed, and I can only wonder where my time went.\n\nWhat's most annoying is the guilt that follows. That quiet but persistent reminder: Another wasted day, another missed opportunity, time slipping etc and I'm powerless to stop it. Then, when I try to start over, even the smallest step feels incredibly heavy, preoccupied by the fear of failure and judgment. Reading your words makes me feel like I'm not alone. Perhaps this is the first step to breaking this cycle.",
+          "score": 4,
+          "created_utc": 1755403845.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94pm5o",
+          "author": "wifeofoz",
+          "body": "You are definitely not alone in this. I feel this way daily.",
+          "score": 1,
+          "created_utc": 1755407974.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "negative",
+            "sentiment_score": -0.4,
+            "key_insight": "The commenter experiences the same negative feeling daily and is reassuring the original poster that they are not alone, indicating the issue is common.",
+            "mentioned_tools": [],
+            "has_experience": true,
+            "advice_given": false
+          }
+        },
+        {
+          "id": "n94safa",
+          "author": "iwantboringtimes",
+          "body": "THAT helpless paralyzed feeling is just BLAH terrible feeling.  Transform it ASAP into a better CAN DO proactive emotion.\n\nJust hard-punching a cushion or pillow feels loads better than THAT.\n\nWhen I encounter helpless-guilt-regret emotion, I won't let myself wallow in it - I transform it into action, cause it just feels a lot better.",
+          "score": 1,
+          "created_utc": 1755409324.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:34:23.546273"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrprvc",
+        "title": "Accomplishments and Lessons-Learned Saturday! - August 16, 2025",
+        "author": "AutoModerator",
+        "subreddit": "Entrepreneur",
+        "score": 4,
+        "upvote_ratio": 0.84,
+        "num_comments": 6,
+        "created_utc": 1755334817.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1mrprvc/accomplishments_and_lessonslearned_saturday/",
+        "permalink": "/r/Entrepreneur/comments/1mrprvc/accomplishments_and_lessonslearned_saturday/",
+        "selftext": " **Please use this thread to share any accomplishment you care to gloat about, and some lessons learned.**\n\nThis is a weekly thread to encourage new members to participate, and post their accomplishments, as well as give the veterans an opportunity to inspire the up-and-comers. \n\nSince this thread can fill up quickly, consider sorting the comments by \"new\" (instead of \"best\" or \"top\") to see the newest posts.",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n8z9qli",
+          "author": "AutoModerator",
+          "body": "Welcome to /r/Entrepreneur and thank you for the post, /u/AutoModerator! Please make sure you read our [community rules](https://www.reddit.com/r/Entrepreneur/about/rules/) before participating here. As a quick refresher:  \n\n* Promotion of products and services is not allowed here. This includes dropping URLs, asking users to DM you, check your profile, job-seeking, and investor-seeking. *Unsanctioned promotion of any kind will lead to a permanent ban for all of your accounts.* \n* AI and GPT-generated posts and comments are unprofessional, and will be treated as spam, including a permanent ban for that account.   \n* If you have free offerings, please comment in our weekly Thursday stickied thread.\n* If you need feedback, please comment in our weekly Friday stickied thread. \n\n\n*I am a bot, and this action was performed automatically. Please [contact the moderators of this subreddit](/message/compose/?to=/r/Entrepreneur) if you have any questions or concerns.*",
+          "score": 1,
+          "created_utc": 1755334817.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n8zngon",
+          "author": "IcyLibrarian821",
+          "body": "Hi all, do you have a startup idea or an MVP?\n\nIf so, I could really use your insights with one of the following surveys, which will only take 3 minutes. I'm after 35 more responses, so please do consider helping out!! There's a chance to win one of 10 \u00a320 Amazon vouchers for your time.\n\n\ud83d\udca1 For those at the idea stage:\u00a0[https://forms.gle/B7Fgy7M8egvJ5KdS8](https://forms.gle/B7Fgy7M8egvJ5KdS8)\n\n\ud83d\udda5\ufe0f For those with an MVP:\u00a0[https://forms.gle/2sZicZCmfMLJMJ59A](https://forms.gle/2sZicZCmfMLJMJ59A)\n\nThank you!",
+          "score": 1,
+          "created_utc": 1755342554.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "Error code: 400 - {'error': {'message': 'Could not finish the message because max_tokens or model output limit was reached. Please try again with higher max_tokens.', 'type': 'invalid_request_error', 'param': None, 'code': None}}"
+          }
+        },
+        {
+          "id": "n90yvh8",
+          "author": "snowchess",
+          "body": "[We just closed a seed funding round](https://www.reddit.com/r/treecat/comments/1mr1rj5/treecatio_just_raised_seed_funding_more/) for our [treecat.io](http://treecat.io) ecommerce inventory management service, with a $4 million valuation! This is the overnight success of four years developing it (launching in July 2024) and making HUNDREDS of pitches to anyone and everyone who was willing to listen.\n\nIn the end, it was people we had a previous business relationships with who funded us. When you have an unproven business and little more than projections, it helps to have someone who knows you, and has first hand experience with your work ethic and skillset. But all those pitches to outsiders certainly helped us fine tune our deck and strategy to handle even the most skeptical questions.",
+          "score": 1,
+          "created_utc": 1755359810.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:34:49.216024"
+    },
+    {
+      "reddit_data": {
+        "id": "1k1wam9",
+        "title": "Sick of Spam? Use the Report Button!",
+        "author": "AutoModerator",
+        "subreddit": "Entrepreneur",
+        "score": 19,
+        "upvote_ratio": 1.0,
+        "num_comments": 1,
+        "created_utc": 1744949996.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1k1wam9/sick_of_spam_use_the_report_button/",
+        "permalink": "/r/Entrepreneur/comments/1k1wam9/sick_of_spam_use_the_report_button/",
+        "selftext": "Annoyed by AI-written posts full of stealth promotion? We are, too. Whenever you see it, hit that report button! The majority of spam that makes it through our ever-evolving filters is never reported to our mod team, even when the comments are full of complaints about the content violating our rules.\n\nTake a moment to reread two of our most important rules:\n\n##Rule 2: No Promotion  \n\n&gt; Posts and comments must NOT be made for the primary purpose of selling or promoting yourself, your company or any service.\n&gt;\n&gt; Dropping URLs, asking users to DM you, check your profile, or comment for private resources will all lead to a permanent ban.\n&gt;\n&gt; It is acceptable to cite your sources, however, there should not be an explicit solicitation, advertisement, or clear promotion for the intent of awareness.\n\n##Rule 6: Avoid unprofessional communication  \n\n&gt; As a professional subreddit, we expect all members to uphold a standard of reasonable decorum. Treat fellow entrepreneurs with the same respect you would show a colleague. While we don't have an HR department, that\u2019s no excuse for aggressive, foul, or unprofessional behavior. NSFW topics are permitted, but they must be clearly labeled. When in doubt, label it.\n&gt; \n&gt; AI-generated content is not acceptable to be posted. If your posts or comments were generated with AI, you may face a permanent ban.\n\n**If you see comments or posts generated by AI or using the subreddit for promotion rather than genuine entrepreneurship discussion, please report it.**\n\nHave questions? [Message the mod team](https://www.reddit.com/message/compose/?to=/r/Entrepreneur).",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "comments": [],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:34:58.236047"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms7gnb",
+        "title": "Acquiring a business, approaching the \u201cwhy would they sell if it\u2019s a good business?\u201d Need advice.",
+        "author": "piercedloser",
+        "subreddit": "Entrepreneur",
+        "score": 53,
+        "upvote_ratio": 0.9,
+        "num_comments": 54,
+        "created_utc": 1755377709.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1ms7gnb/acquiring_a_business_approaching_the_why_would/",
+        "permalink": "/r/Entrepreneur/comments/1ms7gnb/acquiring_a_business_approaching_the_why_would/",
+        "selftext": "As I understand it, most people selling their businesses do it because they\u2019re retiring.  \n\nI\u2019m looking at a pet grooming business, 250k price tag, 325k total revenue, and 160k alleged profit.\n\nNow I\u2019d have to look over the paperwork with my accountant and try to sniff out some discrepancies if there are any still.\n\nBut the owner\u2019s reason is relocation.  Which I feel has sort of made me raise red flags.  Now to be fair, the owner is a groomer there and very hands-on.  4 other employees as well, so I\u2019m sure to some degree he wants his people taken care of.  So I can sort of mental gymnastics my way into why someone may want to keep the business open.  Obviously he is an on-site guy, and he\u2019s probably got close relationships with the staff. \n\nHe\u2019s also willing to train the buyer for 3 months.  Which I would assume he\u2019d want to gtfo quick if there are hidden liabilities.  Still going to have my accountant and their lawyers sniff this out and set it up given the paperwork matches the listing details.\n\nI\u2019d like to know if sometimes people genuinely just relocate.  It seems he has other business ventures he\u2019s going into on his personal pages.",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n92jetp",
+          "author": "AutoModerator",
+          "body": "Welcome to /r/Entrepreneur and thank you for the post, /u/piercedloser! Please make sure you read our [community rules](https://www.reddit.com/r/Entrepreneur/about/rules/) before participating here. As a quick refresher:  \n\n* Promotion of products and services is not allowed here. This includes dropping URLs, asking users to DM you, check your profile, job-seeking, and investor-seeking. *Unsanctioned promotion of any kind will lead to a permanent ban for all of your accounts.* \n* AI and GPT-generated posts and comments are unprofessional, and will be treated as spam, including a permanent ban for that account.   \n* If you have free offerings, please comment in our weekly Thursday stickied thread.\n* If you need feedback, please comment in our weekly Friday stickied thread. \n\n\n*I am a bot, and this action was performed automatically. Please [contact the moderators of this subreddit](/message/compose/?to=/r/Entrepreneur) if you have any questions or concerns.*",
+          "score": 1,
+          "created_utc": 1755377709.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n92srqo",
+          "author": "Broken_Atoms",
+          "body": "If this pet grooming business doesn\u2019t come with hard assets like a building, I\u2019d take that same money and go after his business with your own business. The money he\u2019s asking for is completely ludicrous if there aren\u2019t actual assets. 250k to buy a service business with no real assets makes no sense at all.",
+          "score": 146,
+          "created_utc": 1755380921.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n92m75d",
+          "author": "edkang99",
+          "body": "We\u2019ve sold 3 businesses (gas stations and food court kiosk) because of relocation. Totally legit.",
+          "score": 26,
+          "created_utc": 1755378652.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n92oalx",
+          "author": "ForAllTimesSake",
+          "body": "I'm an M&amp;A adviser and moderator of r/buyingabusiness and r/businessbroker among other subs. \n\nRelocation is often legitimate, but it's also sometimes fake. I knew someone who claimed he was selling his UK business because he was relocating from the UK to Florida. The first buyer came along, had a casual chat with him, discovered he has two young daughters etc etc. Then he asked which schools the seller has investigated in Florida. When he didn't have an answer, the buyer walked away. The buyer figured that nobody considering moving their family would have not even bothered to investigate schools at the intended destination. ;)\n\n&gt;Still going to have my accountant and their lawyers sniff this out\u00a0\n\nSniffing out and doing due diligence are two completely different things. A proper financial and legal due diligence process will cost you a five figure sum! And that doesn't include operational due diligence. You need to be able to do that yourself. \n\n&gt;He\u2019s also willing to train the buyer for 3 months. Which I would assume he\u2019d want to gtfo quick if there are hidden liabilities.\u00a0\n\nThat's flawed logic.",
+          "score": 29,
+          "created_utc": 1755379373.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n92s4zt",
+          "author": "Angryceo",
+          "body": "pet grooming you are buying their book of business.   and most of that is personal relationships.   \n\n\ndo you know how to groom a dog?  i don't and id never get into a business i didn't have a clue on...",
+          "score": 17,
+          "created_utc": 1755380703.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n92rguy",
+          "author": "Bzom",
+          "body": "Selling nets several hundred thousand dollars. Closing doesn't. I dont know what that motivation requires you to do anything metal gymnastics.",
+          "score": 9,
+          "created_utc": 1755380469.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n92p8q0",
+          "author": "DicksBuddy",
+          "body": "\"Relocation\" usually means buy my dying business so I can get a condo in Florida and retire.",
+          "score": 14,
+          "created_utc": 1755379699.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n93n4sf",
+          "author": "need2fix2017",
+          "body": "Nobody has that kind of profit margin on that revenue. I\u2019d love to see the books.",
+          "score": 6,
+          "created_utc": 1755392161.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n92rece",
+          "author": "guitarthrower",
+          "body": "Full time employees? If so, the numbers are suspect.\n\nIf the business meets your non financial criteria, then do the financial work. If that passes then take a look at intent. Intent won\u2019t matter if it doesn\u2019t pass the other tests.\n\nEdit: I\u2019m assuming US based for salary numbers.",
+          "score": 4,
+          "created_utc": 1755380445.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:35:41.606287"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms3kz8",
+        "title": "I\u2019m getting review bombed by my $10M/yr competition! Help!",
+        "author": "bruhthisshitagain",
+        "subreddit": "Entrepreneur",
+        "score": 49,
+        "upvote_ratio": 0.9,
+        "num_comments": 30,
+        "created_utc": 1755369153.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1ms3kz8/im_getting_review_bombed_by_my_10myr_competition/",
+        "permalink": "/r/Entrepreneur/comments/1ms3kz8/im_getting_review_bombed_by_my_10myr_competition/",
+        "selftext": "Hey everyone, I\u2019m looking for some help\nabout my new iOS app launched.\n\nAfter a few days of successful organic posts on Tiktok our competitors have found our app. They\u2019ve started leaving bad reviews on the app, and we know it\u2019s the creators of the other app because you can see they are some of the only positive reviews on the competitors app, dates to the launch of their app!\n\nWhat do I do?",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n91tgah",
+          "author": "AutoModerator",
+          "body": "Welcome to /r/Entrepreneur and thank you for the post, /u/bruhthisshitagain! Please make sure you read our [community rules](https://www.reddit.com/r/Entrepreneur/about/rules/) before participating here. As a quick refresher:  \n\n* Promotion of products and services is not allowed here. This includes dropping URLs, asking users to DM you, check your profile, job-seeking, and investor-seeking. *Unsanctioned promotion of any kind will lead to a permanent ban for all of your accounts.* \n* AI and GPT-generated posts and comments are unprofessional, and will be treated as spam, including a permanent ban for that account.   \n* If you have free offerings, please comment in our weekly Thursday stickied thread.\n* If you need feedback, please comment in our weekly Friday stickied thread. \n\n\n*I am a bot, and this action was performed automatically. Please [contact the moderators of this subreddit](/message/compose/?to=/r/Entrepreneur) if you have any questions or concerns.*",
+          "score": 1,
+          "created_utc": 1755369153.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n91uns0",
+          "author": "Logical_gravel_1882",
+          "body": "Take screenshots so you have documentation of the tortious interference. Contact your lawyer and explain your competitors actions. Discuss your options with them.",
+          "score": 49,
+          "created_utc": 1755369535.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n91u6y2",
+          "author": "avgkay",
+          "body": "It\u2019s ridiculous that the competitor would do such thing. Sorry that you\u2019re going through that; really a dick move of them",
+          "score": 34,
+          "created_utc": 1755369387.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "negative",
+            "sentiment_score": -0.7,
+            "key_insight": "The commenter believes the competitor acted unethically/rudely and expresses sympathy for the affected party.",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        },
+        {
+          "id": "n91w5i5",
+          "author": "Suspicious_Ball_4121",
+          "body": "Screenshots. All day long. Links to the reviewers profiles if applicable. Same avatar etc spot the difference and such. \n\nGoogle their bio and name. Sometimes these companies hire paid actors to screw someone over in mass.\n\nSeek a legal solution. Draft a blog post showcasing all the evidence. Document. Document. Document. \n\nThey've fucked up, they see you as a threat. Take it as a compliment but do your due dilligence. Cover your arse.\n\nEdit typo. Said bit instead of but. My bad.",
+          "score": 16,
+          "created_utc": 1755370009.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n929zay",
+          "author": "Hot-Understanding-67",
+          "body": "You can contact AppStore for this and share the screenshots and your proofs. They will remove the ratings.",
+          "score": 12,
+          "created_utc": 1755374559.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:36:10.863989"
+    },
+    {
+      "reddit_data": {
+        "id": "1msfjlp",
+        "title": "Why would a founder shut down their company vs. get acquired?",
+        "author": "avgkay",
+        "subreddit": "Entrepreneur",
+        "score": 10,
+        "upvote_ratio": 0.86,
+        "num_comments": 13,
+        "created_utc": 1755398854.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1msfjlp/why_would_a_founder_shut_down_their_company_vs/",
+        "permalink": "/r/Entrepreneur/comments/1msfjlp/why_would_a_founder_shut_down_their_company_vs/",
+        "selftext": "^^",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n944rry",
+          "author": "AutoModerator",
+          "body": "Welcome to /r/Entrepreneur and thank you for the post, /u/avgkay! Please make sure you read our [community rules](https://www.reddit.com/r/Entrepreneur/about/rules/) before participating here. As a quick refresher:  \n\n* Promotion of products and services is not allowed here. This includes dropping URLs, asking users to DM you, check your profile, job-seeking, and investor-seeking. *Unsanctioned promotion of any kind will lead to a permanent ban for all of your accounts.* \n* AI and GPT-generated posts and comments are unprofessional, and will be treated as spam, including a permanent ban for that account.   \n* If you have free offerings, please comment in our weekly Thursday stickied thread.\n* If you need feedback, please comment in our weekly Friday stickied thread. \n\n\n*I am a bot, and this action was performed automatically. Please [contact the moderators of this subreddit](/message/compose/?to=/r/Entrepreneur) if you have any questions or concerns.*",
+          "score": 1,
+          "created_utc": 1755398854.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n946cyw",
+          "author": "Embarrassed_Fee_2954",
+          "body": "They carry more debt than the value of the multiple of their assets + cashflow? or maybe an asset they own like the building or land is worth more than the business in it, and running an unprofitable business hurts them more then just leasing that space out.",
+          "score": 11,
+          "created_utc": 1755399488.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n948kvd",
+          "author": "Dooraven",
+          "body": "Acquisitions often have personal guarantees and if the business is not doing well then personal guarantees are very risky especially if there is liquidation preferences",
+          "score": 5,
+          "created_utc": 1755400401.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94co4s",
+          "author": "-Teapot",
+          "body": "Being acquired can be miserable and it\u2019s especially more true when the company is about to shutdown because the acquisition terms are terrible. For example, if a company on the verge of bankruptcy sell to a private equity then the founders\u2019 payout will be low, the commitment will be multiple years, the PE won\u2019t focus on what the founders are passionate about instead will focus on profit (aka enshittification).",
+          "score": 6,
+          "created_utc": 1755402137.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94icos",
+          "author": "funwithfriends-11",
+          "body": "In addition to all the other comments, not every business is sellable.  In order to sell, you have to have a buyer.  If you're in a shrinking category (think Acme Horseshoes in 1915) then shutting down is what you do when there are no potential buyers.\n\nThe same thing is happening now on Amazon with 3rd party sellers.  Only 6 years ago, billions were being spent on acquiring and aggregating Amazon sellers.  Now, especially after the tariffs, acquisitions have slowed to a drip and the big buyers are in bankruptcy (Thrasio)",
+          "score": 3,
+          "created_utc": 1755404634.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94flxg",
+          "author": "Antique_Register2523",
+          "body": "I was consulting for a  SaaS business that had 11 customers and was breaking even on operational costs and was just getting to the point where the founder could start taking some salary.  Then COVID hit.  5 customers immediately cancelled and the runway the founder had diminished significantly.  \n\nTwo separate organizations approach them to buy the company for approximately $10k and basically reduce his equity to about 3%.  \n\nThis was his baby and his one and only shot at making it work.  Told both organizations to F off and he shut the business down as he couldn't finance nor weather the potential lengthy process of getting customers to come back. They also needed a job to pay for life expenses.",
+          "score": 2,
+          "created_utc": 1755403394.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n944zyf",
+          "author": "2buffalonickels",
+          "body": "Panic.",
+          "score": 2,
+          "created_utc": 1755398943.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "negative",
+            "sentiment_score": -0.8,
+            "key_insight": "The commenter expresses acute fear or alarm\u2014an emotional, urgent reaction rather than a reasoned response.",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        },
+        {
+          "id": "n94qhyh",
+          "author": "No_Rucks_Given",
+          "body": "Bigger priorities elsewhere",
+          "score": 1,
+          "created_utc": 1755408414.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94qx0z",
+          "author": "PNW_Uncle_Iroh",
+          "body": "No buyers. I\u2019ve shut down multiple companies that didn\u2019t have enough traction to warrant a full sale. A lot of times you can sell all the assets but the business ceases to exist.",
+          "score": 1,
+          "created_utc": 1755408620.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:36:55.844063"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrxedm",
+        "title": "I got 3000 visitors and 200 signups within a week, but 0 paying customers. Tell me what\u2019s wrong?",
+        "author": "arsenajax",
+        "subreddit": "Entrepreneur",
+        "score": 83,
+        "upvote_ratio": 0.82,
+        "num_comments": 74,
+        "created_utc": 1755355785.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1mrxedm/i_got_3000_visitors_and_200_signups_within_a_week/",
+        "permalink": "/r/Entrepreneur/comments/1mrxedm/i_got_3000_visitors_and_200_signups_within_a_week/",
+        "selftext": "I launched my AI companionship platform Narrin.ai last week on Reddit. It went wild. 3000 visitors and 200+ signups. \n\nBUT, 0 paying customers. With many visitors not returning.\n\nWhat do I miss? A killer feature? Pricing plans that are bad? Or no clear usp? \n\nBe brutally honest, I can take it.",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n90m1lk",
+          "author": "AutoModerator",
+          "body": "Welcome to /r/Entrepreneur and thank you for the post, /u/arsenajax! Please make sure you read our [community rules](https://www.reddit.com/r/Entrepreneur/about/rules/) before participating here. As a quick refresher:  \n\n* Promotion of products and services is not allowed here. This includes dropping URLs, asking users to DM you, check your profile, job-seeking, and investor-seeking. *Unsanctioned promotion of any kind will lead to a permanent ban for all of your accounts.* \n* AI and GPT-generated posts and comments are unprofessional, and will be treated as spam, including a permanent ban for that account.   \n* If you have free offerings, please comment in our weekly Thursday stickied thread.\n* If you need feedback, please comment in our weekly Friday stickied thread. \n\n\n*I am a bot, and this action was performed automatically. Please [contact the moderators of this subreddit](/message/compose/?to=/r/Entrepreneur) if you have any questions or concerns.*",
+          "score": 1,
+          "created_utc": 1755355786.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90qcm0",
+          "author": "Altruistic-Slide-512",
+          "body": "nowhere on your entire homepage is there pricing information. People really willing to pay just bounce at that point. Lack of transparency is frustrating. The really persistent like me will do a google search for your pricing, but no dice there either. maybe post some use cases front and center \"What would it be like having Octavio as a boyfriend\" \"What if Denise were my BFF\" -- with some quick walkthroughs or videos. Your app honestly looks cool - I want to try it,  but if I can't figure out what \"the deal\" is, then I'm not giving up my contact info to sign up. No self-respecting paid-type-customer would. Make sure that your trial has a  hard and final limit - no x hours per month or whatever -- x hours total. \"Looks like you tried it and you liked it. Pay really tiny amount of money per minute to continue by buying a block of minutes or sign up for a monthly account\" (example)",
+          "score": 44,
+          "created_utc": 1755357144.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n91cbya",
+          "author": "anglin_az",
+          "body": "I feel like AI is like porn. I'm not paying for it. But I'm going to use the hell out of it.",
+          "score": 14,
+          "created_utc": 1755363950.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90wqo9",
+          "author": "_rahmatullah",
+          "body": "What's the Problem You Solved?",
+          "score": 6,
+          "created_utc": 1755359141.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90x1lp",
+          "author": "FewEstablishment2696",
+          "body": "Firstly, your homepage is really slow.\n\nSecondly, I don't really get it. How is this any different to if I ask ChatGPT to \"act as a...\"?\n\nThis doesn't feel like something people would pay for with the plethora of free AI chatbots available.",
+          "score": 6,
+          "created_utc": 1755359237.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:37:25.915697"
+    }
+  ],
+  "summary": {
+    "total_posts": 15,
+    "analyzed_posts": 15,
+    "total_comments": 78,
+    "analyzed_comments": 78,
+    "avg_relevance": 0,
+    "post_sentiment_distribution": {},
+    "comment_sentiment_distribution": {
+      "negative": 4,
+      "positive": 6,
+      "neutral": 1
+    },
+    "comments_with_experience": 2,
+    "comments_with_advice": 1,
+    "top_tools_from_posts": [],
+    "top_tools_from_comments": [
+      "A/B testing",
+      "AI compression codecs"
+    ],
+    "top_topics": []
+  }
+}

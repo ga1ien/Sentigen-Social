@@ -25,14 +25,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { 
-  Users, 
-  UserPlus, 
-  Mail, 
-  MoreVertical, 
-  Shield, 
-  Edit, 
-  Trash2, 
+import {
+  Users,
+  UserPlus,
+  Mail,
+  MoreVertical,
+  Shield,
+  Edit,
+  Trash2,
   Crown,
   CheckCircle,
   XCircle,
@@ -63,74 +63,12 @@ interface Invitation {
   status: 'pending' | 'accepted' | 'expired'
 }
 
-// Mock data
-const mockTeamMembers: TeamMember[] = [
-  {
-    id: '1',
-    name: 'John Doe',
-    email: 'john@company.com',
-    avatar: '/avatars/01.png',
-    role: 'owner',
-    status: 'active',
-    joinedAt: '2024-01-01T00:00:00Z',
-    lastActive: '2024-01-16T10:30:00Z',
-    permissions: ['all']
-  },
-  {
-    id: '2',
-    name: 'Sarah Wilson',
-    email: 'sarah@company.com',
-    avatar: '/avatars/02.png',
-    role: 'admin',
-    status: 'active',
-    joinedAt: '2024-01-05T00:00:00Z',
-    lastActive: '2024-01-16T09:15:00Z',
-    permissions: ['create_posts', 'manage_calendar', 'view_analytics']
-  },
-  {
-    id: '3',
-    name: 'Mike Johnson',
-    email: 'mike@company.com',
-    role: 'editor',
-    status: 'active',
-    joinedAt: '2024-01-10T00:00:00Z',
-    lastActive: '2024-01-15T16:45:00Z',
-    permissions: ['create_posts', 'edit_posts']
-  },
-  {
-    id: '4',
-    name: 'Emily Chen',
-    email: 'emily@company.com',
-    role: 'member',
-    status: 'pending',
-    joinedAt: '2024-01-15T00:00:00Z',
-    lastActive: '2024-01-15T12:00:00Z',
-    permissions: ['view_posts']
-  }
-]
-
-const mockInvitations: Invitation[] = [
-  {
-    id: '1',
-    email: 'alex@company.com',
-    role: 'editor',
-    invitedBy: 'John Doe',
-    invitedAt: '2024-01-15T10:00:00Z',
-    status: 'pending'
-  },
-  {
-    id: '2',
-    email: 'lisa@company.com',
-    role: 'member',
-    invitedBy: 'Sarah Wilson',
-    invitedAt: '2024-01-14T14:30:00Z',
-    status: 'pending'
-  }
-]
+// Real data will be loaded from workspace members
+// For now, showing empty state until workspace integration is complete
 
 export default function TeamPage() {
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(mockTeamMembers)
-  const [invitations, setInvitations] = useState<Invitation[]>(mockInvitations)
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
+  const [invitations, setInvitations] = useState<Invitation[]>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [roleFilter, setRoleFilter] = useState<string>('all')
   const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false)
@@ -287,7 +225,7 @@ export default function TeamPage() {
               </div>
               <div>
                 <Label htmlFor="role">Role</Label>
-                <Select value={inviteRole} onValueChange={(value: string) => setInviteRole(value)}>
+                <Select value={inviteRole} onValueChange={(value) => setInviteRole(value as 'admin' | 'editor' | 'member')}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -400,7 +338,7 @@ export default function TeamPage() {
                               Send Message
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem 
+                            <DropdownMenuItem
                               onClick={() => handleRemoveMember(member.id)}
                               className="text-destructive"
                             >
@@ -423,7 +361,7 @@ export default function TeamPage() {
                 <Users className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
                 <h3 className="text-lg font-semibold mb-2">No team members found</h3>
                 <p className="text-muted-foreground">
-                  {searchTerm || roleFilter !== 'all' 
+                  {searchTerm || roleFilter !== 'all'
                     ? 'Try adjusting your search or filters'
                     : 'Invite your first team member to get started'
                   }
@@ -475,7 +413,7 @@ export default function TeamPage() {
                               Resend Invitation
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem 
+                            <DropdownMenuItem
                               onClick={() => handleCancelInvitation(invitation.id)}
                               className="text-destructive"
                             >

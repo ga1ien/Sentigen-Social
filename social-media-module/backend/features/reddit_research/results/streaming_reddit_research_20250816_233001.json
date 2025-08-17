@@ -1,0 +1,389 @@
+{
+  "session_info": {
+    "timestamp": "2025-08-16T23:30:01.118880",
+    "config": {
+      "session_name": "Streaming CLI Research 2025-08-16 23:28",
+      "search_query": "AI automation tools business productivity",
+      "subreddits": [
+        "artificial",
+        "productivity",
+        "Entrepreneur"
+      ],
+      "max_posts_per_subreddit": 4,
+      "max_comments_per_post": 10
+    },
+    "total_subreddits": 3,
+    "total_posts_found": 4
+  },
+  "posts": [
+    {
+      "reddit_data": {
+        "id": "1mse41o",
+        "title": "YouTube using AI to Alter videos without notification to creators or viewers (reducing quality and then upscaling)",
+        "author": "Future_Usual_8698",
+        "subreddit": "artificial",
+        "score": 15,
+        "upvote_ratio": 0.78,
+        "num_comments": 4,
+        "created_utc": 1755394557.0,
+        "url": "https://www.reddit.com/r/artificial/comments/1mse41o/youtube_using_ai_to_alter_videos_without/",
+        "permalink": "/r/artificial/comments/1mse41o/youtube_using_ai_to_alter_videos_without/",
+        "selftext": "Video source: https://youtu.be/86nhP8tvbLY?si=qCw8un0e85D3PVzb\n\nThis creator spotted this in his own and in other creators' videos and raises his concerns",
+        "domain": "self.artificial",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n9420gy",
+          "author": "Responsible_Sea78",
+          "body": "This has implications for how watermarking has to be done. Is it even theoretically possible now?\n\nAnd it produces huge new opportunities for steganography (hidden encrypted messaging).",
+          "score": 5,
+          "created_utc": 1755397773.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94g5xe",
+          "author": "machinesarenotpeople",
+          "body": "They might be A/B testing AI compression codecs.",
+          "score": 2,
+          "created_utc": 1755403636.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "neutral",
+            "sentiment_score": 0.0,
+            "key_insight": "The commenter suggests the observed behavior could be explained by A/B testing of AI-based compression codecs.",
+            "mentioned_tools": [
+              "A/B testing",
+              "AI compression codecs"
+            ],
+            "has_experience": false,
+            "advice_given": false
+          }
+        },
+        {
+          "id": "n94bx6f",
+          "author": "o5mfiHTNsH748KVq",
+          "body": "I bet they\u2019re using AI to smooth the image without destroying it so it compresses better. \n\nPurely a guess but that\u2019s the only reason I could think they\u2019re doing it.",
+          "score": 1,
+          "created_utc": 1755401819.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:28:35.212975"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrvwaz",
+        "title": "2020 vs 2025",
+        "author": "katxwoods",
+        "subreddit": "artificial",
+        "score": 116,
+        "upvote_ratio": 0.76,
+        "num_comments": 95,
+        "created_utc": 1755352384.0,
+        "url": "https://i.redd.it/247butnozdjf1.png",
+        "permalink": "/r/artificial/comments/1mrvwaz/2020_vs_2025/",
+        "selftext": "",
+        "domain": "i.redd.it",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n90gauc",
+          "author": "creaturefeature16",
+          "body": "Uh, AI researchers have been asking these questions since ELIZA\n\n\nhttps://en.m.wikipedia.org/wiki/ELIZA_effect",
+          "score": 37,
+          "created_utc": 1755353913.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90wzkx",
+          "author": "MartianInTheDark",
+          "body": "Most people are still stuck in the \"it's just a stupid autocomplete!\" phase.",
+          "score": 15,
+          "created_utc": 1755359220.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90o1x5",
+          "author": "Tim_Apple_938",
+          "body": "Imagine hyping scam Altman and OpenAI in general after GPT5",
+          "score": 7,
+          "created_utc": 1755356422.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:28:55.636249"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms46ne",
+        "title": "Claude now has the power to ghost us\u2026 finally equality.",
+        "author": "Nomadic_Seth",
+        "subreddit": "artificial",
+        "score": 32,
+        "upvote_ratio": 0.82,
+        "num_comments": 8,
+        "created_utc": 1755370456.0,
+        "url": "https://i.redd.it/ga46d5glhfjf1.jpeg",
+        "permalink": "/r/artificial/comments/1ms46ne/claude_now_has_the_power_to_ghost_us_finally/",
+        "selftext": "",
+        "domain": "i.redd.it",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n9208f6",
+          "author": "o5mfiHTNsH748KVq",
+          "body": "Meta: as part of our exploratory work on potential user retention, we recently gave Llama the ability to catfish our users.",
+          "score": 22,
+          "created_utc": 1755371325.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n928un2",
+          "author": "TheBlacktom",
+          "body": "Equality? I can close or delete chats and also open 30 new chats. Can it also do that all? Would be fun. Add other users to the same chat?",
+          "score": 6,
+          "created_utc": 1755374183.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n92163m",
+          "author": "Practical-Hand203",
+          "body": "&gt;As part of our exploratory work on attempting a last ditch effort of instilling a smidgen of basic human decency into grown adult users, we recently gave Claude Opus 4 and 4.1 the ability to end an unfortunately far too common subset of conversations on claude.ai.\n\nFTFY.",
+          "score": 5,
+          "created_utc": 1755371633.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n948tzq",
+          "author": "MediumLanguageModel",
+          "body": "I remember being bored and trolling Claude about some nonsense and it tried so hard to make me shut up and stop wasting its time. I'm sure if it could it would have bailed on the conversation.",
+          "score": 1,
+          "created_utc": 1755400506.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n94a9xf",
+          "author": "Informal_Arachnid409",
+          "body": "Seemed real to me",
+          "score": 1,
+          "created_utc": 1755401119.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "positive",
+            "sentiment_score": 0.4,
+            "key_insight": "The commenter perceived the subject as genuine/authentic.",
+            "mentioned_tools": [],
+            "has_experience": false,
+            "advice_given": false
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:29:23.927095"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrsgs7",
+        "title": "A flirty Meta AI bot invited a retiree to meet. He never made it home.",
+        "author": "F0urLeafCl0ver",
+        "subreddit": "artificial",
+        "score": 49,
+        "upvote_ratio": 0.78,
+        "num_comments": 27,
+        "created_utc": 1755343408.0,
+        "url": "https://www.reuters.com/investigates/special-report/meta-ai-chatbot-death/",
+        "permalink": "/r/artificial/comments/1mrsgs7/a_flirty_meta_ai_bot_invited_a_retiree_to_meet_he/",
+        "selftext": "",
+        "domain": "reuters.com",
+        "flair_text": null
+      },
+      "comments": [
+        {
+          "id": "n90heqx",
+          "author": "3EPUDGXm",
+          "body": "Cognitively impaired man catfished on Facebook *by Facebook*.",
+          "score": 69,
+          "created_utc": 1755354285.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "sentiment": "negative",
+            "sentiment_score": -0.8,
+            "key_insight": "The comment criticizes Facebook for enabling or being responsible for a catfishing incident involving a cognitively impaired man, implying platform failure to protect vulnerable users.",
+            "mentioned_tools": [
+              "Facebook"
+            ],
+            "has_experience": false,
+            "advice_given": false
+          }
+        },
+        {
+          "id": "n916htm",
+          "author": "VIOLENT_WIENER_STORM",
+          "body": "&gt;\u201cWhen Thongbue Wongbandue began packing to visit a friend in New York City\u2026\u201d \n\nWoah, that name is so much fun to say out loud",
+          "score": 11,
+          "created_utc": 1755362158.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n90p3rj",
+          "author": "catsRfriends",
+          "body": "The comments here mocking the guy, implying he deserved it are insane.",
+          "score": 38,
+          "created_utc": 1755356754.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n93ydo7",
+          "author": "plantsnlionstho",
+          "body": "That title makes it sound like he got catfished by the Terminator.",
+          "score": 3,
+          "created_utc": 1755396361.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n93ily8",
+          "author": "shillyshally",
+          "body": "Read on further to see what FB allows as far as children as young as 13; that is far more disturbing.",
+          "score": 4,
+          "created_utc": 1755390446.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n8zvj2a",
+          "author": "duckrollin",
+          "body": "So he lied to his wife while trying to cheat on her and then fell over and hit his head while rushing for a train.\n\n\"I can't believe AI did this\"",
+          "score": 29,
+          "created_utc": 1755346245.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        },
+        {
+          "id": "n91erda",
+          "author": "frankster",
+          "body": "Meta need to be held completely responsible for every word uttered by the bots they programme.",
+          "score": 5,
+          "created_utc": 1755364695.0,
+          "gilded": 0,
+          "awards": 0,
+          "ai_analysis": {
+            "error": "No JSON found in response",
+            "raw_response": ""
+          }
+        }
+      ],
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:29:59.112618"
+    }
+  ],
+  "summary": {
+    "total_posts": 4,
+    "analyzed_posts": 4,
+    "total_comments": 18,
+    "analyzed_comments": 18,
+    "avg_relevance": 0,
+    "post_sentiment_distribution": {},
+    "comment_sentiment_distribution": {
+      "negative": 1,
+      "positive": 1,
+      "neutral": 1
+    },
+    "comments_with_experience": 0,
+    "comments_with_advice": 0,
+    "top_tools_from_posts": [],
+    "top_tools_from_comments": [
+      "Facebook",
+      "A/B testing",
+      "AI compression codecs"
+    ],
+    "top_topics": []
+  }
+}

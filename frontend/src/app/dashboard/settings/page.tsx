@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -12,14 +12,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
-import { 
-  Settings as SettingsIcon, 
-  User, 
-  Bell, 
-  Shield, 
-  Palette, 
-  Globe, 
-  CreditCard, 
+import {
+  Settings as SettingsIcon,
+  User,
+  Bell,
+  Shield,
+  Palette,
+  Globe,
+  CreditCard,
   Key,
   Upload,
   Save,
@@ -36,6 +36,7 @@ import {
   AlertCircle
 } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
+import { createClient } from '@/lib/supabase/client'
 
 interface SocialAccount {
   platform: 'twitter' | 'linkedin' | 'facebook' | 'instagram'
@@ -48,16 +49,44 @@ export default function SettingsPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const { toast } = useToast()
+  const supabase = createClient()
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
-  // Mock user data
+  // Real user data from Supabase
   const [userProfile, setUserProfile] = useState({
-    name: 'John Doe',
-    email: 'john@company.com',
+    name: '',
+    email: '',
     avatar: '/avatars/01.png',
-    bio: 'Social media manager passionate about creating engaging content.',
+    bio: '',
     timezone: 'America/New_York',
     language: 'en'
   })
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          setUser(user)
+          setUserProfile({
+            name: user.user_metadata?.full_name || user.email?.split('@')[0] || '',
+            email: user.email || '',
+            avatar: user.user_metadata?.avatar_url || '/avatars/01.png',
+            bio: user.user_metadata?.bio || '',
+            timezone: user.user_metadata?.timezone || 'America/New_York',
+            language: user.user_metadata?.language || 'en'
+          })
+        }
+      } catch (error) {
+        console.error('Error fetching user:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    getUser()
+  }, [supabase.auth])
 
   const [notifications, setNotifications] = useState({
     emailNotifications: true,
@@ -68,32 +97,48 @@ export default function SettingsPage() {
     marketingEmails: false
   })
 
-  const [socialAccounts, setSocialAccounts] = useState<SocialAccount[]>([
-    {
-      platform: 'twitter',
-      username: '@johndoe',
-      connected: true,
-      lastSync: '2024-01-16T10:30:00Z'
-    },
-    {
-      platform: 'linkedin',
-      username: 'John Doe',
-      connected: true,
-      lastSync: '2024-01-16T09:15:00Z'
-    },
-    {
-      platform: 'facebook',
-      username: 'John Doe',
-      connected: false,
-      lastSync: ''
-    },
-    {
-      platform: 'instagram',
-      username: '@johndoe_official',
-      connected: true,
-      lastSync: '2024-01-15T16:45:00Z'
+  const [socialAccounts, setSocialAccounts] = useState<SocialAccount[]>([])
+  const [loadingSocial, setLoadingSocial] = useState(true)
+
+  // Load social accounts
+  useEffect(() => {
+    if (user && !loading) {
+      loadSocialAccounts()
     }
-  ])
+  }, [user, loading])
+
+  const loadSocialAccounts = async () => {
+    try {
+      setLoadingSocial(true)
+      const response = await fetch('/api/social-accounts/connected', {
+        headers: {
+          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+        }
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        const accounts = Object.entries(data.accounts).map(([platform, info]: [string, any]) => ({
+          platform: platform as 'twitter' | 'linkedin' | 'facebook' | 'instagram',
+          username: info.username || '',
+          connected: info.connected || false,
+          lastSync: info.last_sync || ''
+        }))
+        setSocialAccounts(accounts)
+      }
+    } catch (error) {
+      console.error('Error loading social accounts:', error)
+      // Fallback to empty accounts
+      setSocialAccounts([
+        { platform: 'twitter', username: '', connected: false, lastSync: '' },
+        { platform: 'linkedin', username: '', connected: false, lastSync: '' },
+        { platform: 'facebook', username: '', connected: false, lastSync: '' },
+        { platform: 'instagram', username: '', connected: false, lastSync: '' }
+      ])
+    } finally {
+      setLoadingSocial(false)
+    }
+  }
 
   const [workspaceSettings, setWorkspaceSettings] = useState({
     workspaceName: 'My Workspace',
@@ -107,13 +152,31 @@ export default function SettingsPage() {
   const handleSaveProfile = async () => {
     setIsLoading(true)
     try {
-      // Mock API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      if (!user) {
+        throw new Error('No user found')
+      }
+
+      // Update user metadata in Supabase
+      const { error } = await supabase.auth.updateUser({
+        data: {
+          full_name: userProfile.name,
+          bio: userProfile.bio,
+          timezone: userProfile.timezone,
+          language: userProfile.language,
+          avatar_url: userProfile.avatar
+        }
+      })
+
+      if (error) {
+        throw error
+      }
+
       toast({
         title: "Profile updated",
         description: "Your profile has been updated successfully.",
       })
     } catch (error) {
+      console.error('Error updating profile:', error)
       toast({
         title: "Update failed",
         description: "There was an error updating your profile.",
@@ -124,24 +187,78 @@ export default function SettingsPage() {
     }
   }
 
-  const handleConnectSocial = (platform: string) => {
-    setSocialAccounts(prev => 
-      prev.map(account => 
-        account.platform === platform 
-          ? { ...account, connected: true, lastSync: new Date().toISOString() }
-          : account
-      )
-    )
-    toast({
-      title: "Account connected",
-      description: `${platform.charAt(0).toUpperCase() + platform.slice(1)} account connected successfully.`,
-    })
+  const handleConnectSocial = async (platform: string) => {
+    try {
+      const account = socialAccounts.find(acc => acc.platform === platform)
+      const isCurrentlyConnected = account?.connected || false
+
+      if (isCurrentlyConnected) {
+        // Disconnect
+        const response = await fetch(`/api/social-accounts/disconnect/${platform}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+          }
+        })
+
+        if (response.ok) {
+          setSocialAccounts(prev =>
+            prev.map(acc =>
+              acc.platform === platform
+                ? { ...acc, connected: false, lastSync: '' }
+                : acc
+            )
+          )
+          toast({
+            title: "Account disconnected",
+            description: `${platform} has been disconnected.`,
+          })
+        } else {
+          throw new Error('Failed to disconnect account')
+        }
+      } else {
+        // Connect
+        const response = await fetch(`/api/social-accounts/connect/${platform}`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+          }
+        })
+
+        if (response.ok) {
+          const data = await response.json()
+          toast({
+            title: "Connection initiated",
+            description: data.instructions || `Please complete the ${platform} authorization process.`,
+          })
+
+          // Open connection URL if provided
+          if (data.connection_url) {
+            window.open(data.connection_url, '_blank')
+          }
+
+          // Refresh accounts after a short delay
+          setTimeout(() => {
+            loadSocialAccounts()
+          }, 2000)
+        } else {
+          throw new Error('Failed to initiate connection')
+        }
+      }
+    } catch (error) {
+      console.error('Error managing social account:', error)
+      toast({
+        title: "Error",
+        description: "Failed to update social account. Please try again.",
+        variant: "destructive",
+      })
+    }
   }
 
   const handleDisconnectSocial = (platform: string) => {
-    setSocialAccounts(prev => 
-      prev.map(account => 
-        account.platform === platform 
+    setSocialAccounts(prev =>
+      prev.map(account =>
+        account.platform === platform
           ? { ...account, connected: false, lastSync: '' }
           : account
       )
@@ -438,8 +555,8 @@ export default function SettingsPage() {
                   </div>
                   <div>
                     {account.connected ? (
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         onClick={() => handleDisconnectSocial(account.platform)}
                       >
@@ -447,7 +564,7 @@ export default function SettingsPage() {
                         Disconnect
                       </Button>
                     ) : (
-                      <Button 
+                      <Button
                         size="sm"
                         onClick={() => handleConnectSocial(account.platform)}
                       >
@@ -482,8 +599,8 @@ export default function SettingsPage() {
 
               <div>
                 <Label htmlFor="default-timezone">Default Timezone</Label>
-                <Select 
-                  value={workspaceSettings.defaultTimezone} 
+                <Select
+                  value={workspaceSettings.defaultTimezone}
                   onValueChange={(value) => setWorkspaceSettings(prev => ({ ...prev, defaultTimezone: value }))}
                 >
                   <SelectTrigger>

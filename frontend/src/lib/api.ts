@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { env } from '@/lib/env'
+import { createClient } from '@/lib/supabase/client'
 
 // Create axios instance with base configuration
 const api = axios.create({
@@ -12,12 +13,19 @@ const api = axios.create({
 
 // Request interceptor to add auth token
 api.interceptors.request.use(
-  (config) => {
-    // In a real app, you'd get the token from Supabase auth
-    const token = 'mock-jwt-token' // This would come from Supabase session
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+  async (config) => {
+    try {
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+
+      if (session?.access_token) {
+        config.headers.Authorization = `Bearer ${session.access_token}`
+      }
+    } catch (error) {
+      console.warn('Failed to get auth token:', error)
+      // Continue without token - let backend handle unauthorized requests
     }
+
     return config
   },
   (error) => {
@@ -28,10 +36,20 @@ api.interceptors.request.use(
 // Response interceptor for error handling
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     if (error.response?.status === 401) {
-      // Handle unauthorized - redirect to login
-      window.location.href = '/auth/login'
+      // Handle unauthorized - clear session and redirect to login
+      try {
+        const supabase = createClient()
+        await supabase.auth.signOut()
+      } catch (signOutError) {
+        console.warn('Failed to sign out:', signOutError)
+      }
+
+      // Only redirect if not already on auth pages
+      if (!window.location.pathname.startsWith('/auth')) {
+        window.location.href = '/auth/login'
+      }
     }
     return Promise.reject(error)
   }
@@ -54,7 +72,7 @@ export const apiClient = {
     ai_provider: string
   }) => api.post('/api/content/generate', data),
 
-  optimizeContent: (platform: string, content: string) => 
+  optimizeContent: (platform: string, content: string) =>
     api.post(`/api/content/optimize/${platform}`, { content }),
 
   // Posts
@@ -136,7 +154,7 @@ export const apiClient = {
 
   getMidjourneyTask: (taskId: string) => api.get(`/api/midjourney/task/${taskId}`),
 
-  upscaleMidjourneyImage: (taskId: string, index: number) => 
+  upscaleMidjourneyImage: (taskId: string, index: number) =>
     api.post(`/api/midjourney/upscale/${taskId}`, { index }),
 }
 

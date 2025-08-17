@@ -1,0 +1,17 @@
+{
+  "reddit_research_sessions": {
+    "exists": true,
+    "sample_count": 0,
+    "status": "Table exists and is accessible"
+  },
+  "reddit_content": {
+    "exists": true,
+    "sample_count": 0,
+    "status": "Table exists and is accessible"
+  },
+  "reddit_research_insights": {
+    "exists": true,
+    "sample_count": 0,
+    "status": "Table exists and is accessible"
+  }
+}

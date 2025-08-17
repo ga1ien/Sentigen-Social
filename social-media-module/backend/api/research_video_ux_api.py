@@ -11,7 +11,7 @@ import structlog
 from fastapi import APIRouter, BackgroundTasks, HTTPException
 from pydantic import BaseModel, Field
 
-from services.chrome_research_service import ChromeResearchService
+from services.gpt5_chrome_research_service_fixed import GPT5ChromeResearchServiceFixed
 
 logger = structlog.get_logger(__name__)
 
@@ -299,7 +299,7 @@ async def simulate_research(workflow_id: str, request: ResearchSetupRequest):
     """Perform actual research using Chrome MCP with realistic progress updates"""
     try:
         session = research_sessions[workflow_id]
-        chrome_research = ChromeResearchService()
+        chrome_research = GPT5ChromeResearchServiceFixed()
 
         # Step 1: Initialize Chrome research session
         session.update({"progress": 10.0, "current_step": "Initializing Chrome browser automation..."})
@@ -310,8 +310,12 @@ async def simulate_research(workflow_id: str, request: ResearchSetupRequest):
             {"progress": 20.0, "current_step": "Opening research tabs (Reddit, LinkedIn, Substack, etc.)..."}
         )
 
-        research_data = await chrome_research.start_research_session(
-            research_topics=request.research_topics, target_audience=request.target_audience
+        research_data = await chrome_research.start_intelligent_research_session(
+            workflow_id=workflow_id,
+            research_topics=request.research_topics,
+            target_audience=request.target_audience,
+            user_id="demo_user",  # In production, get from auth
+            workspace_id="demo_workspace",  # In production, get from auth
         )
 
         if research_data.get("status") == "failed":

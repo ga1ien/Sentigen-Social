@@ -20,17 +20,17 @@ function AuthCallbackContent() {
       try {
         const code = searchParams.get('code')
         const error = searchParams.get('error')
-        const error_description = searchParams.get('error_description')
+        const errorDescription = searchParams.get('error_description')
 
         if (error) {
           setStatus('error')
-          setMessage(error_description || error)
+          setMessage(errorDescription || error)
           return
         }
 
         if (code) {
           const { data, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
-          
+
           if (exchangeError) {
             setStatus('error')
             setMessage(exchangeError.message)
@@ -40,7 +40,7 @@ function AuthCallbackContent() {
           if (data.session) {
             setStatus('success')
             setMessage('Authentication successful! Redirecting to dashboard...')
-            
+
             // Small delay to show success message
             setTimeout(() => {
               router.push('/dashboard')
@@ -49,7 +49,7 @@ function AuthCallbackContent() {
         } else {
           // Handle other auth flows (like email confirmation)
           const { data: { session }, error: sessionError } = await supabase.auth.getSession()
-          
+
           if (sessionError) {
             setStatus('error')
             setMessage(sessionError.message)
@@ -106,7 +106,7 @@ function AuthCallbackContent() {
               </Link>
             </div>
           )}
-          
+
           {status === 'success' && (
             <Link href="/dashboard">
               <Button className="w-full">

@@ -115,29 +115,19 @@ APP_PORT=8000
 LOG_LEVEL=INFO
 ```
 
-### 4. Frontend Setup
+### 4. Start Backend
 
 ```bash
-cd ../frontend
-
-# Install dependencies
-npm install
-
-# Start development server
-npm start
-```
-
-### 5. Start Backend
-
-```bash
-cd ../backend
+cd backend
 
 # Activate virtual environment if not already active
 source venv/bin/activate
 
 # Start the FastAPI server
-python main.py
+uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
 ```
+
+**Note:** The main frontend is now located at `/frontend` (Next.js 15) in the root directory.
 
 ## 🔧 Configuration
 
@@ -205,7 +195,20 @@ The system will automatically detect and use the appropriate provider based on y
 
 ### API Usage
 
-#### Create a Post
+#### Create a Post (New API)
+
+```bash
+curl -X POST "http://localhost:8000/api/posts" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "Hello from the Social Media Module! 🚀",
+    "content_type": "text",
+    "platforms": ["twitter", "linkedin"],
+    "media_asset_ids": []
+  }'
+```
+
+#### Create a Post (Legacy API - for backward compatibility)
 
 ```bash
 curl -X POST "http://localhost:8000/api/post" \
@@ -238,13 +241,13 @@ from agents.social_media_agent import SocialMediaAgent
 async def main():
     # Initialize the agent
     agent = SocialMediaAgent(ayrshare_api_key="your-api-key")
-    
+
     # Create a post
     result = await agent.post_content(
         prompt="Post 'Hello World!' to Twitter and LinkedIn",
         context="You are helping with a test post"
     )
-    
+
     print(f"Status: {result.status}")
     print(f"Message: {result.message}")
     print(f"Platform Results: {result.platform_results}")
@@ -257,12 +260,19 @@ if __name__ == "__main__":
 
 ### Endpoints
 
-#### Social Media Posting
-- **POST** `/api/post` - Create a social media post
-- **POST** `/api/post/stream` - Create post with streaming response
-- **GET** `/api/analytics/{post_id}` - Get post analytics
-- **GET** `/api/accounts` - Get connected social media accounts
-- **POST** `/api/optimize` - Optimize content for platforms
+#### Social Media Posting (New API)
+- **POST** `/api/posts` - Create a social media post
+- **GET** `/api/posts` - List posts with filtering
+- **GET** `/api/posts/{id}` - Get specific post
+- **PUT** `/api/posts/{id}` - Update post
+- **DELETE** `/api/posts/{id}` - Delete post
+- **POST** `/api/posts/{id}/publish` - Publish post to platforms
+- **POST** `/api/content/generate` - Generate AI content
+- **POST** `/api/content/optimize/{platform}` - Optimize content for platform
+
+#### Social Media Posting (Legacy API - for backward compatibility)
+- **POST** `/api/post` - Create a social media post (legacy)
+- **POST** `/api/optimize` - Optimize content for platforms (legacy)
 
 #### HeyGen Video Generation
 - **POST** `/api/heygen/video` - Create a video with HeyGen

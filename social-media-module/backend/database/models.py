@@ -2,15 +2,17 @@
 Database models for the social media module.
 """
 
-from pydantic import BaseModel, Field, HttpUrl
-from typing import Dict, Any, List, Optional, Union
+import uuid
 from datetime import datetime
 from enum import Enum
-import uuid
+from typing import Any, Dict, List, Optional, Union
+
+from pydantic import BaseModel, Field, HttpUrl
 
 
 class UserRole(str, Enum):
     """User roles."""
+
     ADMIN = "admin"
     USER = "user"
     VIEWER = "viewer"
@@ -18,6 +20,7 @@ class UserRole(str, Enum):
 
 class TaskStatus(str, Enum):
     """Task status options."""
+
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -27,6 +30,7 @@ class TaskStatus(str, Enum):
 
 class PostStatus(str, Enum):
     """Post status options."""
+
     DRAFT = "draft"
     SCHEDULED = "scheduled"
     PUBLISHED = "published"
@@ -35,6 +39,7 @@ class PostStatus(str, Enum):
 
 class MediaType(str, Enum):
     """Media asset types."""
+
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -43,6 +48,7 @@ class MediaType(str, Enum):
 
 class WorkerType(str, Enum):
     """Worker types."""
+
     RESEARCH = "research"
     CONTENT = "content"
     TOOL = "tool"
@@ -51,24 +57,40 @@ class WorkerType(str, Enum):
     VIDEO = "video"
 
 
+class SubscriptionTier(str, Enum):
+    """Subscription tier options."""
+
+    FREE = "free"
+    STARTER = "starter"
+    CREATOR = "creator"
+    CREATOR_PRO = "creator_pro"
+    ENTERPRISE = "enterprise"
+
+
 class User(BaseModel):
-    """User model."""
+    """User model - enhanced to match unified schema."""
+
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     email: str
     full_name: Optional[str] = None
     avatar_url: Optional[HttpUrl] = None
     role: UserRole = UserRole.USER
+    subscription_tier: SubscriptionTier = SubscriptionTier.FREE
+    is_admin: bool = False
     is_active: bool = True
+    onboarding_completed: bool = False
+    preferences: Dict[str, Any] = Field(default_factory=dict)
     metadata: Dict[str, Any] = Field(default_factory=dict)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
-    
+
     class Config:
         use_enum_values = True
 
 
 class Workspace(BaseModel):
     """Workspace model."""
+
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str
     description: Optional[str] = None
@@ -79,13 +101,14 @@ class Workspace(BaseModel):
     is_active: bool = True
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
-    
+
     class Config:
         use_enum_values = True
 
 
 class SocialMediaPost(BaseModel):
     """Social media post model."""
+
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     workspace_id: str
     user_id: str
@@ -103,13 +126,14 @@ class SocialMediaPost(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
-    
+
     class Config:
         use_enum_values = True
 
 
 class WorkerTask(BaseModel):
     """Worker task model."""
+
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     workspace_id: Optional[str] = None
     user_id: Optional[str] = None
@@ -128,13 +152,14 @@ class WorkerTask(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
-    
+
     class Config:
         use_enum_values = True
 
 
 class WorkerResult(BaseModel):
     """Worker result model."""
+
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     task_id: str
     worker_type: WorkerType
@@ -144,13 +169,14 @@ class WorkerResult(BaseModel):
     execution_time: Optional[float] = None
     metadata: Dict[str, Any] = Field(default_factory=dict)
     created_at: datetime = Field(default_factory=datetime.utcnow)
-    
+
     class Config:
         use_enum_values = True
 
 
 class MediaAsset(BaseModel):
     """Media asset model."""
+
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     workspace_id: str
     user_id: str
@@ -168,13 +194,14 @@ class MediaAsset(BaseModel):
     is_public: bool = False
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
-    
+
     class Config:
         use_enum_values = True
 
 
 class Campaign(BaseModel):
     """Marketing campaign model."""
+
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     workspace_id: str
     user_id: str
@@ -195,6 +222,7 @@ class Campaign(BaseModel):
 
 class ContentTemplate(BaseModel):
     """Content template model."""
+
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     workspace_id: str
     user_id: str
@@ -214,6 +242,7 @@ class ContentTemplate(BaseModel):
 
 class WorkflowExecution(BaseModel):
     """Workflow execution model."""
+
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     workspace_id: str
     user_id: str
@@ -229,205 +258,161 @@ class WorkflowExecution(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
-    
+
     class Config:
         use_enum_values = True
 
 
-# Database schema creation SQL
-DATABASE_SCHEMA = """
--- Users table
-CREATE TABLE IF NOT EXISTS users (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    full_name VARCHAR(255),
-    avatar_url TEXT,
-    role VARCHAR(50) DEFAULT 'user',
-    is_active BOOLEAN DEFAULT true,
-    metadata JSONB DEFAULT '{}',
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+# =====================================================
+# ADDITIONAL MODELS FOR UNIFIED SCHEMA
+# =====================================================
 
--- Workspaces table
-CREATE TABLE IF NOT EXISTS workspaces (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    owner_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    settings JSONB DEFAULT '{}',
-    brand_guidelines JSONB,
-    social_accounts JSONB DEFAULT '[]',
-    is_active BOOLEAN DEFAULT true,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
 
--- Social media posts table
-CREATE TABLE IF NOT EXISTS social_media_posts (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    workspace_id UUID REFERENCES workspaces(id) ON DELETE CASCADE,
-    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    title VARCHAR(255),
-    content TEXT NOT NULL,
-    platforms TEXT[] DEFAULT '{}',
-    media_assets TEXT[] DEFAULT '{}',
-    hashtags TEXT[] DEFAULT '{}',
-    mentions TEXT[] DEFAULT '{}',
-    status VARCHAR(50) DEFAULT 'draft',
-    scheduled_for TIMESTAMP WITH TIME ZONE,
-    published_at TIMESTAMP WITH TIME ZONE,
-    platform_results JSONB DEFAULT '[]',
-    analytics JSONB DEFAULT '{}',
-    metadata JSONB DEFAULT '{}',
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+class WorkspaceMember(BaseModel):
+    """Workspace member model."""
 
--- Worker tasks table
-CREATE TABLE IF NOT EXISTS worker_tasks (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    workspace_id UUID REFERENCES workspaces(id) ON DELETE CASCADE,
-    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    worker_type VARCHAR(50) NOT NULL,
-    task_type VARCHAR(100) NOT NULL,
-    input_data JSONB NOT NULL,
-    status VARCHAR(50) DEFAULT 'pending',
-    priority INTEGER DEFAULT 1,
-    retry_count INTEGER DEFAULT 0,
-    max_retries INTEGER DEFAULT 3,
-    timeout_seconds INTEGER DEFAULT 300,
-    scheduled_for TIMESTAMP WITH TIME ZONE,
-    started_at TIMESTAMP WITH TIME ZONE,
-    completed_at TIMESTAMP WITH TIME ZONE,
-    error_message TEXT,
-    metadata JSONB DEFAULT '{}',
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    workspace_id: str
+    user_id: str
+    role: str = "member"  # owner, admin, editor, member
+    permissions: Dict[str, Any] = Field(default_factory=dict)
+    joined_at: datetime = Field(default_factory=datetime.utcnow)
 
--- Worker results table
-CREATE TABLE IF NOT EXISTS worker_results (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    task_id UUID REFERENCES worker_tasks(id) ON DELETE CASCADE,
-    worker_type VARCHAR(50) NOT NULL,
-    status VARCHAR(50) NOT NULL,
-    result_data JSONB,
-    error_message TEXT,
-    execution_time FLOAT,
-    metadata JSONB DEFAULT '{}',
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
 
--- Media assets table
-CREATE TABLE IF NOT EXISTS media_assets (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    workspace_id UUID REFERENCES workspaces(id) ON DELETE CASCADE,
-    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    filename VARCHAR(255) NOT NULL,
-    original_filename VARCHAR(255) NOT NULL,
-    media_type VARCHAR(50) NOT NULL,
-    file_size BIGINT NOT NULL,
-    mime_type VARCHAR(100) NOT NULL,
-    url TEXT NOT NULL,
-    thumbnail_url TEXT,
-    dimensions JSONB,
-    duration FLOAT,
-    metadata JSONB DEFAULT '{}',
-    tags TEXT[] DEFAULT '{}',
-    is_public BOOLEAN DEFAULT false,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+class SocialPlatform(BaseModel):
+    """Social platform model."""
 
--- Campaigns table
-CREATE TABLE IF NOT EXISTS campaigns (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    workspace_id UUID REFERENCES workspaces(id) ON DELETE CASCADE,
-    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    objectives TEXT[] DEFAULT '{}',
-    target_audience JSONB DEFAULT '{}',
-    budget DECIMAL(10,2),
-    start_date TIMESTAMP WITH TIME ZONE,
-    end_date TIMESTAMP WITH TIME ZONE,
-    posts TEXT[] DEFAULT '{}',
-    status VARCHAR(50) DEFAULT 'draft',
-    analytics JSONB DEFAULT '{}',
-    metadata JSONB DEFAULT '{}',
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    display_name: str
+    icon_url: Optional[str] = None
+    api_config: Dict[str, Any] = Field(default_factory=dict)
+    is_active: bool = True
+    created_at: datetime = Field(default_factory=datetime.utcnow)
 
--- Content templates table
-CREATE TABLE IF NOT EXISTS content_templates (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    workspace_id UUID REFERENCES workspaces(id) ON DELETE CASCADE,
-    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    category VARCHAR(100) NOT NULL,
-    template_content TEXT NOT NULL,
-    variables TEXT[] DEFAULT '{}',
-    platforms TEXT[] DEFAULT '{}',
-    tags TEXT[] DEFAULT '{}',
-    usage_count INTEGER DEFAULT 0,
-    is_public BOOLEAN DEFAULT false,
-    metadata JSONB DEFAULT '{}',
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
 
--- Workflow executions table
-CREATE TABLE IF NOT EXISTS workflow_executions (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    workspace_id UUID REFERENCES workspaces(id) ON DELETE CASCADE,
-    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    workflow_name VARCHAR(255) NOT NULL,
-    workflow_config JSONB NOT NULL,
-    tasks TEXT[] DEFAULT '{}',
-    status VARCHAR(50) DEFAULT 'pending',
-    progress FLOAT DEFAULT 0.0,
-    started_at TIMESTAMP WITH TIME ZONE,
-    completed_at TIMESTAMP WITH TIME ZONE,
-    results JSONB DEFAULT '{}',
-    error_message TEXT,
-    metadata JSONB DEFAULT '{}',
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+class UserSocialAccount(BaseModel):
+    """User social account model."""
 
--- Indexes for better performance
-CREATE INDEX IF NOT EXISTS idx_workspaces_owner_id ON workspaces(owner_id);
-CREATE INDEX IF NOT EXISTS idx_posts_workspace_id ON social_media_posts(workspace_id);
-CREATE INDEX IF NOT EXISTS idx_posts_user_id ON social_media_posts(user_id);
-CREATE INDEX IF NOT EXISTS idx_posts_status ON social_media_posts(status);
-CREATE INDEX IF NOT EXISTS idx_posts_scheduled_for ON social_media_posts(scheduled_for);
-CREATE INDEX IF NOT EXISTS idx_tasks_workspace_id ON worker_tasks(workspace_id);
-CREATE INDEX IF NOT EXISTS idx_tasks_status ON worker_tasks(status);
-CREATE INDEX IF NOT EXISTS idx_tasks_worker_type ON worker_tasks(worker_type);
-CREATE INDEX IF NOT EXISTS idx_results_task_id ON worker_results(task_id);
-CREATE INDEX IF NOT EXISTS idx_media_workspace_id ON media_assets(workspace_id);
-CREATE INDEX IF NOT EXISTS idx_campaigns_workspace_id ON campaigns(workspace_id);
-CREATE INDEX IF NOT EXISTS idx_templates_workspace_id ON content_templates(workspace_id);
-CREATE INDEX IF NOT EXISTS idx_workflows_workspace_id ON workflow_executions(workspace_id);
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    workspace_id: str
+    platform_id: str
+    account_name: str
+    account_id: Optional[str] = None
+    access_token: Optional[str] = None
+    refresh_token: Optional[str] = None
+    token_expires_at: Optional[datetime] = None
+    account_metadata: Dict[str, Any] = Field(default_factory=dict)
+    is_active: bool = True
+    connected_at: datetime = Field(default_factory=datetime.utcnow)
+    last_used_at: Optional[datetime] = None
 
--- Updated at triggers
-CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.updated_at = NOW();
-    RETURN NEW;
-END;
-$$ language 'plpgsql';
 
-CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_workspaces_updated_at BEFORE UPDATE ON workspaces FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_posts_updated_at BEFORE UPDATE ON social_media_posts FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_tasks_updated_at BEFORE UPDATE ON worker_tasks FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_media_updated_at BEFORE UPDATE ON media_assets FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_campaigns_updated_at BEFORE UPDATE ON campaigns FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_templates_updated_at BEFORE UPDATE ON content_templates FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_workflows_updated_at BEFORE UPDATE ON workflow_executions FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-"""
+class ContentPost(BaseModel):
+    """Content post model."""
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    workspace_id: str
+    user_id: str
+    title: Optional[str] = None
+    content: str
+    content_type: str = "text"  # text, image, video, carousel, story
+    status: str = "draft"  # draft, scheduled, published, failed, archived
+    scheduled_for: Optional[datetime] = None
+    published_at: Optional[datetime] = None
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+    tags: List[str] = Field(default_factory=list)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class ResearchConfiguration(BaseModel):
+    """Research configuration model."""
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    workspace_id: str
+    source_type: str  # reddit, hackernews, github, google_trends, linkedin, twitter
+    config_name: str
+    description: Optional[str] = None
+    configuration: Dict[str, Any] = Field(default_factory=dict)
+    schedule: Dict[str, Any] = Field(default_factory=dict)
+    auto_run_enabled: bool = False
+    is_active: bool = True
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    last_run_at: Optional[datetime] = None
+
+
+class ResearchJob(BaseModel):
+    """Research job model."""
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    workspace_id: str
+    configuration_id: Optional[str] = None
+    source_type: str
+    job_type: str = "pipeline"  # raw, analyze, pipeline
+    status: str = "queued"  # queued, running, completed, failed, cancelled
+    priority: str = "normal"  # low, normal, high
+    started_at: Optional[datetime] = None
+    completed_at: Optional[datetime] = None
+    error_message: Optional[str] = None
+    results_path: Optional[str] = None
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class ResearchResult(BaseModel):
+    """Research result model."""
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    workspace_id: str
+    job_id: str
+    source_type: str
+    result_type: str = "analysis"  # raw, analysis, insights
+    title: Optional[str] = None
+    summary: Optional[str] = None
+    content: Dict[str, Any] = Field(default_factory=dict)
+    insights: Dict[str, Any] = Field(default_factory=dict)
+    tags: List[str] = Field(default_factory=list)
+    is_public: bool = False
+    quality_score: Optional[float] = None
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class ContentEmbedding(BaseModel):
+    """Content embedding model for vector search."""
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    workspace_id: str
+    content_type: str
+    content_id: str
+    content_text: str
+    embedding: List[float]  # Vector embedding
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class AnalyticsEvent(BaseModel):
+    """Analytics event model."""
+
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    workspace_id: str
+    user_id: Optional[str] = None
+    event_type: str
+    event_data: Dict[str, Any] = Field(default_factory=dict)
+    session_id: Optional[str] = None
+    ip_address: Optional[str] = None
+    user_agent: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+# NOTE: Database schema is now unified at /database/complete_supabase_schema.sql
+# This file contains Pydantic models that match the unified database schema

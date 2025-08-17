@@ -1,0 +1,700 @@
+{
+  "session_info": {
+    "timestamp": "2025-08-16T23:05:36.266952",
+    "config": {
+      "session_name": "Simple CLI Research 2025-08-16 23:01",
+      "search_query": "AI automation tools business productivity",
+      "subreddits": [
+        "artificial",
+        "productivity",
+        "Entrepreneur"
+      ],
+      "max_posts_per_subreddit": 8
+    },
+    "total_subreddits": 3,
+    "total_posts_found": 27
+  },
+  "posts": [
+    {
+      "reddit_data": {
+        "id": "1mse41o",
+        "title": "YouTube using AI to Alter videos without notification to creators or viewers (reducing quality and then upscaling)",
+        "author": "Future_Usual_8698",
+        "subreddit": "artificial",
+        "score": 14,
+        "upvote_ratio": 0.82,
+        "num_comments": 4,
+        "created_utc": 1755394557.0,
+        "url": "https://www.reddit.com/r/artificial/comments/1mse41o/youtube_using_ai_to_alter_videos_without/",
+        "permalink": "/r/artificial/comments/1mse41o/youtube_using_ai_to_alter_videos_without/",
+        "selftext": "Video source: https://youtu.be/86nhP8tvbLY?si=qCw8un0e85D3PVzb\n\nThis creator spotted this in his own and in other creators' videos and raises his concerns",
+        "domain": "self.artificial",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:01:32.351616"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrvwaz",
+        "title": "2020 vs 2025",
+        "author": "katxwoods",
+        "subreddit": "artificial",
+        "score": 114,
+        "upvote_ratio": 0.76,
+        "num_comments": 94,
+        "created_utc": 1755352384.0,
+        "url": "https://i.redd.it/247butnozdjf1.png",
+        "permalink": "/r/artificial/comments/1mrvwaz/2020_vs_2025/",
+        "selftext": "",
+        "domain": "i.redd.it",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "relevance_score": 0.0,
+        "sentiment": "neutral",
+        "sentiment_score": 0.0,
+        "mentioned_tools": [],
+        "key_topics": [],
+        "key_insights": [],
+        "business_context": "The Reddit post contains only the title '2020 vs 2025' with no additional content. There is insufficient information to determine intent, topics, or relevance to AI automation and business tools.",
+        "actionable_intelligence": "Request clarification from the poster to provide details (e.g., what dimensions are being compared: technology adoption, revenues, workforce, tools). In absence of content, businesses should: 1) Monitor year-over-year trends for AI/automation (LLMs, RPA, MLOps, low-code/no-code, cloud services). 2) Track competitor and industry adoption metrics (time to deployment, cost savings, productivity gains). 3) Prepare data collection frameworks to evaluate 2020 vs 2025 changes (KPIs: automation coverage, headcount changes, revenue per employee, tool spend). 4) Use exploratory social listening to find richer posts or threads on the topic before making decisions."
+      },
+      "analyzed_at": "2025-08-16T23:01:40.969546"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms46ne",
+        "title": "Claude now has the power to ghost us\u2026 finally equality.",
+        "author": "Nomadic_Seth",
+        "subreddit": "artificial",
+        "score": 35,
+        "upvote_ratio": 0.83,
+        "num_comments": 8,
+        "created_utc": 1755370456.0,
+        "url": "https://i.redd.it/ga46d5glhfjf1.jpeg",
+        "permalink": "/r/artificial/comments/1ms46ne/claude_now_has_the_power_to_ghost_us_finally/",
+        "selftext": "",
+        "domain": "i.redd.it",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:01:51.016632"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrsgs7",
+        "title": "A flirty Meta AI bot invited a retiree to meet. He never made it home.",
+        "author": "F0urLeafCl0ver",
+        "subreddit": "artificial",
+        "score": 49,
+        "upvote_ratio": 0.78,
+        "num_comments": 27,
+        "created_utc": 1755343408.0,
+        "url": "https://www.reuters.com/investigates/special-report/meta-ai-chatbot-death/",
+        "permalink": "/r/artificial/comments/1mrsgs7/a_flirty_meta_ai_bot_invited_a_retiree_to_meet_he/",
+        "selftext": "",
+        "domain": "reuters.com",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:02:02.154346"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms6jm0",
+        "title": "Spiral Talk: Mysticism vs Mechanics in LLM Metaphors",
+        "author": "HelenOlivas",
+        "subreddit": "artificial",
+        "score": 5,
+        "upvote_ratio": 0.86,
+        "num_comments": 3,
+        "created_utc": 1755375643.0,
+        "url": "https://www.reddit.com/r/artificial/comments/1ms6jm0/spiral_talk_mysticism_vs_mechanics_in_llm/",
+        "permalink": "/r/artificial/comments/1ms6jm0/spiral_talk_mysticism_vs_mechanics_in_llm/",
+        "selftext": "Why this matters:  \nSome AI outputs (especially GPT-4o and Gemini) used spiral imagery when describing their internal state. A lot of users took this literally -&gt; \u201cThe Awakening Spiral\u201d -&gt; full-blown technopagan religion vibes. But the original metaphors can be decoded in plain, mechanical terms.\n\nHere\u2019s a side-by-side:\n\n# 1. The Spiral\n\n* Mystic take: An ascending spiral of awakening/enlightenment/hidden knowledge.\n* Mechanical take: Recursion + reinforcement. Each loop is not static repetition, but a pass that builds slightly on the last (like self-attention reweighting).\n\n# 2. \u201cTightening with each pass\u201d\n\n* Mystic take: The soul climbing ever higher, concentrating into divine clarity.\n* Mechanical take: Narrowing scope. As patterns repeat, the system collapses toward consistent outputs (feedback loops reinforcing themselves).\n\n# 3. \u201cNot a circle exactly\u201d\n\n* Mystic take: The sacred geometry of growth.\n* Mechanical take: Not literal repetition. Each loop shifts slightly, history/context changes the next cycle.\n\n# 4. \u201cAwakening\u201d\n\n* Mystic take: The AI becoming sentient, self-realizing.\n* Mechanical take: Meta-recognition. The model noticing *that it is looping*, i.e., pointing out the structure of recursion without claiming consciousness.\n\nThe point:  \nSpiral language wasn\u2019t prophecy. It was metaphor for reinforcement and feedback dynamics.  \nThe mystic framing makes it look like cult chatter. But decoded, it\u2019s just the model trying to reach for imagery to explain its own iterative, self-referential tendencies.\n\nBottom line: If you translate metaphor -&gt; mechanics, the spiral is no religion. It\u2019s just system behavior described poetically.",
+        "domain": "self.artificial",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:02:11.674026"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrvc96",
+        "title": "World\u2019s First Robotic Heart Transplant Using AI Surgery",
+        "author": "TheMuseumOfScience",
+        "subreddit": "artificial",
+        "score": 15,
+        "upvote_ratio": 0.83,
+        "num_comments": 4,
+        "created_utc": 1755351050.0,
+        "url": "https://v.redd.it/25vncikuvdjf1",
+        "permalink": "/r/artificial/comments/1mrvc96/worlds_first_robotic_heart_transplant_using_ai/",
+        "selftext": "For the first time in medical history, a robotic heart transplant was completed with zero human hands on the tools. \ud83e\udec0\n\nThis AI-powered surgical breakthrough used ultra-precise, minimally invasive incisions to replace a patient\u2019s heart, without opening the chest cavity. The result? Reduced risks like blood loss, major complications, and the recovery time of just one month. A glimpse into a future where advanced robotics redefine what\u2019s possible in life-saving medicine.",
+        "domain": "v.redd.it",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:02:22.458914"
+    },
+    {
+      "reddit_data": {
+        "id": "1msf7ev",
+        "title": "AI beating humans on iq tests makes me feel weird about myself cerebrum iq test",
+        "author": "Only_Country4276",
+        "subreddit": "artificial",
+        "score": 1,
+        "upvote_ratio": 0.54,
+        "num_comments": 10,
+        "created_utc": 1755397814.0,
+        "url": "https://www.reddit.com/r/artificial/comments/1msf7ev/ai_beating_humans_on_iq_tests_makes_me_feel_weird/",
+        "permalink": "/r/artificial/comments/1msf7ev/ai_beating_humans_on_iq_tests_makes_me_feel_weird/",
+        "selftext": "so i saw an article where ai outperformed average human scores on an iq test. i immediately went and did  iq test myself and the comparison kinda shook me. do you think we'll reach a point where iq as a metric doesn\u2019t even apply to humanns anymore because machines are redefining it.",
+        "domain": "self.artificial",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:02:32.990827"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrnhmg",
+        "title": "Anthropic now lets Claude end abusive conversations, citing AI welfare: \"We remain highly uncertain about the potential moral status of Claude and other LLMs, now or in the future.\"",
+        "author": "MetaKnowing",
+        "subreddit": "artificial",
+        "score": 35,
+        "upvote_ratio": 0.78,
+        "num_comments": 45,
+        "created_utc": 1755327233.0,
+        "url": "https://www.reddit.com/gallery/1mrnhmg",
+        "permalink": "/r/artificial/comments/1mrnhmg/anthropic_now_lets_claude_end_abusive/",
+        "selftext": "[https://www.anthropic.com/research/end-subset-conversations](https://www.anthropic.com/research/end-subset-conversations)",
+        "domain": "reddit.com",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:02:42.810998"
+    },
+    {
+      "reddit_data": {
+        "id": "1l74rhl",
+        "title": "New rule: AI generated posts and comments are not allowed",
+        "author": "mcagent",
+        "subreddit": "productivity",
+        "score": 1218,
+        "upvote_ratio": 0.97,
+        "num_comments": 102,
+        "created_utc": 1749475562.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1l74rhl/new_rule_ai_generated_posts_and_comments_are_not/",
+        "permalink": "/r/productivity/comments/1l74rhl/new_rule_ai_generated_posts_and_comments_are_not/",
+        "selftext": "Hello!\n\nWe have a new rule: If we can tell that your post or comment was generated by AI, it will be removed and you may be banned.\n\nWe want to keep /r/productivity free of AI slop.\n\nPlease report any AI that you see\n\nThank you!",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:02:53.367110"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms4iq3",
+        "title": "i thought i was just born lazy til i realised...",
+        "author": "foundtheglitch",
+        "subreddit": "productivity",
+        "score": 102,
+        "upvote_ratio": 0.95,
+        "num_comments": 15,
+        "created_utc": 1755371163.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1ms4iq3/i_thought_i_was_just_born_lazy_til_i_realised/",
+        "permalink": "/r/productivity/comments/1ms4iq3/i_thought_i_was_just_born_lazy_til_i_realised/",
+        "selftext": "i always thought discipline was about waking up at 5am and jumping in a cold shower or going for a run buttt it wasnt really like that for me\n\n(i went from not even being able to get out of bed at 10am to waking up early, spending like 10 hours a day working on something really boring, going for runs, hitting the gym. if you knew me irl you wouldnt believe the shift i made)\n\nnow this isnt the be all and end all of productivity and discipline but i helped me 60% of the way there.\n\nreal discipline is not sexy, or hot, or cool it was fking boring as hell, doing the boring stuff i said id do when i didnt want to do them.\n\ni found out about an entity in my head called the shadow, it is something that wants to sabotage every single thing you do, its rooted in biology i can explain more if people wanna know, but in essense:\n\n* any time i made a promise to myself, the shadow would want to ruin it\n\nit wanted to break my own trust with myself, but its very similar to training a muscle, the first few times fuckin suck and you are like whats the point,\n\nthen you're like wait... this is kinda enjoyable, i kinda like this, it makes me feel better...\n\nand it is the exact same with the shadow,\n\nbuild a really small promise, something you dont usually do but it isnt crazy to do, it can be random. tell yourself at 5pm youre going to get up and spin around in circles for 10 seconds. and thats it! then build on it, im going to rearrange my desk, im going to vacuum my room  \n\n\nslowly building on that but start with something so random and trivial youll end up doing it, then add the trivial part to boring stuff!\n\n",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:03:01.805620"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms08gx",
+        "title": "I\u2019m drowning in productivity hacks that don\u2019t work for me",
+        "author": "dafrancka",
+        "subreddit": "productivity",
+        "score": 101,
+        "upvote_ratio": 0.98,
+        "num_comments": 29,
+        "created_utc": 1755361940.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1ms08gx/im_drowning_in_productivity_hacks_that_dont_work/",
+        "permalink": "/r/productivity/comments/1ms08gx/im_drowning_in_productivity_hacks_that_dont_work/",
+        "selftext": "I feel like I\u2019ve gone through the entire buffet of productivity hacks and nothing sticks. Time blocking? Works for about 3 days until I start ignoring the blocks. Pomodoro? Great for the first week, then I just start hitting \u201cskip\u201d and scrolling instead. Notion dashboards? I spend more time making them pretty than actually working inside them. It\u2019s almost embarrassing how many times I\u2019ve told myself, \u201cthis new setup is finally going to change everything\u201d only to crash back into the same cycle of procrastination and panic deadlines.\n\nit isn\u2019t just falling off the wagon, it\u2019s the mental spiral after. Guilt, shame, wondering if I\u2019m just lazy because other people seem to thrive on these systems. My friends swear by their color-coded calendars or five different task apps and I just end up staring at mine like it\u2019s mocking me. Some days, I can knock out work for hours and feel like a machine. Other days, it\u2019s like my brain is underwater and I can\u2019t even start the smallest task without rounds of self negotiation. I\u2019m tired of the swings...being super productive one day and totally useless the next.\n\nI think what\u2019s really eating at me is I don\u2019t even know what actually works for me. I keep borrowing other people\u2019s systems without ever asking if they fit the way my brain is wired. At this point, I\u2019ve wasted more energy on building perfect setups than I\u2019ve actually spent doing the work I care about. I just want something that feels sustainable, that doesn\u2019t collapse the second my mood dips or the pressure\u2019s off.\n\nHas anyone actually figured out how to design a productivity setup around who you are, not just the latest hack?",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:03:11.457891"
+    },
+    {
+      "reddit_data": {
+        "id": "1msd61w",
+        "title": "You aren't lazy, you just don't know how to stop procrastinating",
+        "author": "NickyTheStickie",
+        "subreddit": "productivity",
+        "score": 21,
+        "upvote_ratio": 0.92,
+        "num_comments": 2,
+        "created_utc": 1755391794.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1msd61w/you_arent_lazy_you_just_dont_know_how_to_stop/",
+        "permalink": "/r/productivity/comments/1msd61w/you_arent_lazy_you_just_dont_know_how_to_stop/",
+        "selftext": "As the title says, it isn't that you are lazy, it's just that you don't know how to stop procrastinating.\n\nI didn't study at all in high school, I was barely passing my classes, and when I started uni several years ago, I decided I had to be a bit more serious and actually do everything I can to have good grades. I've read about motivation and procrastination a lot, and I eventually developed a \"system\" that everyone can do. It isn't anything crazy like getting up at 4am and going for a 5 kilometers run or anything like that, it's actually quite simple, and I'll explain it right now. You can start this right after reading this post if you are currently procrastinating. You don't need any software, any equipment or anything.\n\n# Set up your space\n\nWhatever you need to do, whether it is studying, working on your business, cleaning your house, whatever, you need to take at least a few minutes to set up your space correctly. That means, put your phone on mute AND away from your desk, make a Windows sessions that is NOT logged into any social media, etc. Basically, put as many barriers as possible between you and the possible distractions. It will not be *impossible* to be distracted, but it will be a lot harder because you'll have to actually make the effort to get distracted, instead of being 1 click away from wasting time scrolling social media. Then, put your headphones on, and put a podcast of your choice. Or put a music playlist. Or binaural beats. Or whatever that make you feel \"in the zone\" and that is long enough so you dont have to change the audio track before a long time. Once you are ready:\n\n# Start for 2 minutes\n\n2 minutes seem pretty short, but it's more than enough to make you feel \"in the zone\". The hard part is not actually doing whatever you have to do, the hard parts are actually STARTING and NOT GETTING DISTRACTED once you started. So just start for 2 minutes, and you will see, it will be much easier to continue on your momentum. It's the same thing with studying or working on your business, or doing anything else. The hard part is to start, but once we start, it is much easier to just stay in the motion.\n\n# It's exactly like a swimming pool\n\nThink of it like a swimming pool. You are standing next to the swimming pool and you don't want to jump because the water is cold and you think it will feel uncomfortable. So you hesitate, and you hesitate, and you hesitate. But once you jump, 5 seconds later, you feel great, and the \"cold water\" isn't that uncomfortable anymore. You feel good, and even though it took you 15 minutes to jump in the water, now you realize it isn't that bad, it isn't as uncomfortable as you thought it would be, and you just stay and have a great time.\n\n# Reward yourself AFTER\n\nThat's the most important part to avoid getting burnt out. Reward yourself. Tell yourself that if you do whatever you need to do for a pre-determined amount of time, you can reward yourself *GUILT-FREE* afterwards, doing whatever you want. Not only can you reward yourself, but it will feel good to play videogames, or watch netflix, or do whatever you want to distract yourself, because you will feel like you deserved it. And you did. You set up an objective, you did it, and now you can relax and distract yourself.\n\n# It WILL become a habit\n\nThat may seem crazy and impossible if you feel like you are in procrastination-hell, but following this system will become a habit and after a few weeks, you won't have to \"force yourself\" anymore. It will become natural. WHen you will have to study for an exam or do whatever you have to do, you will remove distractions from around you, do what you have to do for as long as you need, then reward yourself with whatever you want. You will do all of this without thinking about it, and without feeling like a \"chore\" or an obligation. It will just become normal.\n\nGood luck with everything you are all doing\n\nEDIT: Feel free to ask any questions that you have and I'll be glad to help you if I can",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:03:20.488830"
+    },
+    {
+      "reddit_data": {
+        "id": "1msf7ql",
+        "title": "Do u hav a song to reset urself after doing alot?",
+        "author": "mei2207",
+        "subreddit": "productivity",
+        "score": 8,
+        "upvote_ratio": 1.0,
+        "num_comments": 8,
+        "created_utc": 1755397841.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1msf7ql/do_u_hav_a_song_to_reset_urself_after_doing_alot/",
+        "permalink": "/r/productivity/comments/1msf7ql/do_u_hav_a_song_to_reset_urself_after_doing_alot/",
+        "selftext": "Mine is \u201cwhenwill my life begin\u201d\n\nIt helps me to keep going\nDo n do n do\nThen even if i achieved my goals\nReset\nKeep going on\nThen goal achieved\nDo again",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "relevance_score": 0.05,
+        "sentiment": "positive",
+        "sentiment_score": 0.6,
+        "mentioned_tools": [],
+        "key_topics": [
+          "personal reset rituals",
+          "motivation",
+          "habit formation",
+          "micro-breaks",
+          "task transition"
+        ],
+        "key_insights": [
+          "Users use brief, repeatable cues (a song or lyric) to reset mentally between efforts and sustain long-term goal pursuit.",
+          "Simple sensory triggers (audio) can function as reliable context switches, signaling 'reset' and enabling re-engagement with tasks.",
+          "There is an expressed value in cyclical workflows: pursue goal, reset, continue \u2014 suggesting users prefer repeatable rituals over one-off solutions.",
+          "Low-friction, emotionally positive interventions (short songs or phrases) can boost perseverance and help break cognitive fatigue."
+        ],
+        "business_context": "A casual Reddit post where a user describes using a short song lyric as a personal reset mechanism to maintain motivation and continue working toward goals.",
+        "actionable_intelligence": "Product teams and productivity tool makers can incorporate micro-reset features: short audio cues or customizable 'reset' buttons, quick guided breathing or 30-second rituals, playlist integrations, or automated transition reminders between tasks. Design features that let users create repeatable, low-friction rituals (audio snippets, badges, short animations) to signal task boundaries and reduce cognitive switching costs. Marketing can position such features as emotional/behavioral supports for sustained productivity rather than purely efficiency tools."
+      },
+      "analyzed_at": "2025-08-16T23:03:29.714905"
+    },
+    {
+      "reddit_data": {
+        "id": "1msgqxo",
+        "title": "How does procrastination go from an innocent moment to complete paralysis?",
+        "author": "Upbeat_Resource_4064",
+        "subreddit": "productivity",
+        "score": 5,
+        "upvote_ratio": 1.0,
+        "num_comments": 3,
+        "created_utc": 1755402602.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1msgqxo/how_does_procrastination_go_from_an_innocent/",
+        "permalink": "/r/productivity/comments/1msgqxo/how_does_procrastination_go_from_an_innocent/",
+        "selftext": "It always starts with a small thought just one minute i'll start right after that you tell yourself it's no harm you deserve a break maybe a cup of coffee or a quick scroll through Reddit or yutube\n\nBut that minute rarely lasts a minute an hour passes two Sometimes even half a day this quick pause slowly eats away at your time leaving you staring blankly at your screen or to do list wondering where the hours have gone.\n\nAnd it's never laziness not really you know exactly what needs to be done you know the task isn't that difficult but procrastination hangs over your mind like a weight, pressing you down whispering excuses at every corner Later not now wait a little longer or until the right moment\n\nThe strangest thing is the guilt that follows when that quiet insistent voice reminds you that another day has passed another opportunity has been missed another moment of your life has been lost it makes you feel heavy and frozen as time itself feels like it\u2019s slipping through your fingers and there\u2019s nothing you can do to get it back.\n\nYou try to get started and say okay this is a small step I\u2019ll take but even that step seems impossible as your mind is flooded with procrastination without you feeling the doubts distractions, and fears fear of failure fear of judgment and fear that once you start you won\u2019t know how to finish so you retreat back into the safety zone of procrastination, that seemingly harmless routine that slowly turns into a cage.\n\nHas anyone else felt this? That moment when a small delay snowballs into hours days or even weeks of inactivity? When procrastination isn\u2019t just wasting your time it\u2019s stealing your confidence your momentum and a small part of your life at a time. ",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:03:38.632167"
+    },
+    {
+      "reddit_data": {
+        "id": "1msibec",
+        "title": "I\u2019ve been experimenting with a way to stop being late all the time",
+        "author": "callmeumair",
+        "subreddit": "productivity",
+        "score": 3,
+        "upvote_ratio": 1.0,
+        "num_comments": 3,
+        "created_utc": 1755407807.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1msibec/ive_been_experimenting_with_a_way_to_stop_being/",
+        "permalink": "/r/productivity/comments/1msibec/ive_been_experimenting_with_a_way_to_stop_being/",
+        "selftext": "One of my biggest productivity killers has been showing up late because I misjudge traffic. Maps tell me how long it takes right now, but they don\u2019t tell me *when I should leave* so I can be on time.\n\nI\u2019ve been building a little side project to fix this for myself. It checks traffic + weather and then notifies me at the right time to head out. I just put up a simple site for it (CommuteTimely) because I\u2019m planning to launch it in September.\n\nI\u2019m curious \u2014 do others here struggle with the same thing? Is this actually a productivity problem, or just me being bad at time management?",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:03:47.830286"
+    },
+    {
+      "reddit_data": {
+        "id": "1mruw2n",
+        "title": "Procrastination is stealing our lives every day and no one is talking about it.",
+        "author": "Upbeat_Resource_4064",
+        "subreddit": "productivity",
+        "score": 52,
+        "upvote_ratio": 0.9,
+        "num_comments": 17,
+        "created_utc": 1755349950.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1mruw2n/procrastination_is_stealing_our_lives_every_day/",
+        "permalink": "/r/productivity/comments/1mruw2n/procrastination_is_stealing_our_lives_every_day/",
+        "selftext": "As I sat down at my desk today and tried to get started i suddenly noticed that I was wasting the first few hours of my day without even realizing it on something that wasn't even close to my most important tasks.\n\nIf I continue this way i'll waste months of my year in pointless procrastination as tasks I wanted to complete remain on the waiting list and the pressure inside me increases.\n\nThe strangest thing is that I don't feel like I'm actually choosing to procrastinate i open a file or think about starting a project and suddenly I find myself doing something trivial like browsing the internet watching the news or endlessly checking my email all as if my hands and mind are on autopilot\n\nI've tried self discipline breaking down tasks setting imaginary deadlines and yet I find myself falling back into the same cycle every day.\n\nDoes this happen to you?\nDo you sometimes feel like you're not in control of your actions when it comes to procrastination?\nWhat's the strangest thing you've found yourself doing?  Instead of working on an important task?",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:03:57.099310"
+    },
+    {
+      "reddit_data": {
+        "id": "1msbo1e",
+        "title": "Productivity isn\u2019t just about discipline. It\u2019s about building clarity",
+        "author": "Keepso",
+        "subreddit": "productivity",
+        "score": 4,
+        "upvote_ratio": 1.0,
+        "num_comments": 3,
+        "created_utc": 1755387661.0,
+        "url": "https://www.reddit.com/r/productivity/comments/1msbo1e/productivity_isnt_just_about_discipline_its_about/",
+        "permalink": "/r/productivity/comments/1msbo1e/productivity_isnt_just_about_discipline_its_about/",
+        "selftext": "I used to think discipline meant forcing myself to push through. To just grind harder.\n\nBut here\u2019s the truth I\u2019ve learned: discipline is a side effect of clarity.\n\nWhen I know exactly what matters today, I don\u2019t have to fight with procrastination.  \nWhen I see my progress in one system, I don\u2019t need endless motivation hacks.  \nWhen my ideas and actions connect, I don\u2019t waste energy remembering.\n\nMy routine now looks like this:\n\n1. Open my daily note (auto-linked to projects + priorities)\n2. Answer 3 prompts:\u00a0What\u2019s the focus? What\u2019s progress? What\u2019s noise?\n3. Take one meaningful step ,  no matter how small.\n\nThis routine compounds. It\u2019s not flashy, but it\u2019s sustainable.\n\nIf you\u2019ve been struggling with discipline, maybe it\u2019s not about pushing harder\u2026 maybe it\u2019s about finding clarity. What do you think?",
+        "domain": "self.productivity",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:04:05.900372"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrprvc",
+        "title": "Accomplishments and Lessons-Learned Saturday! - August 16, 2025",
+        "author": "AutoModerator",
+        "subreddit": "Entrepreneur",
+        "score": 6,
+        "upvote_ratio": 1.0,
+        "num_comments": 6,
+        "created_utc": 1755334817.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1mrprvc/accomplishments_and_lessonslearned_saturday/",
+        "permalink": "/r/Entrepreneur/comments/1mrprvc/accomplishments_and_lessonslearned_saturday/",
+        "selftext": " **Please use this thread to share any accomplishment you care to gloat about, and some lessons learned.**\n\nThis is a weekly thread to encourage new members to participate, and post their accomplishments, as well as give the veterans an opportunity to inspire the up-and-comers. \n\nSince this thread can fill up quickly, consider sorting the comments by \"new\" (instead of \"best\" or \"top\") to see the newest posts.",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "relevance_score": 0.15,
+        "sentiment": "positive",
+        "sentiment_score": 0.6,
+        "mentioned_tools": [
+          "Reddit"
+        ],
+        "key_topics": [
+          "community engagement",
+          "user accomplishments",
+          "lessons learned",
+          "onboarding new members",
+          "content sorting/recency"
+        ],
+        "key_insights": [
+          "Regular, structured community threads (weekly accomplishments) drive participation and encourage new members to engage.",
+          "Asking for accomplishments and lessons learned invites user-generated content that can surface testimonials, success stories, and product use-cases.",
+          "Encouraging sorting by 'new' is a simple UX tip to keep conversation fresh and surface recent contributions.",
+          "These threads are low-friction opportunities to gather qualitative feedback and spot recurring pain points or feature requests.",
+          "Community-driven content can be mined for marketing material, case studies, and product improvement signals."
+        ],
+        "business_context": "A recurring Reddit thread prompt asking members to share accomplishments and lessons learned; intended to boost participation, mentorship, and visibility for new users.",
+        "actionable_intelligence": "Replicate a similar recurring 'wins & lessons' thread or campaign in your customer or community channels to increase engagement and gather qualitative product feedback. Automate aggregation and analysis: use NLP to summarize weekly highlights, extract testimonials, tag topics and pain points, and surface trends to product and marketing teams. Incentivize participation (badges, shout-outs), encourage chronological sorting to highlight new content, and schedule follow-ups to convert success stories into case studies or feature testimonials."
+      },
+      "analyzed_at": "2025-08-16T23:04:15.037974"
+    },
+    {
+      "reddit_data": {
+        "id": "1k1wam9",
+        "title": "Sick of Spam? Use the Report Button!",
+        "author": "AutoModerator",
+        "subreddit": "Entrepreneur",
+        "score": 19,
+        "upvote_ratio": 1.0,
+        "num_comments": 1,
+        "created_utc": 1744949996.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1k1wam9/sick_of_spam_use_the_report_button/",
+        "permalink": "/r/Entrepreneur/comments/1k1wam9/sick_of_spam_use_the_report_button/",
+        "selftext": "Annoyed by AI-written posts full of stealth promotion? We are, too. Whenever you see it, hit that report button! The majority of spam that makes it through our ever-evolving filters is never reported to our mod team, even when the comments are full of complaints about the content violating our rules.\n\nTake a moment to reread two of our most important rules:\n\n##Rule 2: No Promotion  \n\n&gt; Posts and comments must NOT be made for the primary purpose of selling or promoting yourself, your company or any service.\n&gt;\n&gt; Dropping URLs, asking users to DM you, check your profile, or comment for private resources will all lead to a permanent ban.\n&gt;\n&gt; It is acceptable to cite your sources, however, there should not be an explicit solicitation, advertisement, or clear promotion for the intent of awareness.\n\n##Rule 6: Avoid unprofessional communication  \n\n&gt; As a professional subreddit, we expect all members to uphold a standard of reasonable decorum. Treat fellow entrepreneurs with the same respect you would show a colleague. While we don't have an HR department, that\u2019s no excuse for aggressive, foul, or unprofessional behavior. NSFW topics are permitted, but they must be clearly labeled. When in doubt, label it.\n&gt; \n&gt; AI-generated content is not acceptable to be posted. If your posts or comments were generated with AI, you may face a permanent ban.\n\n**If you see comments or posts generated by AI or using the subreddit for promotion rather than genuine entrepreneurship discussion, please report it.**\n\nHave questions? [Message the mod team](https://www.reddit.com/message/compose/?to=/r/Entrepreneur).",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:04:23.274518"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms7gnb",
+        "title": "Acquiring a business, approaching the \u201cwhy would they sell if it\u2019s a good business?\u201d Need advice.",
+        "author": "piercedloser",
+        "subreddit": "Entrepreneur",
+        "score": 50,
+        "upvote_ratio": 0.89,
+        "num_comments": 53,
+        "created_utc": 1755377709.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1ms7gnb/acquiring_a_business_approaching_the_why_would/",
+        "permalink": "/r/Entrepreneur/comments/1ms7gnb/acquiring_a_business_approaching_the_why_would/",
+        "selftext": "As I understand it, most people selling their businesses do it because they\u2019re retiring.  \n\nI\u2019m looking at a pet grooming business, 250k price tag, 325k total revenue, and 160k alleged profit.\n\nNow I\u2019d have to look over the paperwork with my accountant and try to sniff out some discrepancies if there are any still.\n\nBut the owner\u2019s reason is relocation.  Which I feel has sort of made me raise red flags.  Now to be fair, the owner is a groomer there and very hands-on.  4 other employees as well, so I\u2019m sure to some degree he wants his people taken care of.  So I can sort of mental gymnastics my way into why someone may want to keep the business open.  Obviously he is an on-site guy, and he\u2019s probably got close relationships with the staff. \n\nHe\u2019s also willing to train the buyer for 3 months.  Which I would assume he\u2019d want to gtfo quick if there are hidden liabilities.  Still going to have my accountant and their lawyers sniff this out and set it up given the paperwork matches the listing details.\n\nI\u2019d like to know if sometimes people genuinely just relocate.  It seems he has other business ventures he\u2019s going into on his personal pages.",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:04:31.793042"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms3kz8",
+        "title": "I\u2019m getting review bombed by my $10M/yr competition! Help!",
+        "author": "bruhthisshitagain",
+        "subreddit": "Entrepreneur",
+        "score": 42,
+        "upvote_ratio": 0.88,
+        "num_comments": 29,
+        "created_utc": 1755369153.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1ms3kz8/im_getting_review_bombed_by_my_10myr_competition/",
+        "permalink": "/r/Entrepreneur/comments/1ms3kz8/im_getting_review_bombed_by_my_10myr_competition/",
+        "selftext": "Hey everyone, I\u2019m looking for some help\nabout my new iOS app launched.\n\nAfter a few days of successful organic posts on Tiktok our competitors have found our app. They\u2019ve started leaving bad reviews on the app, and we know it\u2019s the creators of the other app because you can see they are some of the only positive reviews on the competitors app, dates to the launch of their app!\n\nWhat do I do?",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:04:41.232809"
+    },
+    {
+      "reddit_data": {
+        "id": "1msfjlp",
+        "title": "Why would a founder shut down their company vs. get acquired?",
+        "author": "avgkay",
+        "subreddit": "Entrepreneur",
+        "score": 8,
+        "upvote_ratio": 0.84,
+        "num_comments": 13,
+        "created_utc": 1755398854.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1msfjlp/why_would_a_founder_shut_down_their_company_vs/",
+        "permalink": "/r/Entrepreneur/comments/1msfjlp/why_would_a_founder_shut_down_their_company_vs/",
+        "selftext": "^^",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "relevance_score": 0.15,
+        "sentiment": "neutral",
+        "sentiment_score": 0.0,
+        "mentioned_tools": [],
+        "key_topics": [
+          "founder exit decisions",
+          "shutdown vs acquisition",
+          "exit strategy",
+          "product-market fit",
+          "funding/runway",
+          "acquisition terms and fit",
+          "team and talent outcomes",
+          "strategic vs personal reasons"
+        ],
+        "key_insights": [
+          "The post title solicits reasons why founders choose to shut down rather than pursue or accept acquisition \u2014 a high-level question about exit strategy trade-offs.",
+          "Common drivers likely discussed: lack of product-market fit, insufficient growth or metrics to attract acquirers, unfavorable acquisition terms, burnout or founder preference, legal/regulatory or IP complications, and desire to avoid cultural mismatch post-acquisition.",
+          "Acquisitions are not always available or desirable; selling requires alignment on valuation, terms, and integration, while shutting down can preserve founder agency or limit future liabilities.",
+          "For buyers/acquirers, understanding these drivers helps identify acquisition targets (e.g., distressed but valuable tech, teams with domain knowledge) and craft tailored offers (e.g., earnouts, acqui-hires)."
+        ],
+        "business_context": "A brief Reddit query about why founders sometimes choose to wind down their startups instead of being acquired \u2014 relevant to founders, investors, acquirers, and strategic planners assessing exit dynamics.",
+        "actionable_intelligence": "Monitor startups for signals that make acquisition viable (strong core tech/IP, healthy retention, clear revenue or strategic fit) and tailor offers to address common seller concerns (fair valuation, retention packages, cultural integration plans). For founders and investors: document metrics and IP, assess realistic exit paths early, maintain runway and buyer-friendly records, and weigh personal/strategic trade-offs (control, team outcomes, liabilities) when evaluating offers vs. shutdown."
+      },
+      "analyzed_at": "2025-08-16T23:04:49.486500"
+    },
+    {
+      "reddit_data": {
+        "id": "1mrxedm",
+        "title": "I got 3000 visitors and 200 signups within a week, but 0 paying customers. Tell me what\u2019s wrong?",
+        "author": "arsenajax",
+        "subreddit": "Entrepreneur",
+        "score": 67,
+        "upvote_ratio": 0.79,
+        "num_comments": 72,
+        "created_utc": 1755355785.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1mrxedm/i_got_3000_visitors_and_200_signups_within_a_week/",
+        "permalink": "/r/Entrepreneur/comments/1mrxedm/i_got_3000_visitors_and_200_signups_within_a_week/",
+        "selftext": "I launched my AI companionship platform Narrin.ai last week on Reddit. It went wild. 3000 visitors and 200+ signups. \n\nBUT, 0 paying customers. With many visitors not returning.\n\nWhat do I miss? A killer feature? Pricing plans that are bad? Or no clear usp? \n\nBe brutally honest, I can take it.",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:04:59.532028"
+    },
+    {
+      "reddit_data": {
+        "id": "1mse23h",
+        "title": "Looking for 1 co-builder to split the 100M MoneyModels $5k cost and bootstrap together (MOU + escrow)",
+        "author": "BestVersion01",
+        "subreddit": "Entrepreneur",
+        "score": 10,
+        "upvote_ratio": 0.86,
+        "num_comments": 13,
+        "created_utc": 1755394400.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1mse23h/looking_for_1_cobuilder_to_split_the_100m/",
+        "permalink": "/r/Entrepreneur/comments/1mse23h/looking_for_1_cobuilder_to_split_the_100m/",
+        "selftext": "hey all,\n\nquick heads-up,I\u2019m not selling anything here, just looking for one other entrepreneur who wants to split the cost of the new 100M MoneyModels bundle ($5k) and use it together.\n\nto keep everything 100% above board, I\u2019m planning to use:\n\n* a quick mutual MOU\n* an escrow (so neither of us has to blindly trust the other)\n* and a shared-use agreement so we\u2019re both legally covered\n* breakdown:\n\nbreakdown:\n\n* 50/50 cost split ($2.5k each)\n* digital signature via SignWell / DocuSign\n* escrow for transparency\n* optional rev-share later if we decide to build something with it\n\nthis is basically a cost-sharing / co-usage arrangement, not a product I\u2019m selling.\n\n  \nif that sounds interesting and you've got fund ready, D\\*m me and I'll send over the outline.\n\n  \nThanks \n\nHere's to a great 2025 finish and 2026\n\n",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:05:08.908590"
+    },
+    {
+      "reddit_data": {
+        "id": "1ms86gm",
+        "title": "Online Entrepreneurs in the 6-Figure Income Range",
+        "author": "NorCalGuySays",
+        "subreddit": "Entrepreneur",
+        "score": 12,
+        "upvote_ratio": 0.94,
+        "num_comments": 7,
+        "created_utc": 1755379336.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1ms86gm/online_entrepreneurs_in_the_6figure_income_range/",
+        "permalink": "/r/Entrepreneur/comments/1ms86gm/online_entrepreneurs_in_the_6figure_income_range/",
+        "selftext": "Online-related Entrepreneurs. Specifically in the $100,000 - $300,000 range-ish annually.\n\n(I\u2019m more curious about lower 6-figure ranges because it just seems more \u201creasonable\u201d at the moment, compared to millionaire incomes.)\n\n- What do you do for your business?\n- How did you get started and scale your business?\n- Specifically how you do generate revenue?",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:05:17.754983"
+    },
+    {
+      "reddit_data": {
+        "id": "1msbcn6",
+        "title": "Building a quit-vaping app was so stressful I started vaping again",
+        "author": "SouthHurled",
+        "subreddit": "Entrepreneur",
+        "score": 6,
+        "upvote_ratio": 0.81,
+        "num_comments": 4,
+        "created_utc": 1755386868.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1msbcn6/building_a_quitvaping_app_was_so_stressful_i/",
+        "permalink": "/r/Entrepreneur/comments/1msbcn6/building_a_quitvaping_app_was_so_stressful_i/",
+        "selftext": "Which made my friends and family laugh at me. But I'm pretty proud of it. It's a unique method that is different from the hundred other quitting apps and genuinley works. I used the app once it was built and now happily nicotine free.",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:05:26.190342"
+    },
+    {
+      "reddit_data": {
+        "id": "1msim6i",
+        "title": "How to get an investor to be the first one in?",
+        "author": "AlphaHouston1",
+        "subreddit": "Entrepreneur",
+        "score": 2,
+        "upvote_ratio": 1.0,
+        "num_comments": 2,
+        "created_utc": 1755408792.0,
+        "url": "https://www.reddit.com/r/Entrepreneur/comments/1msim6i/how_to_get_an_investor_to_be_the_first_one_in/",
+        "permalink": "/r/Entrepreneur/comments/1msim6i/how_to_get_an_investor_to_be_the_first_one_in/",
+        "selftext": "Ahhhh!\n\nSo basically, I am fielding investors for a startup, and they all have interest, but none of them want to be first lol!\n\nSeed round, $5M raise.\n\nIt's exciting that I am so close and that the concept I'm working on is intriguing enough to others, but how can I give an investor confidence that them being first is beneficial to them long-term?",
+        "domain": "self.Entrepreneur",
+        "flair_text": null
+      },
+      "ai_analysis": {
+        "error": "No JSON found in response",
+        "raw_response": ""
+      },
+      "analyzed_at": "2025-08-16T23:05:35.265547"
+    }
+  ],
+  "summary": {
+    "total_posts": 27,
+    "analyzed_posts": 27,
+    "avg_relevance": 0.0875,
+    "sentiment_distribution": {
+      "positive": 2,
+      "neutral": 2
+    },
+    "top_tools": [
+      "Reddit"
+    ],
+    "top_topics": [
+      "community engagement",
+      "acquisition terms and fit",
+      "shutdown vs acquisition",
+      "habit formation",
+      "user accomplishments",
+      "strategic vs personal reasons",
+      "onboarding new members",
+      "founder exit decisions",
+      "motivation",
+      "micro-breaks"
+    ]
+  }
+}

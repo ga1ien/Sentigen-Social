@@ -1,0 +1,70 @@
+{
+  "user_id": "user_001",
+  "workspace_id": "workspace_001",
+  "config_name": "trending_tech",
+  "description": "Daily GitHub research on trending technologies and viral repos",
+  "github_config": {
+    "content_types": [
+      "GitHubContentType.TRENDING_REPOS",
+      "GitHubContentType.VIRAL_REPOS"
+    ],
+    "search_topics": [
+      "AI",
+      "machine learning",
+      "web development",
+      "blockchain",
+      "devops"
+    ],
+    "languages": [
+      "Python",
+      "JavaScript",
+      "TypeScript",
+      "Rust",
+      "Go"
+    ],
+    "max_repos_per_search": 15,
+    "min_stars": 500,
+    "min_forks": 50,
+    "time_range": "GitHubTimeRange.WEEKLY",
+    "include_readme": true,
+    "include_issues": true,
+    "include_discussions": true,
+    "max_issues_per_repo": 10,
+    "viral_threshold_stars_per_day": 100,
+    "exclude_archived": true,
+    "exclude_forks": true
+  },
+  "analysis_depth": "AnalysisDepth.COMPREHENSIVE",
+  "ai_model": "gpt-5-mini",
+  "focus_areas": [
+    "technology_insights",
+    "trend_analysis",
+    "innovation_tracking"
+  ],
+  "schedule": {
+    "frequency": "ResearchFrequency.DAILY",
+    "time_of_day": "08:00",
+    "timezone": "America/New_York",
+    "days_of_week": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "custom_cron": null
+  },
+  "auto_run_enabled": true,
+  "generate_summary": true,
+  "generate_insights": true,
+  "generate_content_ideas": true,
+  "export_formats": [
+    "json",
+    "markdown"
+  ],
+  "created_at": "2025-08-17T00:13:04.669947",
+  "updated_at": "2025-08-17T00:13:04.669947",
+  "last_run_at": null
+}

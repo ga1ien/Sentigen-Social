@@ -1,0 +1,58 @@
+{
+  "user_id": "user_003",
+  "workspace_id": "workspace_003",
+  "config_name": "comprehensive_tech_intel",
+  "description": "Comprehensive HN research across all story types for complete tech intelligence",
+  "hackernews_config": {
+    "story_types": [
+      "HNStoryType.TOP",
+      "HNStoryType.ASK",
+      "HNStoryType.SHOW",
+      "HNStoryType.BEST"
+    ],
+    "search_topics": [
+      "artificial intelligence",
+      "blockchain",
+      "cybersecurity",
+      "cloud computing",
+      "devops"
+    ],
+    "max_stories_per_type": 10,
+    "max_comments_per_story": 35,
+    "min_score": 40,
+    "min_comments": 12,
+    "comment_depth": 3,
+    "exclude_jobs": true,
+    "time_range_hours": 48
+  },
+  "analysis_depth": "AnalysisDepth.COMPREHENSIVE",
+  "ai_model": "gpt-5-mini",
+  "focus_areas": [
+    "business_intelligence",
+    "competitive_analysis",
+    "trend_analysis",
+    "technology_insights"
+  ],
+  "schedule": {
+    "frequency": "ResearchFrequency.WEEKLY",
+    "time_of_day": "07:00",
+    "timezone": "UTC",
+    "days_of_week": [
+      0,
+      3
+    ],
+    "custom_cron": null
+  },
+  "auto_run_enabled": true,
+  "generate_summary": true,
+  "generate_insights": true,
+  "generate_content_ideas": true,
+  "export_formats": [
+    "json",
+    "markdown",
+    "pdf"
+  ],
+  "created_at": "2025-08-17T00:00:27.345299",
+  "updated_at": "2025-08-17T00:00:27.345299",
+  "last_run_at": null
+}

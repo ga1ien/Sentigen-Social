@@ -3,15 +3,18 @@ Pydantic AI agent for social media posting with Ayrshare integration.
 """
 
 import os
-from pydantic_ai import Agent, RunContext
 from dataclasses import dataclass
-from typing import Optional, Dict, List, Any
 from datetime import datetime
+from typing import Any, Dict, List, Optional
+
 import structlog
 from dotenv import load_dotenv
+from pydantic_ai import Agent, RunContext
 
-from utils import get_smart_model, AyrshareClient, HeyGenClient
-from models_social_media import SupportedPlatform, PostStatus
+from models.social_media import PostStatus, SupportedPlatform
+from utils.ayrshare_client import AyrshareClient
+from utils.heygen_client import HeyGenClient
+from utils.model_config import get_smart_model
 
 load_dotenv()
 
@@ -21,6 +24,7 @@ logger = structlog.get_logger(__name__)
 @dataclass
 class SocialMediaAgentDeps:
     """Dependencies required by the social media agent."""
+
     context: str
     ayrshare_client: AyrshareClient
     heygen_client: Optional[HeyGenClient] = None
@@ -29,9 +33,10 @@ class SocialMediaAgentDeps:
     options: Optional[Dict[str, Any]] = None
 
 
-@dataclass  
+@dataclass
 class SocialMediaAgentResult:
     """Structured output from the social media agent."""
+
     status: str
     message: str
     post_id: Optional[str] = None
@@ -82,9 +87,8 @@ social_media_agent = Agent(
     get_smart_model(),
     system_prompt=system_prompt,
     deps_type=SocialMediaAgentDeps,
-    result_type=SocialMediaAgentResult,
     instructions="You are an expert in social media posting and the current date is {current_date}.",
-    retries=2
+    retries=2,
 )
 
 
@@ -93,14 +97,14 @@ def add_context(ctx: RunContext[SocialMediaAgentDeps]) -> str:
     """Add dynamic context to the system prompt."""
     deps = ctx.deps
     return f"""
-    \n\nAdditional context for social media posting: 
+    \n\nAdditional context for social media posting:
     {deps.context}
-    
+
     Available platforms and posting capabilities will be determined by the user's connected accounts.
     """
 
 
-@social_media_agent.instructions  
+@social_media_agent.instructions
 def add_workspace_instructions(ctx: RunContext[SocialMediaAgentDeps]) -> str:
     """Add workspace-specific instructions."""
     if ctx.deps.workspace_metadata:
@@ -108,7 +112,7 @@ def add_workspace_instructions(ctx: RunContext[SocialMediaAgentDeps]) -> str:
     return ""
 
 
-@social_media_agent.instructions  
+@social_media_agent.instructions
 def add_workspace_description(ctx: RunContext[SocialMediaAgentDeps]) -> str:
     """Add workspace description context."""
     if ctx.deps.workspace_metadata:
@@ -129,7 +133,7 @@ async def post_to_social_media(
     is_portrait_video: bool = False,
     hashtags: Optional[List[str]] = None,
     mentions: Optional[List[str]] = None,
-    platform_options: Optional[Dict[str, Dict[str, Any]]] = None
+    platform_options: Optional[Dict[str, Dict[str, Any]]] = None,
 ) -> str:
     """
     Post content to social media platforms using Ayrshare API.
@@ -157,10 +161,10 @@ async def post_to_social_media(
         # Validate inputs
         if not platforms:
             return '{"status": "error", "message": "At least one platform must be specified", "errors": ["No platforms provided"]}'
-        
+
         if not post_content and not random_post:
             return '{"status": "error", "message": "Either post content or random_post must be provided", "errors": ["No content provided"]}'
-        
+
         # Process hashtags and mentions into content if provided
         final_content = post_content
         if final_content and (hashtags or mentions):
@@ -170,15 +174,15 @@ async def post_to_social_media(
             if mentions:
                 mention_str = " " + " ".join(mentions)
                 final_content += mention_str
-        
+
         # Parse schedule date if provided
         parsed_schedule_date = None
         if schedule_date:
             try:
-                parsed_schedule_date = datetime.fromisoformat(schedule_date.replace('Z', '+00:00'))
+                parsed_schedule_date = datetime.fromisoformat(schedule_date.replace("Z", "+00:00"))
             except ValueError:
                 return f'{{"status": "error", "message": "Invalid schedule date format: {schedule_date}", "errors": ["Invalid date format"]}}'
-        
+
         # Make the API call
         result = await ctx.deps.ayrshare_client.post_to_social_media(
             post_content=final_content,
@@ -189,32 +193,34 @@ async def post_to_social_media(
             random_media_url=random_media_url,
             is_landscape_video=is_landscape_video,
             is_portrait_video=is_portrait_video,
-            platform_options=platform_options
+            platform_options=platform_options,
         )
-        
+
         logger.info("Social media post successful", result_status=result.get("status"))
-        
+
         # Return the result as JSON string
         import json
+
         return json.dumps(result)
-        
+
     except Exception as e:
         error_msg = str(e)
         logger.error("Social media posting failed", error=error_msg)
-        
+
         import json
-        return json.dumps({
-            "status": "error",
-            "message": f"Failed to post to social media: {error_msg}",
-            "errors": [error_msg],
-            "platform_results": []
-        })
+
+        return json.dumps(
+            {
+                "status": "error",
+                "message": f"Failed to post to social media: {error_msg}",
+                "errors": [error_msg],
+                "platform_results": [],
+            }
+        )
 
 
 @social_media_agent.tool
-async def get_connected_accounts(
-    ctx: RunContext[SocialMediaAgentDeps]
-) -> str:
+async def get_connected_accounts(ctx: RunContext[SocialMediaAgentDeps]) -> str:
     """
     Get the list of connected social media accounts.
 
@@ -228,27 +234,24 @@ async def get_connected_accounts(
 
     try:
         result = await ctx.deps.ayrshare_client.get_connected_accounts()
-        
+
         import json
+
         return json.dumps(result)
-        
+
     except Exception as e:
         error_msg = str(e)
         logger.error("Failed to get connected accounts", error=error_msg)
-        
+
         import json
-        return json.dumps({
-            "status": "error",
-            "message": f"Failed to get connected accounts: {error_msg}",
-            "errors": [error_msg]
-        })
+
+        return json.dumps(
+            {"status": "error", "message": f"Failed to get connected accounts: {error_msg}", "errors": [error_msg]}
+        )
 
 
 @social_media_agent.tool
-async def get_post_analytics(
-    ctx: RunContext[SocialMediaAgentDeps],
-    post_id: str
-) -> str:
+async def get_post_analytics(ctx: RunContext[SocialMediaAgentDeps], post_id: str) -> str:
     """
     Get analytics for a specific social media post.
 
@@ -263,20 +266,20 @@ async def get_post_analytics(
 
     try:
         result = await ctx.deps.ayrshare_client.get_post_analytics(post_id)
-        
+
         import json
+
         return json.dumps(result)
-        
+
     except Exception as e:
         error_msg = str(e)
         logger.error("Failed to get post analytics", error=error_msg, post_id=post_id)
-        
+
         import json
-        return json.dumps({
-            "status": "error",
-            "message": f"Failed to get post analytics: {error_msg}",
-            "errors": [error_msg]
-        })
+
+        return json.dumps(
+            {"status": "error", "message": f"Failed to get post analytics: {error_msg}", "errors": [error_msg]}
+        )
 
 
 @social_media_agent.tool
@@ -285,7 +288,7 @@ async def optimize_content_for_platforms(
     content: str,
     platforms: List[str],
     include_hashtags: bool = True,
-    include_mentions: bool = True
+    include_mentions: bool = True,
 ) -> str:
     """
     Optimize content for specific social media platforms.
@@ -305,12 +308,12 @@ async def optimize_content_for_platforms(
     try:
         # Platform-specific optimization rules
         optimizations = {}
-        
+
         for platform in platforms:
             platform_lower = platform.lower()
             optimized = content
             suggestions = []
-            
+
             if platform_lower == "twitter":
                 # Twitter has 280 character limit
                 if len(content) > 280:
@@ -318,51 +321,48 @@ async def optimize_content_for_platforms(
                     suggestions.append("Content truncated to fit Twitter's 280 character limit")
                 if include_hashtags:
                     suggestions.append("Consider adding 1-2 relevant hashtags")
-                    
+
             elif platform_lower == "instagram":
                 # Instagram allows longer content and loves hashtags
                 if include_hashtags:
                     suggestions.append("Instagram performs well with 5-10 hashtags")
                 suggestions.append("Consider adding an engaging visual")
-                
+
             elif platform_lower == "linkedin":
                 # LinkedIn is professional
                 suggestions.append("Keep tone professional and industry-focused")
                 if include_hashtags:
                     suggestions.append("Use 3-5 professional hashtags")
-                    
+
             elif platform_lower == "facebook":
                 # Facebook allows long content
                 suggestions.append("Facebook posts can be longer and more conversational")
-                
+
             elif platform_lower == "tiktok":
                 # TikTok is video-focused
                 suggestions.append("TikTok requires video content - consider portrait format")
                 if include_hashtags:
                     suggestions.append("Use trending hashtags for better reach")
-            
+
             optimizations[platform] = {
                 "optimized_content": optimized,
                 "suggestions": suggestions,
-                "character_count": len(optimized)
+                "character_count": len(optimized),
             }
-        
+
         import json
-        return json.dumps({
-            "status": "success",
-            "optimizations": optimizations
-        })
-        
+
+        return json.dumps({"status": "success", "optimizations": optimizations})
+
     except Exception as e:
         error_msg = str(e)
         logger.error("Failed to optimize content", error=error_msg)
-        
+
         import json
-        return json.dumps({
-            "status": "error",
-            "message": f"Failed to optimize content: {error_msg}",
-            "errors": [error_msg]
-        })
+
+        return json.dumps(
+            {"status": "error", "message": f"Failed to optimize content: {error_msg}", "errors": [error_msg]}
+        )
 
 
 @social_media_agent.tool
@@ -371,7 +371,7 @@ async def generate_video_with_heygen(
     script: str,
     avatar_id: Optional[str] = None,
     voice_id: Optional[str] = None,
-    background: Optional[str] = None
+    background: Optional[str] = None,
 ) -> str:
     """
     Generate a video using HeyGen API.
@@ -390,41 +390,37 @@ async def generate_video_with_heygen(
 
     try:
         if not ctx.deps.heygen_client:
-            return json.dumps({
-                "status": "error",
-                "message": "HeyGen client not available. Please configure HEYGEN_API_KEY.",
-                "errors": ["HeyGen client not initialized"]
-            })
+            return json.dumps(
+                {
+                    "status": "error",
+                    "message": "HeyGen client not available. Please configure HEYGEN_API_KEY.",
+                    "errors": ["HeyGen client not initialized"],
+                }
+            )
 
         result = await ctx.deps.heygen_client.create_video(
-            script=script,
-            avatar_id=avatar_id,
-            voice_id=voice_id,
-            background=background
+            script=script, avatar_id=avatar_id, voice_id=voice_id, background=background
         )
-        
+
         logger.info("HeyGen video generation successful", video_id=result.get("video_id"))
-        
+
         import json
+
         return json.dumps(result)
-        
+
     except Exception as e:
         error_msg = str(e)
         logger.error("HeyGen video generation failed", error=error_msg)
-        
+
         import json
-        return json.dumps({
-            "status": "error",
-            "message": f"Failed to generate video: {error_msg}",
-            "errors": [error_msg]
-        })
+
+        return json.dumps(
+            {"status": "error", "message": f"Failed to generate video: {error_msg}", "errors": [error_msg]}
+        )
 
 
 @social_media_agent.tool
-async def get_heygen_video_status(
-    ctx: RunContext[SocialMediaAgentDeps],
-    video_id: str
-) -> str:
+async def get_heygen_video_status(ctx: RunContext[SocialMediaAgentDeps], video_id: str) -> str:
     """
     Get the status of a HeyGen video generation.
 
@@ -439,33 +435,33 @@ async def get_heygen_video_status(
 
     try:
         if not ctx.deps.heygen_client:
-            return json.dumps({
-                "status": "error",
-                "message": "HeyGen client not available",
-                "errors": ["HeyGen client not initialized"]
-            })
+            return json.dumps(
+                {
+                    "status": "error",
+                    "message": "HeyGen client not available",
+                    "errors": ["HeyGen client not initialized"],
+                }
+            )
 
         result = await ctx.deps.heygen_client.get_video_status(video_id)
-        
+
         import json
+
         return json.dumps(result)
-        
+
     except Exception as e:
         error_msg = str(e)
         logger.error("Failed to get HeyGen video status", error=error_msg, video_id=video_id)
-        
+
         import json
-        return json.dumps({
-            "status": "error",
-            "message": f"Failed to get video status: {error_msg}",
-            "errors": [error_msg]
-        })
+
+        return json.dumps(
+            {"status": "error", "message": f"Failed to get video status: {error_msg}", "errors": [error_msg]}
+        )
 
 
 @social_media_agent.tool
-async def list_heygen_avatars(
-    ctx: RunContext[SocialMediaAgentDeps]
-) -> str:
+async def list_heygen_avatars(ctx: RunContext[SocialMediaAgentDeps]) -> str:
     """
     Get list of available HeyGen avatars.
 
@@ -479,43 +475,43 @@ async def list_heygen_avatars(
 
     try:
         if not ctx.deps.heygen_client:
-            return json.dumps({
-                "status": "error",
-                "message": "HeyGen client not available",
-                "errors": ["HeyGen client not initialized"]
-            })
+            return json.dumps(
+                {
+                    "status": "error",
+                    "message": "HeyGen client not available",
+                    "errors": ["HeyGen client not initialized"],
+                }
+            )
 
         result = await ctx.deps.heygen_client.list_avatars()
-        
+
         import json
+
         return json.dumps(result)
-        
+
     except Exception as e:
         error_msg = str(e)
         logger.error("Failed to get HeyGen avatars", error=error_msg)
-        
+
         import json
-        return json.dumps({
-            "status": "error",
-            "message": f"Failed to get avatars: {error_msg}",
-            "errors": [error_msg]
-        })
+
+        return json.dumps({"status": "error", "message": f"Failed to get avatars: {error_msg}", "errors": [error_msg]})
 
 
 # Convenience class for easier usage
 class SocialMediaAgent:
     """Wrapper class for the social media agent."""
-    
+
     def __init__(self, ayrshare_api_key: Optional[str] = None, heygen_api_key: Optional[str] = None):
         """
         Initialize the social media agent.
-        
+
         Args:
             ayrshare_api_key: Ayrshare API key. If None, uses environment variable.
             heygen_api_key: HeyGen API key. If None, uses environment variable.
         """
         self.ayrshare_client = AyrshareClient(api_key=ayrshare_api_key)
-        
+
         # Initialize HeyGen client if API key is available
         try:
             self.heygen_client = HeyGenClient(api_key=heygen_api_key)
@@ -523,21 +519,21 @@ class SocialMediaAgent:
             # HeyGen API key not provided, client will be None
             self.heygen_client = None
             logger.info("HeyGen client not initialized - API key not provided")
-    
+
     async def post_content(
         self,
         prompt: str,
         context: str = "You are helping a user post content to social media.",
-        workspace_metadata: Optional[Dict[str, Any]] = None
+        workspace_metadata: Optional[Dict[str, Any]] = None,
     ) -> SocialMediaAgentResult:
         """
         Use the agent to post content to social media.
-        
+
         Args:
             prompt: The user's request/prompt
             context: Additional context for the agent
             workspace_metadata: Workspace-specific metadata
-            
+
         Returns:
             SocialMediaAgentResult with the posting results
         """
@@ -545,30 +541,24 @@ class SocialMediaAgent:
             context=context,
             ayrshare_client=self.ayrshare_client,
             heygen_client=self.heygen_client,
-            workspace_metadata=workspace_metadata or {}
+            workspace_metadata=workspace_metadata or {},
         )
-        
+
         try:
             result = await social_media_agent.run(prompt, deps=deps)
-            
+
             # Extract structured result
-            if hasattr(result, 'data'):
+            if hasattr(result, "data"):
                 return result.data
             else:
                 # Handle fallback cases - create result from output
                 return SocialMediaAgentResult(
-                    status="success",
-                    message="Content processed successfully",
-                    post_content=str(result.output)
+                    status="success", message="Content processed successfully", post_content=str(result.output)
                 )
-                
+
         except Exception as e:
             logger.error(f"Social media agent error: {str(e)}")
-            return SocialMediaAgentResult(
-                status="error",
-                message=f"Agent error: {str(e)}",
-                errors=[str(e)]
-            )
+            return SocialMediaAgentResult(status="error", message=f"Agent error: {str(e)}", errors=[str(e)])
 
 
 # Example usage function
@@ -577,9 +567,9 @@ async def main():
     # Example prompt for the agent
     prompt = """
     Please post the following content to Twitter and LinkedIn:
-    
+
     "Excited to share our latest AI breakthrough! Our new social media automation tool is now live. 🚀 #AI #SocialMedia #Innovation"
-    
+
     Also include the image: https://img.ayrshare.com/012/gb.jpg
     """
 
@@ -590,8 +580,8 @@ async def main():
         ayrshare_client=ayrshare_client,
         workspace_metadata={
             "instructions": "Focus on professional tone for business content",
-            "description": "AI product marketing workspace"
-        }
+            "description": "AI product marketing workspace",
+        },
     )
 
     # Run the agent
@@ -600,9 +590,9 @@ async def main():
     # Print the response
     print("Agent Response:")
     print(response.output)
-    
+
     # Access structured data if available
-    if hasattr(response, 'data'):
+    if hasattr(response, "data"):
         structured_result = response.data
         print(f"Status: {structured_result.status}")
         print(f"Message: {structured_result.message}")
@@ -612,4 +602,5 @@ async def main():
 
 if __name__ == "__main__":
     import asyncio
+
     asyncio.run(main())

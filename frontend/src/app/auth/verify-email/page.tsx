@@ -17,13 +17,13 @@ function VerifyEmailContent() {
 
   useEffect(() => {
     const handleEmailVerification = async () => {
-      const token_hash = searchParams.get('token_hash')
+      const tokenHash = searchParams.get('token_hash')
       const type = searchParams.get('type')
-      
-      if (token_hash && type) {
+
+      if (tokenHash && type) {
         try {
           const { error } = await supabase.auth.verifyOtp({
-            token_hash,
+            token_hash: tokenHash,
             type: type as 'signup' | 'email_change',
           })
 
@@ -59,7 +59,7 @@ function VerifyEmailContent() {
           type: 'signup',
           email: user.email,
         })
-        
+
         if (error) {
           setMessage('Failed to resend verification email')
         } else {
@@ -102,7 +102,7 @@ function VerifyEmailContent() {
               </Button>
             </>
           )}
-          
+
           {status === 'error' && (
             <div className="space-y-2">
               <Button onClick={resendVerification} variant="outline" className="w-full">

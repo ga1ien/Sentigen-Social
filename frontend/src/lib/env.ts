@@ -19,9 +19,9 @@ export const env = createEnv({
     NEXT_PUBLIC_API_URL: z.string().default("https://sentigen-social-production.up.railway.app"),
     NEXT_PUBLIC_APP_NAME: z.string().default("AI Social Media Platform"),
     NEXT_PUBLIC_APP_DESCRIPTION: z.string().default("AI-powered social media content creation and scheduling"),
-    NEXT_PUBLIC_ENABLE_ANALYTICS: z.string().transform((val) => val === "true").default("true"),
-    NEXT_PUBLIC_ENABLE_AI_GENERATION: z.string().transform((val) => val === "true").default("true"),
-    NEXT_PUBLIC_ENABLE_SCHEDULING: z.string().transform((val) => val === "true").default("true"),
+    NEXT_PUBLIC_ENABLE_ANALYTICS: z.string().default("true").transform((val) => val === "true"),
+    NEXT_PUBLIC_ENABLE_AI_GENERATION: z.string().default("true").transform((val) => val === "true"),
+    NEXT_PUBLIC_ENABLE_SCHEDULING: z.string().default("true").transform((val) => val === "true"),
   },
 
   /**

@@ -26,9 +26,20 @@ interface ResearchRequest {
 interface ResearchResult {
   id: string
   status: 'researching' | 'completed' | 'failed'
-  insights: any[]
+  insights: Array<{
+    title: string
+    content: string
+    source: string
+    relevance_score?: number
+  }>
   trending_topics: string[]
-  engagement_data: any
+  engagement_data: {
+    views?: number
+    likes?: number
+    shares?: number
+    comments?: number
+    average_engagement?: number
+  }
   created_at: string
 }
 

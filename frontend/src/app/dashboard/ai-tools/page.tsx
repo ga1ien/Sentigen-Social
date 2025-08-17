@@ -9,13 +9,13 @@ import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { 
-  Brain, 
-  Sparkles, 
-  Image as ImageIcon, 
-  Video, 
-  MessageSquare, 
-  Search, 
+import {
+  Brain,
+  Sparkles,
+  Image as ImageIcon,
+  Video,
+  MessageSquare,
+  Search,
   Lightbulb,
   Wand2,
   Copy,
@@ -103,8 +103,8 @@ export default function AIToolsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const { toast } = useToast()
 
-  const filteredTools = selectedCategory === 'all' 
-    ? aiTools 
+  const filteredTools = selectedCategory === 'all'
+    ? aiTools
     : aiTools.filter(tool => tool.category === selectedCategory)
 
   const selectedToolData = aiTools.find(tool => tool.id === selectedTool)
@@ -123,63 +123,21 @@ export default function AIToolsPage() {
     setResult('')
 
     try {
-      // Mock AI generation - replace with real API calls
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      const mockResults = {
-        'content-generator': `🚀 Exciting news! We're launching something amazing that will transform how you work. 
+      // TODO: Implement real AI API calls to backend
+      // For now, show a message that this feature is coming soon
 
-Stay tuned for the big reveal! What do you think it could be? 👀
+      setResult(`🚧 AI ${aiTools.find(t => t.id === selectedTool)?.name} is coming soon!
 
-#Innovation #TechLaunch #StayTuned #Excitement`,
-        'hashtag-generator': '#Innovation #TechLaunch #StayTuned #Excitement #NewProduct #ComingSoon #TechNews #Startup #Launch #Amazing',
-        'idea-generator': `Here are 5 content ideas based on your prompt:
+This feature will be connected to real AI services including:
+• OpenAI GPT for content generation
+• Advanced trend analysis
+• Real-time optimization suggestions
 
-1. Behind-the-scenes development process
-2. Team member spotlight series
-3. Customer success story features
-4. Industry trend analysis posts
-5. Interactive polls about user preferences`,
-        'content-optimizer': `Optimized version:
+Stay tuned for the full implementation!`)
 
-🚀 EXCITING NEWS: We're launching something that will revolutionize your workflow!
-
-✨ Big reveal coming soon - can you guess what it is?
-
-👇 Drop your predictions below!
-
-#Innovation #TechLaunch #StayTuned #Excitement
-
-Optimization tips:
-• Added emojis for visual appeal
-• Included call-to-action
-• Optimized hashtag placement
-• Improved readability with line breaks`,
-        'trend-researcher': `Current trending topics in your industry:
-
-🔥 Hot Topics:
-• AI automation tools (+45% mentions)
-• Remote work productivity (+32% mentions)
-• Sustainable tech solutions (+28% mentions)
-
-📈 Emerging Trends:
-• No-code development platforms
-• AI-powered customer service
-• Green technology initiatives
-
-💡 Content Opportunities:
-• How-to guides on AI tools
-• Remote work best practices
-• Sustainability in tech`,
-        'image-generator': 'Image generation started... Check your Media Library for the generated image.',
-        'video-generator': 'Video generation started... This may take a few minutes. Check your Media Library for the generated video.'
-      }
-
-      setResult(mockResults[selectedTool as keyof typeof mockResults] || 'Generated content will appear here...')
-      
       toast({
-        title: "Generation complete",
-        description: "Your AI-generated content is ready!",
+        title: "Feature Coming Soon",
+        description: "AI tools will be available in the next update!",
       })
     } catch (error) {
       toast({
@@ -258,8 +216,8 @@ Optimization tips:
                   <div
                     key={tool.id}
                     className={`p-3 rounded-lg border cursor-pointer transition-colors ${
-                      selectedTool === tool.id 
-                        ? 'border-primary bg-primary/5' 
+                      selectedTool === tool.id
+                        ? 'border-primary bg-primary/5'
                         : 'border-border hover:border-primary/50'
                     }`}
                     onClick={() => setSelectedTool(tool.id)}
@@ -379,8 +337,8 @@ Optimization tips:
                   </div>
                 )}
 
-                <Button 
-                  onClick={handleGenerate} 
+                <Button
+                  onClick={handleGenerate}
                   disabled={isGenerating || !prompt.trim()}
                   className="w-full"
                 >
@@ -433,7 +391,7 @@ Optimization tips:
             <p className="text-sm text-muted-foreground">Generate a social media post in seconds</p>
           </CardContent>
         </Card>
-        
+
         <Card className="hover:shadow-md transition-shadow cursor-pointer">
           <CardContent className="p-6 text-center">
             <ImageIcon className="mx-auto h-8 w-8 text-primary mb-3" />
@@ -441,7 +399,7 @@ Optimization tips:
             <p className="text-sm text-muted-foreground">Generate custom images for your posts</p>
           </CardContent>
         </Card>
-        
+
         <Card className="hover:shadow-md transition-shadow cursor-pointer">
           <CardContent className="p-6 text-center">
             <Search className="mx-auto h-8 w-8 text-primary mb-3" />

@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar Video Generation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .avatar-carousel-container {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .avatar-carousel {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 10px 0;
+            scroll-behavior: smooth;
+        }
+
+        .avatar-option {
+            min-width: 200px;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .avatar-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .avatar-option.selected {
+            border-color: #0d6efd;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%);
+        }
+
+        .preview-video-container {
+            position: relative;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .avatar-preview-video {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .play-pause-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.7);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-pause-btn:hover {
+            background: rgba(0,0,0,0.9);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .avatar-info {
+            text-align: center;
+        }
+
+        .avatar-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .avatar-description {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .subscription-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #ffc107;
+            color: #000;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .subscription-badge.pro {
+            background: #6f42c1;
+            color: white;
+        }
+
+        .subscription-badge.enterprise {
+            background: #dc3545;
+            color: white;
+        }
+
+        .video-generation-form {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+        }
+
+        .form-section {
+            margin-bottom: 25px;
+        }
+
+        .form-section h6 {
+            color: #495057;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .aspect-ratio-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .aspect-ratio-option {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .aspect-ratio-option:hover {
+            border-color: #0d6efd;
+        }
+
+        .aspect-ratio-option.selected {
+            border-color: #0d6efd;
+            background: #f8f9ff;
+        }
+
+        .aspect-ratio-preview {
+            width: 40px;
+            height: 30px;
+            background: #dee2e6;
+            margin: 0 auto 8px;
+            border-radius: 4px;
+        }
+
+        .aspect-ratio-preview.portrait {
+            width: 20px;
+            height: 35px;
+        }
+
+        .aspect-ratio-preview.square {
+            width: 30px;
+            height: 30px;
+        }
+
+        .video-status-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .status-spinner {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+        }
+
+        .progress-container {
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .generated-video {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .video-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .research-integration {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .research-integration h5 {
+            margin-bottom: 15px;
+        }
+
+        .research-jobs {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .research-job-card {
+            min-width: 250px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .research-job-card:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .research-job-card.selected {
+            border-color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .job-source {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .job-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .job-date {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center mb-4">
+                    <i class="bi bi-camera-video me-2"></i>
+                    Create Avatar Video
+                </h2>
+
+                <!-- Research Integration Section -->
+                <div class="research-integration" id="researchSection" style="display: none;">
+                    <h5><i class="bi bi-graph-up me-2"></i>Create from Research</h5>
+                    <p class="mb-3">Select a completed research job to automatically generate video content:</p>
+                    <div class="research-jobs" id="researchJobs">
+                        <!-- Research jobs will be loaded here -->
+                    </div>
+                    <button type="button" class="btn btn-light btn-sm mt-3" onclick="toggleManualMode()">
+                        <i class="bi bi-pencil me-1"></i>Write Custom Script Instead
+                    </button>
+                </div>
+
+                <!-- Avatar Selection Carousel -->
+                <div class="avatar-carousel-container">
+                    <h5 class="mb-3">
+                        <i class="bi bi-person-circle me-2"></i>
+                        Choose Your Avatar
+                    </h5>
+                    <div class="avatar-carousel" id="avatarCarousel">
+                        <!-- Avatars will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Video Generation Form -->
+                <div class="video-generation-form" id="videoForm">
+                    <form id="createVideoForm">
+                        <input type="hidden" id="selectedAvatarId" name="avatar_profile_id">
+                        <input type="hidden" id="selectedResearchJobId" name="research_job_id">
+
+                        <!-- Script Section -->
+                        <div class="form-section">
+                            <h6><i class="bi bi-file-text me-2"></i>Video Script</h6>
+                            <div class="mb-3">
+                                <label for="scriptTitle" class="form-label">Title (Optional)</label>
+                                <input type="text" class="form-control" id="scriptTitle" name="script_title"
+                                       placeholder="Enter video title...">
+                            </div>
+                            <div class="mb-3">
+                                <label for="scriptContent" class="form-label">Script Content</label>
+                                <textarea class="form-control" id="scriptContent" name="script_content"
+                                         rows="6" required placeholder="Enter your video script here..."></textarea>
+                                <div class="form-text">
+                                    <span id="scriptLength">0</span> characters (recommended: 200-1000)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Video Settings -->
+                        <div class="form-section">
+                            <h6><i class="bi bi-gear me-2"></i>Video Settings</h6>
+
+                            <!-- Aspect Ratio -->
+                            <div class="mb-3">
+                                <label class="form-label">Aspect Ratio</label>
+                                <div class="aspect-ratio-selector">
+                                    <div class="aspect-ratio-option selected" data-ratio="portrait">
+                                        <div class="aspect-ratio-preview portrait"></div>
+                                        <small>Portrait<br>9:16</small>
+                                    </div>
+                                    <div class="aspect-ratio-option" data-ratio="landscape">
+                                        <div class="aspect-ratio-preview landscape"></div>
+                                        <small>Landscape<br>16:9</small>
+                                    </div>
+                                    <div class="aspect-ratio-option" data-ratio="square">
+                                        <div class="aspect-ratio-preview square"></div>
+                                        <small>Square<br>1:1</small>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="aspectRatio" name="aspect_ratio" value="portrait">
+                            </div>
+
+                            <!-- Voice Speed -->
+                            <div class="mb-3">
+                                <label for="voiceSpeed" class="form-label">
+                                    Voice Speed: <span id="voiceSpeedValue">1.0x</span>
+                                </label>
+                                <input type="range" class="form-range" id="voiceSpeed" name="voice_speed"
+                                       min="0.5" max="2.0" step="0.1" value="1.0">
+                            </div>
+
+                            <!-- Captions -->
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="enableCaptions"
+                                           name="enable_captions" checked>
+                                    <label class="form-check-label" for="enableCaptions">
+                                        Enable Captions/Subtitles
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Background Color -->
+                            <div class="mb-3">
+                                <label for="backgroundColor" class="form-label">Background Color</label>
+                                <input type="color" class="form-control form-control-color"
+                                       id="backgroundColor" name="background_color" value="#ffffff">
+                            </div>
+                        </div>
+
+                        <!-- Generate Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg px-5" id="generateBtn">
+                                <i class="bi bi-play-circle me-2"></i>
+                                Generate Video
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Video Status/Result -->
+                <div class="video-status-container" id="videoStatus" style="display: none;">
+                    <!-- Status content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables
+        let selectedAvatarId = null;
+        let selectedResearchJobId = null;
+        let videoStatusWebSocket = null;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAvatars();
+            loadRecentResearchJobs();
+            setupEventListeners();
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Avatar selection
+            document.addEventListener('click', function(event) {
+                const avatarOption = event.target.closest('.avatar-option');
+                if (avatarOption) {
+                    selectAvatar(avatarOption);
+                }
+            });
+
+            // Research job selection
+            document.addEventListener('click', function(event) {
+                const jobCard = event.target.closest('.research-job-card');
+                if (jobCard) {
+                    selectResearchJob(jobCard);
+                }
+            });
+
+            // Aspect ratio selection
+            document.addEventListener('click', function(event) {
+                const ratioOption = event.target.closest('.aspect-ratio-option');
+                if (ratioOption) {
+                    selectAspectRatio(ratioOption);
+                }
+            });
+
+            // Voice speed slider
+            document.getElementById('voiceSpeed').addEventListener('input', function() {
+                document.getElementById('voiceSpeedValue').textContent = this.value + 'x';
+            });
+
+            // Script length counter
+            document.getElementById('scriptContent').addEventListener('input', function() {
+                document.getElementById('scriptLength').textContent = this.value.length;
+            });
+
+            // Form submission
+            document.getElementById('createVideoForm').addEventListener('submit', handleFormSubmission);
+        }
+
+        // Load available avatars
+        async function loadAvatars() {
+            try {
+                const response = await fetch('/api/avatar-video/avatars', {
+                    headers: {
+                        'Authorization': 'Bearer ' + getAuthToken()
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to load avatars');
+
+                const avatars = await response.json();
+                renderAvatars(avatars);
+
+                // Select first avatar by default
+                if (avatars.length > 0) {
+                    const firstAvatar = document.querySelector('.avatar-option');
+                    if (firstAvatar) selectAvatar(firstAvatar);
+                }
+
+            } catch (error) {
+                console.error('Error loading avatars:', error);
+                showError('Failed to load avatars');
+            }
+        }
+
+        // Render avatars carousel
+        function renderAvatars(avatars) {
+            const carousel = document.getElementById('avatarCarousel');
+            carousel.innerHTML = '';
+
+            avatars.forEach(avatar => {
+                const avatarElement = document.createElement('div');
+                avatarElement.className = 'avatar-option';
+                avatarElement.dataset.avatarId = avatar.id;
+
+                avatarElement.innerHTML = `
+                    <div class="preview-video-container">
+                        ${avatar.subscription_tier !== 'free' ?
+                            `<div class="subscription-badge ${avatar.subscription_tier}">${avatar.subscription_tier.toUpperCase()}</div>` :
+                            ''
+                        }
+                        ${avatar.preview_url ? `
+                            <video muted loop preload="metadata" class="avatar-preview-video">
+                                <source src="${avatar.preview_url}" type="video/mp4">
+                            </video>
+                            <button type="button" class="play-pause-btn" onclick="playPauseVideo(this)">
+                                <i class="bi bi-play-fill"></i>
+                            </button>
+                        ` : `
+                            <div class="avatar-preview-video d-flex align-items-center justify-content-center bg-secondary text-white">
+                                <i class="bi bi-person-circle" style="font-size: 2rem;"></i>
+                            </div>
+                        `}
+                    </div>
+                    <div class="avatar-info">
+                        <h6 class="avatar-name">${avatar.name}</h6>
+                        <p class="avatar-description">${avatar.description || ''}</p>
+                    </div>
+                `;
+
+                carousel.appendChild(avatarElement);
+            });
+        }
+
+        // Load recent research jobs
+        async function loadRecentResearchJobs() {
+            try {
+                const response = await fetch('/api/research/jobs?status=completed&limit=10', {
+                    headers: {
+                        'Authorization': 'Bearer ' + getAuthToken()
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to load research jobs');
+
+                const jobs = await response.json();
+
+                if (jobs.length > 0) {
+                    renderResearchJobs(jobs);
+                    document.getElementById('researchSection').style.display = 'block';
+                }
+
+            } catch (error) {
+                console.error('Error loading research jobs:', error);
+                // Don't show error for research jobs - it's optional
+            }
+        }
+
+        // Render research jobs
+        function renderResearchJobs(jobs) {
+            const container = document.getElementById('researchJobs');
+            container.innerHTML = '';
+
+            jobs.forEach(job => {
+                const jobElement = document.createElement('div');
+                jobElement.className = 'research-job-card';
+                jobElement.dataset.jobId = job.id;
+
+                const date = new Date(job.completed_at).toLocaleDateString();
+                const source = job.source_type.replace('_', ' ').toUpperCase();
+
+                jobElement.innerHTML = `
+                    <div class="job-source">${source}</div>
+                    <div class="job-title">${job.job_type} Research</div>
+                    <div class="job-date">Completed ${date}</div>
+                `;
+
+                container.appendChild(jobElement);
+            });
+        }
+
+        // Select avatar
+        function selectAvatar(avatarElement) {
+            // Remove previous selection
+            document.querySelectorAll('.avatar-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // Select new avatar
+            avatarElement.classList.add('selected');
+            selectedAvatarId = avatarElement.dataset.avatarId;
+            document.getElementById('selectedAvatarId').value = selectedAvatarId;
+        }
+
+        // Select research job
+        function selectResearchJob(jobElement) {
+            // Remove previous selection
+            document.querySelectorAll('.research-job-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // Select new job
+            jobElement.classList.add('selected');
+            selectedResearchJobId = jobElement.dataset.jobId;
+            document.getElementById('selectedResearchJobId').value = selectedResearchJobId;
+
+            // Load research content into script
+            loadResearchContent(selectedResearchJobId);
+        }
+
+        // Load research content
+        async function loadResearchContent(jobId) {
+            try {
+                const response = await fetch(`/api/research/jobs/${jobId}`, {
+                    headers: {
+                        'Authorization': 'Bearer ' + getAuthToken()
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to load research content');
+
+                const job = await response.json();
+
+                // Generate script from research data
+                const script = generateScriptFromResearch(job);
+                document.getElementById('scriptContent').value = script;
+                document.getElementById('scriptLength').textContent = script.length;
+
+                // Set title
+                const title = `${job.source_type.replace('_', ' ').toUpperCase()} Research Video`;
+                document.getElementById('scriptTitle').value = title;
+
+            } catch (error) {
+                console.error('Error loading research content:', error);
+                showError('Failed to load research content');
+            }
+        }
+
+        // Generate script from research data
+        function generateScriptFromResearch(job) {
+            const source = job.source_type.replace('_', ' ');
+            return `Based on our latest ${source} research, we've uncovered some fascinating insights and trends. This analysis reveals key opportunities and emerging patterns that are worth exploring. The data shows significant developments that could impact content strategy and market positioning. These findings provide valuable intelligence for making informed decisions and staying ahead of the curve.`;
+        }
+
+        // Select aspect ratio
+        function selectAspectRatio(ratioElement) {
+            // Remove previous selection
+            document.querySelectorAll('.aspect-ratio-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // Select new ratio
+            ratioElement.classList.add('selected');
+            const ratio = ratioElement.dataset.ratio;
+            document.getElementById('aspectRatio').value = ratio;
+        }
+
+        // Play/pause video preview
+        function playPauseVideo(buttonElement) {
+            const videoContainer = buttonElement.closest('.preview-video-container');
+            const video = videoContainer.querySelector('video');
+            const icon = buttonElement.querySelector('i');
+
+            if (video.paused) {
+                video.play();
+                icon.classList.remove('bi-play-fill');
+                icon.classList.add('bi-pause-fill');
+            } else {
+                video.pause();
+                icon.classList.remove('bi-pause-fill');
+                icon.classList.add('bi-play-fill');
+            }
+        }
+
+        // Toggle manual mode
+        function toggleManualMode() {
+            document.getElementById('researchSection').style.display = 'none';
+            document.getElementById('scriptContent').value = '';
+            document.getElementById('scriptTitle').value = '';
+            selectedResearchJobId = null;
+            document.getElementById('selectedResearchJobId').value = '';
+        }
+
+        // Handle form submission
+        async function handleFormSubmission(event) {
+            event.preventDefault();
+
+            if (!selectedAvatarId) {
+                showError('Please select an avatar');
+                return;
+            }
+
+            const scriptContent = document.getElementById('scriptContent').value.trim();
+            if (!scriptContent) {
+                showError('Please enter script content');
+                return;
+            }
+
+            // Show loading state
+            showVideoStatus('processing');
+
+            try {
+                const formData = new FormData(event.target);
+                const requestData = Object.fromEntries(formData.entries());
+
+                // Convert form values
+                requestData.voice_speed = parseFloat(requestData.voice_speed);
+                requestData.enable_captions = document.getElementById('enableCaptions').checked;
+
+                let endpoint = '/api/avatar-video/videos';
+                if (selectedResearchJobId) {
+                    endpoint = '/api/avatar-video/videos/from-research';
+                    requestData.research_job_id = selectedResearchJobId;
+                }
+
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + getAuthToken()
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Failed to create video');
+                }
+
+                const result = await response.json();
+
+                // Start WebSocket monitoring
+                startVideoStatusMonitoring(result.video_id);
+
+            } catch (error) {
+                console.error('Error creating video:', error);
+                showError(error.message);
+            }
+        }
+
+        // Show video status
+        function showVideoStatus(status, data = {}) {
+            const statusContainer = document.getElementById('videoStatus');
+            const videoForm = document.getElementById('videoForm');
+
+            statusContainer.style.display = 'block';
+            videoForm.style.display = 'none';
+
+            if (status === 'processing') {
+                statusContainer.innerHTML = `
+                    <div class="status-spinner spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <h5 class="mb-3">Creating your avatar video...</h5>
+                    <p class="text-muted">This usually takes 2-5 minutes</p>
+                    <div class="progress-container">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                 style="width: 25%"></div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-secondary mt-3" onclick="showVideoForm()">
+                        <i class="bi bi-arrow-left me-1"></i>Back to Form
+                    </button>
+                `;
+            } else if (status === 'completed') {
+                statusContainer.innerHTML = `
+                    <h5 class="text-success mb-3">
+                        <i class="bi bi-check-circle me-2"></i>
+                        Video Generated Successfully!
+                    </h5>
+                    <div class="mb-4">
+                        <video controls preload="auto" class="generated-video"
+                               style="max-width: 400px; aspect-ratio: ${data.aspect_ratio === 'portrait' ? '9/16' : data.aspect_ratio === 'square' ? '1/1' : '16/9'};">
+                            <source src="${data.video_url}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-actions">
+                        <a href="${data.video_url}" download="avatar-video.mp4" class="btn btn-primary">
+                            <i class="bi bi-download me-1"></i>Download Video
+                        </a>
+                        <button type="button" class="btn btn-outline-primary" onclick="shareVideo('${data.video_url}')">
+                            <i class="bi bi-share me-1"></i>Share
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="createAnother()">
+                            <i class="bi bi-plus-circle me-1"></i>Create Another
+                        </button>
+                    </div>
+                `;
+            } else if (status === 'failed') {
+                statusContainer.innerHTML = `
+                    <h5 class="text-danger mb-3">
+                        <i class="bi bi-exclamation-circle me-2"></i>
+                        Video Generation Failed
+                    </h5>
+                    <p class="text-muted mb-4">${data.error_message || 'An error occurred during video generation'}</p>
+                    <button type="button" class="btn btn-primary" onclick="showVideoForm()">
+                        <i class="bi bi-arrow-left me-1"></i>Try Again
+                    </button>
+                `;
+            }
+        }
+
+        // Start WebSocket monitoring
+        function startVideoStatusMonitoring(videoId) {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}/api/avatar-video/videos/${videoId}/status-ws`;
+
+            videoStatusWebSocket = new WebSocket(wsUrl);
+
+            videoStatusWebSocket.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+
+                if (data.status === 'completed') {
+                    showVideoStatus('completed', data);
+                    videoStatusWebSocket.close();
+                } else if (data.status === 'failed' || data.status === 'error') {
+                    showVideoStatus('failed', data);
+                    videoStatusWebSocket.close();
+                }
+            };
+
+            videoStatusWebSocket.onerror = function(error) {
+                console.error('WebSocket error:', error);
+                // Fallback to polling
+                pollVideoStatus(videoId);
+            };
+        }
+
+        // Fallback polling
+        function pollVideoStatus(videoId) {
+            const pollInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(`/api/avatar-video/videos/${videoId}/status`, {
+                        headers: {
+                            'Authorization': 'Bearer ' + getAuthToken()
+                        }
+                    });
+
+                    if (!response.ok) throw new Error('Status check failed');
+
+                    const data = await response.json();
+
+                    if (data.status === 'completed') {
+                        showVideoStatus('completed', data);
+                        clearInterval(pollInterval);
+                    } else if (data.status === 'failed' || data.status === 'error') {
+                        showVideoStatus('failed', data);
+                        clearInterval(pollInterval);
+                    }
+
+                } catch (error) {
+                    console.error('Polling error:', error);
+                }
+            }, 5000);
+
+            // Stop polling after 10 minutes
+            setTimeout(() => clearInterval(pollInterval), 600000);
+        }
+
+        // Utility functions
+        function showVideoForm() {
+            document.getElementById('videoStatus').style.display = 'none';
+            document.getElementById('videoForm').style.display = 'block';
+        }
+
+        function createAnother() {
+            showVideoForm();
+            document.getElementById('createVideoForm').reset();
+            document.getElementById('scriptLength').textContent = '0';
+            selectedResearchJobId = null;
+            document.getElementById('selectedResearchJobId').value = '';
+        }
+
+        function shareVideo(videoUrl) {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Check out my avatar video!',
+                    url: videoUrl
+                });
+            } else {
+                navigator.clipboard.writeText(videoUrl);
+                showSuccess('Video URL copied to clipboard!');
+            }
+        }
+
+        function showError(message) {
+            // You can implement a toast notification system here
+            alert('Error: ' + message);
+        }
+
+        function showSuccess(message) {
+            // You can implement a toast notification system here
+            alert(message);
+        }
+
+        function getAuthToken() {
+            // Implement your authentication token retrieval logic
+            return localStorage.getItem('auth_token') || '';
+        }
+    </script>
+</body>
+</html>

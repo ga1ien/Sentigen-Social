@@ -7,17 +7,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { 
-  Upload, 
-  Search, 
-  Filter, 
-  Grid3X3, 
-  List, 
-  Image as ImageIcon, 
-  Video, 
-  FileText, 
-  Download, 
-  Trash2, 
+import {
+  Upload,
+  Search,
+  Filter,
+  Grid3X3,
+  List,
+  Image as ImageIcon,
+  Video,
+  FileText,
+  Download,
+  Trash2,
   Eye,
   Copy,
   MoreVertical,
@@ -48,47 +48,11 @@ interface MediaAsset {
   duration?: number
 }
 
-// Mock data - replace with real API calls
-const mockMediaAssets: MediaAsset[] = [
-  {
-    id: '1',
-    filename: 'product-launch.jpg',
-    original_filename: 'Product Launch Hero Image.jpg',
-    media_type: 'image',
-    file_size: 2048000,
-    url: '/api/media/product-launch.jpg',
-    thumbnail_url: '/api/media/thumbs/product-launch.jpg',
-    created_at: '2024-01-15T10:30:00Z',
-    tags: ['product', 'launch', 'hero'],
-    dimensions: { width: 1920, height: 1080 }
-  },
-  {
-    id: '2',
-    filename: 'team-video.mp4',
-    original_filename: 'Team Introduction Video.mp4',
-    media_type: 'video',
-    file_size: 15728640,
-    url: '/api/media/team-video.mp4',
-    thumbnail_url: '/api/media/thumbs/team-video.jpg',
-    created_at: '2024-01-14T14:20:00Z',
-    tags: ['team', 'introduction', 'about'],
-    dimensions: { width: 1280, height: 720 },
-    duration: 45
-  },
-  {
-    id: '3',
-    filename: 'brand-guidelines.pdf',
-    original_filename: 'Brand Guidelines 2024.pdf',
-    media_type: 'document',
-    file_size: 5242880,
-    url: '/api/media/brand-guidelines.pdf',
-    created_at: '2024-01-13T09:15:00Z',
-    tags: ['brand', 'guidelines', 'document']
-  }
-]
+// Real media assets will be loaded from the database
+// Empty state until media upload and storage is implemented
 
 export default function MediaLibraryPage() {
-  const [assets, setAssets] = useState<MediaAsset[]>(mockMediaAssets)
+  const [assets, setAssets] = useState<MediaAsset[]>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedType, setSelectedType] = useState<'all' | 'image' | 'video' | 'document'>('all')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
@@ -97,27 +61,27 @@ export default function MediaLibraryPage() {
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     setIsUploading(true)
-    
+
     try {
       // Mock upload - replace with real API call
       for (const file of acceptedFiles) {
         await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate upload
-        
+
         const newAsset: MediaAsset = {
           id: Date.now().toString(),
           filename: file.name.toLowerCase().replace(/\s+/g, '-'),
           original_filename: file.name,
-          media_type: file.type.startsWith('image/') ? 'image' : 
+          media_type: file.type.startsWith('image/') ? 'image' :
                      file.type.startsWith('video/') ? 'video' : 'document',
           file_size: file.size,
           url: URL.createObjectURL(file),
           created_at: new Date().toISOString(),
           tags: []
         }
-        
+
         setAssets(prev => [newAsset, ...prev])
       }
-      
+
       toast({
         title: "Upload successful",
         description: `${acceptedFiles.length} file(s) uploaded successfully.`,
@@ -249,7 +213,7 @@ export default function MediaLibraryPage() {
             className="pl-10"
           />
         </div>
-        <Tabs value={selectedType} onValueChange={(value: string) => setSelectedType(value)}>
+        <Tabs value={selectedType} onValueChange={(value) => setSelectedType(value as 'all' | 'image' | 'video' | 'document')}>
           <TabsList>
             <TabsTrigger value="all">All</TabsTrigger>
             <TabsTrigger value="image">Images</TabsTrigger>
@@ -298,7 +262,7 @@ export default function MediaLibraryPage() {
                           Download
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem 
+                        <DropdownMenuItem
                           onClick={() => deleteAsset(asset.id)}
                           className="text-destructive"
                         >
@@ -387,7 +351,7 @@ export default function MediaLibraryPage() {
                           Download
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem 
+                        <DropdownMenuItem
                           onClick={() => deleteAsset(asset.id)}
                           className="text-destructive"
                         >
@@ -410,7 +374,7 @@ export default function MediaLibraryPage() {
             <ImageIcon className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
             <h3 className="text-lg font-semibold mb-2">No media files found</h3>
             <p className="text-muted-foreground">
-              {searchTerm || selectedType !== 'all' 
+              {searchTerm || selectedType !== 'all'
                 ? 'Try adjusting your search or filters'
                 : 'Upload your first media file to get started'
               }
