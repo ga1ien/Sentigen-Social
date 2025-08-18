@@ -19,9 +19,23 @@ from database.supabase_client import SupabaseClient
 logger = structlog.get_logger(__name__)
 router = APIRouter(prefix="/api/media", tags=["media"])
 
-# Initialize clients
-config = get_config()
-supabase_client = SupabaseClient()
+# Lazy initialization to avoid import-time environment variable issues
+_config = None
+_supabase_client = None
+
+def get_app_config():
+    """Get config with lazy initialization."""
+    global _config
+    if _config is None:
+        _config = get_config()
+    return _config
+
+def get_supabase_client():
+    """Get Supabase client with lazy initialization."""
+    global _supabase_client
+    if _supabase_client is None:
+        _supabase_client = SupabaseClient()
+    return _supabase_client
 
 # Supported file types
 SUPPORTED_IMAGE_TYPES = {"image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"}
@@ -113,7 +127,7 @@ async def upload_media(
 
             # Upload to Supabase Storage
             try:
-                storage_response = supabase_client.client.storage.from_("media").upload(
+                storage_response = get_supabase_client().client.storage.from_("media").upload(
                     path=storage_path,
                     file=file_content,
                     file_options={"content-type": content_type, "cache-control": "3600"},
@@ -123,7 +137,7 @@ async def upload_media(
                     raise Exception(f"Storage upload failed: {storage_response.error}")
 
                 # Get public URL
-                public_url_response = supabase_client.client.storage.from_("media").get_public_url(storage_path)
+                public_url_response = get_supabase_client().client.storage.from_("media").get_public_url(storage_path)
                 public_url = (
                     public_url_response
                     if isinstance(public_url_response, str)
@@ -147,12 +161,12 @@ async def upload_media(
                 }
 
                 # Save to database
-                db_result = supabase_client.client.table("media_assets").insert(media_asset).execute()
+                db_result = get_supabase_client().client.table("media_assets").insert(media_asset).execute()
 
                 if not db_result.data:
                     # If database insert fails, try to clean up storage
                     try:
-                        supabase_client.client.storage.from_("media").remove([storage_path])
+                        get_supabase_client().client.storage.from_("media").remove([storage_path])
                     except:
                         pass
                     raise Exception("Failed to save media asset to database")
@@ -207,7 +221,7 @@ async def get_media_assets(
 
         # Build query
         query = (
-            supabase_client.client.table("media_assets")
+            get_supabase_client().client.table("media_assets")
             .select(
                 "id, filename, original_filename, media_type, content_type, " "file_size, public_url, tags, created_at"
             )
@@ -228,7 +242,7 @@ async def get_media_assets(
 
         # Get total count
         count_result = (
-            supabase_client.client.table("media_assets")
+            get_supabase_client().client.table("media_assets")
             .select("id", count="exact")
             .eq("user_id", current_user.user_id)
             .execute()
@@ -257,7 +271,7 @@ async def delete_media_asset(asset_id: str, current_user: UserContext = Depends(
 
         # Get asset details
         result = (
-            supabase_client.client.table("media_assets")
+            get_supabase_client().client.table("media_assets")
             .select("storage_path, filename")
             .eq("id", asset_id)
             .eq("user_id", current_user.user_id)
@@ -272,12 +286,12 @@ async def delete_media_asset(asset_id: str, current_user: UserContext = Depends(
 
         # Delete from storage
         try:
-            supabase_client.client.storage.from_("media").remove([storage_path])
+            get_supabase_client().client.storage.from_("media").remove([storage_path])
         except Exception as e:
             logger.warning("Failed to delete file from storage", storage_path=storage_path, error=str(e))
 
         # Delete from database
-        supabase_client.client.table("media_assets").delete().eq("id", asset_id).eq(
+        get_supabase_client().client.table("media_assets").delete().eq("id", asset_id).eq(
             "user_id", current_user.user_id
         ).execute()
 
@@ -296,7 +310,7 @@ async def get_storage_info(current_user: UserContext = Depends(get_current_user)
     try:
         # Get user's media assets summary
         result = (
-            supabase_client.client.table("media_assets")
+            get_supabase_client().client.table("media_assets")
             .select("media_type, file_size")
             .eq("user_id", current_user.user_id)
             .execute()
