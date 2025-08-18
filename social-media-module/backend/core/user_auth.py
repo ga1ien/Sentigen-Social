@@ -48,11 +48,15 @@ class UserAuthService:
     async def authenticate_user(self, token: str) -> Optional[UserContext]:
         """Authenticate user from JWT token or Supabase session"""
         try:
+            print(f"Authenticating token: {token[:20]}..." if len(token) > 20 else token)
+
             # Try to decode JWT token first
             try:
                 payload = jwt.decode(token, self.jwt_secret, algorithms=["HS256"])
                 user_id = payload.get("user_id")
-            except JWTError:
+                print(f"Got user_id from JWT decode: {user_id}")
+            except JWTError as e:
+                print(f"JWT decode failed: {e}, trying Supabase validation")
                 # If JWT fails, try Supabase token validation
                 user_id = await self._validate_supabase_token(token)
 
@@ -61,6 +65,33 @@ class UserAuthService:
 
             # Get user details from database
             user = await self.supabase_client.get_user(user_id)
+
+            # If user doesn't exist in custom users table, try to get from auth.users
+            if not user:
+                try:
+                    # Get user from Supabase Auth
+                    auth_response = self.supabase_client.service_client.auth.admin.get_user_by_id(user_id)
+                    if auth_response and auth_response.user:
+                        auth_user = auth_response.user
+                        # Create a minimal user context from auth data
+                        user = {
+                            "id": auth_user.id,
+                            "email": auth_user.email,
+                            "full_name": auth_user.user_metadata.get("full_name") if auth_user.user_metadata else None,
+                            "subscription_tier": "free",
+                            "is_admin": False,
+                        }
+                except Exception as e:
+                    print(f"Failed to get user from auth.users: {e}")
+                    # Create a minimal user context with just the ID
+                    user = {
+                        "id": user_id,
+                        "email": f"user_{user_id}@example.com",
+                        "full_name": None,
+                        "subscription_tier": "free",
+                        "is_admin": False,
+                    }
+
             if not user:
                 return None
 
@@ -69,8 +100,8 @@ class UserAuthService:
 
             # Build user context
             return UserContext(
-                user_id=user["id"],
-                email=user["email"],
+                user_id=user.get("id", user_id),
+                email=user.get("email", f"user_{user_id}@example.com"),
                 full_name=user.get("full_name"),
                 subscription_tier=user.get("subscription_tier", "free"),
                 is_admin=user.get("is_admin", False),
@@ -85,7 +116,18 @@ class UserAuthService:
     async def _validate_supabase_token(self, token: str) -> Optional[str]:
         """Validate Supabase JWT token"""
         try:
-            # Use Supabase client to validate token (prefer anon, fallback to service)
+            # First try to decode the Supabase JWT with the secret
+            try:
+                # Use the Supabase JWT secret to validate the token
+                payload = jwt.decode(token, self.jwt_secret, algorithms=["HS256"])
+                user_id = payload.get("sub")  # 'sub' is the user ID in Supabase JWTs
+                if user_id:
+                    return user_id
+            except JWTError as e:
+                print(f"JWT decode error: {e}")
+                pass
+
+            # Fallback: Use Supabase client to validate token
             client_for_auth = None
             if hasattr(self.supabase_client, "anon_client") and self.supabase_client.anon_client:
                 client_for_auth = self.supabase_client.anon_client
@@ -96,19 +138,21 @@ class UserAuthService:
                 response = client_for_auth.auth.get_user(token)
                 # Handle both SDK object and dict-like responses
                 if response is not None:
-                    user_obj = getattr(response, "user", None) or (response.get("user") if isinstance(response, dict) else None)
+                    user_obj = getattr(response, "user", None) or (
+                        response.get("user") if isinstance(response, dict) else None
+                    )
                     if user_obj:
                         user_id_from_resp = getattr(user_obj, "id", None) or user_obj.get("id")
                         if user_id_from_resp:
                             return user_id_from_resp
-            except Exception:
+            except Exception as e:
+                print(f"Supabase client validation error: {e}")
                 pass
 
-            # Fallback: Try to decode JWT manually for development
+            # Last resort: Try to decode without verification (development only)
             try:
-                # Decode without verification for development (should use proper verification in production)
-                payload = jwt.decode(token, self.jwt_secret, algorithms=["HS256"], options={"verify_signature": False})
-                return payload.get("sub")  # 'sub' is the user ID in Supabase JWTs
+                payload = jwt.decode(token, options={"verify_signature": False})
+                return payload.get("sub")
             except Exception:
                 pass
 
