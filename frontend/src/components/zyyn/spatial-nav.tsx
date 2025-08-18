@@ -14,11 +14,13 @@ import {
   Settings,
   Bell,
   Search,
-  Plus
+  Plus,
+  Lightbulb
 } from "lucide-react"
 
 const navItems = [
   { icon: Home, label: "home", href: "/dashboard" },
+  { icon: Lightbulb, label: "research", href: "/dashboard/research" },
   { icon: BarChart3, label: "analytics", href: "/dashboard/analytics" },
   { icon: Brain, label: "intelligence", href: "/dashboard/intelligence" },
   { icon: Image, label: "media", href: "/dashboard/media" },

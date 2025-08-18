@@ -20,6 +20,7 @@ from sse_starlette.sse import EventSourceResponse
 
 # Import API routes
 from api.avatar_api import router as avatar_router
+from api.content_research_api import router as content_research_router
 from api.media_storage_api import router as media_storage_router
 from api.research_tools_api import router as research_tools_router
 from api.research_video_api import router as research_video_router
@@ -237,6 +238,7 @@ app.include_router(avatar_router)
 app.include_router(research_video_router)
 app.include_router(social_accounts_router)
 app.include_router(social_posting_router)
+app.include_router(content_research_router)
 app.include_router(media_storage_router)
 app.include_router(research_tools_router)
 
