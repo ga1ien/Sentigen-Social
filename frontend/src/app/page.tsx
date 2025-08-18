@@ -2,17 +2,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Bot, Calendar, BarChart3, Users, Zap } from "lucide-react";
+import { ThemeBackgrounds } from "@/components/zyyn/theme-backgrounds";
 import Link from "next/link";
 import { env } from "@/lib/env";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Moving background */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(1000px_600px_at_0%_-10%,hsl(var(--primary)/0.15),transparent),radial-gradient(800px_500px_at_100%_0%,hsl(var(--secondary)/0.15),transparent)] animate-[pulse_10s_ease-in-out_infinite]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 to-background" />
-      </div>
+      <ThemeBackgrounds />
 
       {/* Minimal header */}
       <header className="border-b bg-background/70 backdrop-blur supports-[backdrop-filter]:bg-background/40">
