@@ -4,11 +4,10 @@ User Authentication and Authorization System
 Provides centralized user management for all research tools
 """
 
-import asyncio
 import os
 import sys
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta  # noqa: F401
 from typing import Any, Dict, List, Optional
 
 from fastapi import Depends, HTTPException, Request
@@ -44,7 +43,7 @@ class UserAuthService:
         self.supabase_client = SupabaseClient()
         self.security = HTTPBearer()
         self.jwt_secret = os.getenv("JWT_SECRET", "your-secret-key")
-        
+
         # Log JWT secret status for debugging
         if self.jwt_secret == "your-secret-key":
             print("WARNING: JWT_SECRET not set in environment, using default (will fail)")
@@ -59,11 +58,17 @@ class UserAuthService:
             # Try to decode JWT token first
             try:
                 payload = jwt.decode(token, self.jwt_secret, algorithms=["HS256"])
-                user_id = payload.get("user_id")
-                print(f"Got user_id from JWT decode: {user_id}")
+                # Supabase uses the 'sub' claim for the user ID
+                user_id = (
+                    payload.get("sub") or payload.get("user_id") or (payload.get("user_metadata") or {}).get("sub")
+                )
+                print(f"Got user_id from JWT decode: {user_id} (sub={payload.get('sub')})")
             except JWTError as e:
                 print(f"JWT decode failed: {e}, trying Supabase validation")
-                # If JWT fails, try Supabase token validation
+                user_id = None
+
+            # If we couldn't determine the user_id from the direct decode, fall back
+            if not user_id:
                 user_id = await self._validate_supabase_token(token)
 
             if not user_id:
@@ -126,26 +131,26 @@ class UserAuthService:
             try:
                 # Use the Supabase JWT secret to validate the token
                 print(f"Attempting to decode JWT with secret: {self.jwt_secret[:10]}...")
-                
+
                 # Supabase JWTs use HS256 algorithm
                 payload = jwt.decode(
-                    token, 
-                    self.jwt_secret, 
+                    token,
+                    self.jwt_secret,
                     algorithms=["HS256"],
                     options={
                         "verify_signature": True,
                         "verify_exp": True,
                         "verify_nbf": False,
                         "verify_iat": False,
-                        "verify_aud": False
-                    }
+                        "verify_aud": False,
+                    },
                 )
-                
+
                 # Supabase stores user ID in 'sub' claim
                 user_id = payload.get("sub")
                 print(f"JWT decoded successfully, payload: {payload}")
                 print(f"User ID from token (sub): {user_id}")
-                
+
                 if user_id:
                     return user_id
             except JWTError as e:
@@ -372,12 +377,16 @@ def get_auth_service():
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())) -> UserContext:
     """FastAPI dependency to get current authenticated user"""
     print(f"get_current_user called with credentials: {credentials}")
-    
+
     if not credentials:
         print("No credentials provided")
         raise HTTPException(status_code=401, detail="Authentication required")
 
-    print(f"Token from credentials: {credentials.credentials[:20]}..." if len(credentials.credentials) > 20 else credentials.credentials)
+    print(
+        f"Token from credentials: {credentials.credentials[:20]}..."
+        if len(credentials.credentials) > 20
+        else credentials.credentials
+    )
     user_context = await get_auth_service().authenticate_user(credentials.credentials)
 
     if not user_context:

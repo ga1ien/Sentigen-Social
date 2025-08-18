@@ -47,18 +47,29 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response?.status === 401) {
-      // Handle unauthorized - clear session and redirect to login
+    const status = error?.response?.status
+    const originalRequest = error?.config || {}
+
+    // If unauthorized, try a one-time silent refresh and retry
+    if (status === 401 && !originalRequest.__retry) {
       try {
         const supabase = createClient()
-        await supabase.auth.signOut()
-      } catch (signOutError) {
-        console.warn('Failed to sign out:', signOutError)
+        const { data: refreshData } = await supabase.auth.refreshSession()
+        const newToken = refreshData?.session?.access_token
+        if (newToken) {
+          originalRequest.__retry = true
+          originalRequest.headers = {
+            ...(originalRequest.headers || {}),
+            Authorization: `Bearer ${newToken}`,
+          }
+          return api(originalRequest)
+        }
+      } catch (refreshError) {
+        console.warn('Silent token refresh failed:', refreshError)
       }
-
-      // Do NOT redirect. Let callers handle the 401 and show an inline error/modal.
-      // Staying on the current page avoids breaking multi-step flows.
+      // Do not sign the user out automatically. Let the caller handle 401.
     }
+
     return Promise.reject(error)
   }
 )
