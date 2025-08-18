@@ -18,7 +18,10 @@ from jose import JWTError, jwt
 # Add parent directories to path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
-from database.supabase_client import SupabaseClient
+try:
+    from database.supabase_client import SupabaseClient
+except ModuleNotFoundError:
+    from core.supabase_client import SupabaseClient
 
 
 @dataclass
@@ -82,11 +85,24 @@ class UserAuthService:
     async def _validate_supabase_token(self, token: str) -> Optional[str]:
         """Validate Supabase JWT token"""
         try:
-            # Use Supabase anon client to validate token
+            # Use Supabase client to validate token (prefer anon, fallback to service)
+            client_for_auth = None
             if hasattr(self.supabase_client, "anon_client") and self.supabase_client.anon_client:
-                response = self.supabase_client.anon_client.auth.get_user(token)
-                if response and hasattr(response, "user") and response.user:
-                    return response.user.id
+                client_for_auth = self.supabase_client.anon_client
+            else:
+                client_for_auth = self.supabase_client.service_client
+
+            try:
+                response = client_for_auth.auth.get_user(token)
+                # Handle both SDK object and dict-like responses
+                if response is not None:
+                    user_obj = getattr(response, "user", None) or (response.get("user") if isinstance(response, dict) else None)
+                    if user_obj:
+                        user_id_from_resp = getattr(user_obj, "id", None) or user_obj.get("id")
+                        if user_id_from_resp:
+                            return user_id_from_resp
+            except Exception:
+                pass
 
             # Fallback: Try to decode JWT manually for development
             try:
