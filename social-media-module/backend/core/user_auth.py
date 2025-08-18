@@ -119,12 +119,15 @@ class UserAuthService:
             # First try to decode the Supabase JWT with the secret
             try:
                 # Use the Supabase JWT secret to validate the token
+                print(f"Attempting to decode JWT with secret: {self.jwt_secret[:10]}...")
                 payload = jwt.decode(token, self.jwt_secret, algorithms=["HS256"])
                 user_id = payload.get("sub")  # 'sub' is the user ID in Supabase JWTs
+                print(f"JWT decoded successfully, user_id (sub): {user_id}")
                 if user_id:
                     return user_id
             except JWTError as e:
                 print(f"JWT decode error: {e}")
+                print(f"Token header: {token.split('.')[0] if '.' in token else 'Invalid format'}")
                 pass
 
             # Fallback: Use Supabase client to validate token
@@ -338,13 +341,20 @@ def get_auth_service():
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())) -> UserContext:
     """FastAPI dependency to get current authenticated user"""
+    print(f"get_current_user called with credentials: {credentials}")
+    
     if not credentials:
+        print("No credentials provided")
         raise HTTPException(status_code=401, detail="Authentication required")
 
+    print(f"Token from credentials: {credentials.credentials[:20]}..." if len(credentials.credentials) > 20 else credentials.credentials)
     user_context = await get_auth_service().authenticate_user(credentials.credentials)
+
     if not user_context:
+        print("Failed to authenticate user - no user context returned")
         raise HTTPException(status_code=401, detail="Invalid authentication token")
 
+    print(f"Successfully authenticated user: {user_context.user_id}")
     return user_context
 
 
