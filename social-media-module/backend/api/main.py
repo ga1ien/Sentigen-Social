@@ -20,8 +20,9 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sse_starlette.sse import EventSourceResponse
 
 # Import agents and services
-from agents.content_agent import ContentGenerationAgent
-from agents.social_media_agent import SocialMediaAgent
+# Temporarily disabled to debug environment variables
+# from agents.content_agent import ContentGenerationAgent
+# from agents.social_media_agent import SocialMediaAgent
 
 # Import API routes
 from api.avatar_api import router as avatar_router

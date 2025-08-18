@@ -82,46 +82,28 @@ Always return your response in the structured SocialMediaAgentResult format with
 - Be helpful and informative about social media posting best practices
 """
 
-# Create agent
-social_media_agent = Agent(
-    get_smart_model(),
-    system_prompt=system_prompt,
-    deps_type=SocialMediaAgentDeps,
-    instructions="You are an expert in social media posting and the current date is {current_date}.",
-    retries=2,
-)
+# Temporarily disable agent initialization to debug environment variables
+# TODO: Re-enable once Railway environment variables are working
+try:
+    # Create agent
+    social_media_agent = Agent(
+        get_smart_model(),
+        system_prompt=system_prompt,
+        deps_type=SocialMediaAgentDeps,
+        instructions="You are an expert in social media posting and the current date is {current_date}.",
+        retries=2,
+    )
+except Exception as e:
+    print(f"⚠️  Failed to initialize social_media_agent: {e}")
+    print("🔧 Creating placeholder agent - API endpoints will not work until environment is fixed")
+    # Create a dummy agent that will fail gracefully
+    social_media_agent = None
 
 
-@social_media_agent.system_prompt
-def add_context(ctx: RunContext[SocialMediaAgentDeps]) -> str:
-    """Add dynamic context to the system prompt."""
-    deps = ctx.deps
-    return f"""
-    Additional context for social media posting:
-    {deps.context}
-
-    Available platforms and posting capabilities will be determined by the user's connected accounts.
-    """
-
-
-@social_media_agent.instructions
-def add_workspace_instructions(ctx: RunContext[SocialMediaAgentDeps]) -> str:
-    """Add workspace-specific instructions."""
-    if ctx.deps.workspace_metadata:
-        return f"The workspace instructions are {ctx.deps.workspace_metadata.get('instructions', 'N/A')}."
-    return ""
-
-
-@social_media_agent.instructions
-def add_workspace_description(ctx: RunContext[SocialMediaAgentDeps]) -> str:
-    """Add workspace description context."""
-    if ctx.deps.workspace_metadata:
-        return f"The workspace description is {ctx.deps.workspace_metadata.get('description', 'N/A')}."
-    return ""
-
-
-@social_media_agent.tool
-async def post_to_social_media(
+# Only add decorators if agent was successfully initialized
+if social_media_agent is not None:
+    @social_media_agent.tool
+    async def post_to_social_media_impl(
     ctx: RunContext[SocialMediaAgentDeps],
     post_content: Optional[str] = None,
     platforms: List[str] = None,
