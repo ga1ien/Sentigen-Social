@@ -493,8 +493,15 @@ class ResearchToVideoIntegrator:
             raise
 
 
-# Global integrator instance
-research_to_video_integrator = ResearchToVideoIntegrator()
+# Lazy initialization to avoid import-time environment variable issues
+_research_to_video_integrator = None
+
+def get_research_to_video_integrator():
+    """Get research to video integrator with lazy initialization."""
+    global _research_to_video_integrator
+    if _research_to_video_integrator is None:
+        _research_to_video_integrator = ResearchToVideoIntegrator()
+    return _research_to_video_integrator
 
 
 # Convenience functions

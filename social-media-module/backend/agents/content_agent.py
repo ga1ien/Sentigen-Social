@@ -91,6 +91,8 @@ Generate high-quality, engaging social media content that is optimized for speci
 """
 
 # Create the content generation agent
+# NOTE: This agent initialization is temporarily kept at module level due to decorator complexity
+# TODO: Refactor to use lazy initialization when agent decorators support it
 content_agent = Agent(get_smart_model(), system_prompt=CONTENT_GENERATION_PROMPT, deps_type=ContentAgentDeps, retries=2)
 
 
