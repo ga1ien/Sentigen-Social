@@ -12,10 +12,10 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl border-b border-white/10">
+      <nav className="fixed top-0 left-0 right-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className="text-white/90 text-lg font-light tracking-wide">
+            <Link href="/" className="text-white text-lg font-light tracking-wide">
               zyyn
             </Link>
             <div className="flex items-center gap-4">
@@ -24,7 +24,7 @@ export default function HomePage() {
                   setAuthMode("signin");
                   setAuthModalOpen(true);
                 }}
-                className="px-4 py-2 text-sm text-white/70 hover:text-white transition-colors"
+                className="px-4 py-2 text-sm text-white/85 hover:text-white transition-colors"
               >
                 sign in
               </button>
@@ -33,7 +33,7 @@ export default function HomePage() {
                   setAuthMode("signup");
                   setAuthModalOpen(true);
                 }}
-                className="px-4 py-2 text-sm bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl hover:bg-white/15 transition-all text-white/90"
+                className="px-4 py-2 text-sm bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl hover:bg-white/15 transition-all text-white"
               >
                 get started
               </button>
@@ -50,11 +50,11 @@ export default function HomePage() {
             <span className="text-sm text-white/80">ai-native</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-extralight text-white/90 tracking-tight">
+          <h1 className="text-5xl md:text-7xl font-extralight text-white tracking-tight">
             zyyn
           </h1>
 
-          <p className="text-xl md:text-2xl text-white/60 font-light max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-white/80 font-light max-w-2xl mx-auto">
             create at the speed of thought
           </p>
 
@@ -71,7 +71,7 @@ export default function HomePage() {
             </button>
             <Link
               href="#features"
-              className="px-8 py-3 text-white/70 hover:text-white transition-colors"
+              className="px-8 py-3 text-white/85 hover:text-white transition-colors"
             >
               view demo
             </Link>
@@ -83,10 +83,10 @@ export default function HomePage() {
       <section id="features" className="py-24 px-4">
         <div className="max-w-6xl mx-auto space-y-16">
           <div className="text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-light text-white/90">
+            <h2 className="text-3xl md:text-4xl font-light text-white">
               less, but better
             </h2>
-            <p className="text-lg text-white/60 max-w-2xl mx-auto">
+            <p className="text-lg text-white/80 max-w-2xl mx-auto">
               clean, spatial interfaces for content creation, scheduling, and insights
             </p>
           </div>
@@ -171,10 +171,10 @@ export default function HomePage() {
       <section className="py-24 px-4">
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <GlassCard variant="elevated" blur="xl" glow className="p-12">
-            <h2 className="text-3xl md:text-4xl font-light text-white/90 mb-4">
+            <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
               ready to be seen?
             </h2>
-            <p className="text-lg text-white/60 mb-8 max-w-2xl mx-auto">
+            <p className="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
               join thousands of creators using zyyn to amplify their voice and grow their audience
             </p>
             <button
@@ -194,15 +194,15 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="py-8 px-4 border-t border-white/10">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/50">© 2025 zyyn. all rights reserved.</p>
+          <p className="text-sm text-white/70">© 2025 zyyn. all rights reserved.</p>
           <div className="flex items-center gap-6">
-            <Link href="#" className="text-sm text-white/50 hover:text-white/70 transition-colors">
+            <Link href="#" className="text-sm text-white/70 hover:text-white/85 transition-colors">
               privacy
             </Link>
-            <Link href="#" className="text-sm text-white/50 hover:text-white/70 transition-colors">
+            <Link href="#" className="text-sm text-white/70 hover:text-white/85 transition-colors">
               terms
             </Link>
-            <Link href="#" className="text-sm text-white/50 hover:text-white/70 transition-colors">
+            <Link href="#" className="text-sm text-white/70 hover:text-white/85 transition-colors">
               contact
             </Link>
           </div>

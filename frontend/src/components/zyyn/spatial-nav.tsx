@@ -41,20 +41,17 @@ export function SpatialNav() {
   return (
     <>
       {/* Top Bar */}
-      <div className={cn(
-        "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
-        scrolled ? "bg-black/20 backdrop-blur-xl border-b border-white/10" : "bg-transparent"
-      )}>
+      <div className="fixed top-0 left-0 right-0 z-40">
         <div className="flex items-center justify-between px-6 h-14">
           {/* Logo */}
-          <Link href="/dashboard" className="text-white/90 text-sm font-light tracking-wide">
+          <Link href="/dashboard" className="text-white text-sm font-light tracking-wide">
             zyyn
           </Link>
 
           {/* Center Actions */}
           <div className="flex items-center gap-2">
             <button className="p-2 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
-              <Search className="w-4 h-4 text-white/60" />
+              <Search className="w-4 h-4 text-white/80" />
             </button>
             <button className="px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/15 transition-all flex items-center gap-2">
               <Plus className="w-4 h-4 text-white/80" />
@@ -65,7 +62,7 @@ export function SpatialNav() {
           {/* Right Actions */}
           <div className="flex items-center gap-3">
             <button className="relative p-2 rounded-xl hover:bg-white/10 transition-all">
-              <Bell className="w-4 h-4 text-white/60" />
+              <Bell className="w-4 h-4 text-white/80" />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-500 rounded-full" />
             </button>
             <button className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600" />
@@ -90,11 +87,11 @@ export function SpatialNav() {
               >
                 <Icon className={cn(
                   "w-5 h-5 mb-1",
-                  isActive ? "text-white" : "text-white/60"
+                  isActive ? "text-white" : "text-white/80"
                 )} />
                 <span className={cn(
                   "text-[10px]",
-                  isActive ? "text-white/90" : "text-white/50"
+                  isActive ? "text-white/90" : "text-white/70"
                 )}>
                   {item.label}
                 </span>
@@ -121,7 +118,7 @@ export function SpatialNav() {
               >
                 <Icon className={cn(
                   "w-5 h-5",
-                  isActive ? "text-white" : "text-white/60"
+                  isActive ? "text-white" : "text-white/80"
                 )} />
 
                 {/* Tooltip */}
@@ -143,7 +140,7 @@ export function SpatialNav() {
           >
             <Settings className={cn(
               "w-5 h-5",
-              pathname === "/dashboard/settings" ? "text-white" : "text-white/60"
+              pathname === "/dashboard/settings" ? "text-white" : "text-white/80"
             )} />
             <span className="absolute left-full ml-3 px-2 py-1 bg-black/80 backdrop-blur-sm rounded-lg text-xs text-white/90 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
               settings

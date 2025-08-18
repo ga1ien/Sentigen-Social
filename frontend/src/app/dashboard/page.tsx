@@ -1,15 +1,31 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { GlassCard, GlassCardContent, GlassCardDescription, GlassCardHeader, GlassCardTitle } from "@/components/zyyn/glass-card"
 import { TrendingUp, Users, FileText, Activity, Zap, Target, Calendar, BarChart3 } from "lucide-react"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 export default function DashboardPage() {
+  const [userName, setUserName] = useState("")
+  const supabase = createClientComponentClient()
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        // Extract name from email or use metadata
+        const name = user.user_metadata?.name || user.email?.split('@')[0] || 'there'
+        setUserName(name)
+      }
+    }
+    getUser()
+  }, [])
   return (
     <div className="space-y-8">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-light text-white/90">welcome back</h1>
-        <p className="text-white/60">here's what's happening with your content today</p>
+        <h1 className="text-3xl font-light text-white">welcome back{userName && `, ${userName}`}</h1>
+        <p className="text-white/80">here's what's happening with your content today</p>
       </div>
 
       {/* Stats Grid */}
@@ -94,11 +110,11 @@ export default function DashboardPage() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
                     <div className="space-y-1">
-                      <p className="text-sm text-white/90">{item.title}</p>
-                      <p className="text-xs text-white/50">{item.platform}</p>
+                      <p className="text-sm text-white">{item.title}</p>
+                      <p className="text-xs text-white/70">{item.platform}</p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-sm text-white/70">{item.engagement}</span>
+                      <span className="text-sm text-white/85">{item.engagement}</span>
                       {item.trend === "up" ? (
                         <TrendingUp className="w-4 h-4 text-green-400" />
                       ) : (
@@ -120,19 +136,19 @@ export default function DashboardPage() {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <button className="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
                   <Zap className="w-5 h-5 mb-2 text-yellow-400" />
-                  <span className="text-xs text-white/70">generate</span>
+                  <span className="text-xs text-white/85">generate</span>
                 </button>
                 <button className="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
                   <Calendar className="w-5 h-5 mb-2 text-blue-400" />
-                  <span className="text-xs text-white/70">schedule</span>
+                  <span className="text-xs text-white/85">schedule</span>
                 </button>
                 <button className="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
                   <BarChart3 className="w-5 h-5 mb-2 text-green-400" />
-                  <span className="text-xs text-white/70">analyze</span>
+                  <span className="text-xs text-white/85">analyze</span>
                 </button>
                 <button className="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
                   <Target className="w-5 h-5 mb-2 text-purple-400" />
-                  <span className="text-xs text-white/70">optimize</span>
+                  <span className="text-xs text-white/85">optimize</span>
                 </button>
               </div>
             </GlassCardContent>
@@ -150,16 +166,16 @@ export default function DashboardPage() {
             <GlassCardContent>
               <div className="space-y-3">
                 <div className="p-3 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-white/10">
-                  <p className="text-xs text-white/90 mb-1">trending topic</p>
-                  <p className="text-sm text-white/70">AI automation tools are gaining traction. Create content about workflow optimization.</p>
+                  <p className="text-xs text-white mb-1">trending topic</p>
+                  <p className="text-sm text-white/85">AI automation tools are gaining traction. Create content about workflow optimization.</p>
                 </div>
                 <div className="p-3 rounded-xl bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-white/10">
-                  <p className="text-xs text-white/90 mb-1">best time to post</p>
-                  <p className="text-sm text-white/70">Your audience is most active at 2PM EST today.</p>
+                  <p className="text-xs text-white mb-1">best time to post</p>
+                  <p className="text-sm text-white/85">Your audience is most active at 2PM EST today.</p>
                 </div>
                 <div className="p-3 rounded-xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-white/10">
-                  <p className="text-xs text-white/90 mb-1">content idea</p>
-                  <p className="text-sm text-white/70">Share your morning routine for maximum productivity.</p>
+                  <p className="text-xs text-white mb-1">content idea</p>
+                  <p className="text-sm text-white/85">Share your morning routine for maximum productivity.</p>
                 </div>
               </div>
             </GlassCardContent>
@@ -181,9 +197,9 @@ export default function DashboardPage() {
                   { day: "friday", posts: 5 },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center justify-between">
-                    <span className="text-sm text-white/70">{item.day}</span>
+                    <span className="text-sm text-white/85">{item.day}</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm text-white/50">{item.posts} posts</span>
+                      <span className="text-sm text-white/70">{item.posts} posts</span>
                       <div className="w-2 h-2 rounded-full bg-green-400/60" />
                     </div>
                   </div>

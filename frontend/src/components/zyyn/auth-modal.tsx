@@ -83,16 +83,16 @@ export function AuthModal({ isOpen, onClose, defaultMode = "signin" }: AuthModal
             onClick={onClose}
             className="absolute right-4 top-4 p-2 rounded-xl hover:bg-white/10 transition-colors"
           >
-            <X className="w-4 h-4 text-white/60" />
+            <X className="w-4 h-4 text-white/80" />
           </button>
 
           {/* Content */}
           <div className="space-y-6">
             <div className="space-y-2 text-center">
-              <h2 className="text-2xl font-light text-white/90">
+              <h2 className="text-2xl font-light text-white">
                 {mode === "signin" ? "welcome back" : "get started"}
               </h2>
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-white/80">
                 {mode === "signin"
                   ? "sign in to your account"
                   : "create your account"}
@@ -106,7 +106,7 @@ export function AuthModal({ isOpen, onClose, defaultMode = "signin" }: AuthModal
                   placeholder="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
                   required
                 />
               </div>
@@ -117,7 +117,7 @@ export function AuthModal({ isOpen, onClose, defaultMode = "signin" }: AuthModal
                   placeholder="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/20 transition-all"
                   required
                 />
               </div>
@@ -139,7 +139,7 @@ export function AuthModal({ isOpen, onClose, defaultMode = "signin" }: AuthModal
             <div className="text-center">
               <button
                 onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-                className="text-sm text-white/60 hover:text-white/80 transition-colors"
+                className="text-sm text-white/80 hover:text-white/80 transition-colors"
               >
                 {mode === "signin"
                   ? "need an account? sign up"
