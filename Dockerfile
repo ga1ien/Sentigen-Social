@@ -13,12 +13,11 @@ COPY social-media-module/backend/requirements-prod.txt ./requirements-prod.txt
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements-prod.txt
 
-# Copy backend source code
-COPY social-media-module/backend/ ./
+# Copy backend source code (entire backend dir into /app)
+COPY social-media-module/backend /app
 
-# Explicitly ensure the database package is copied (some builders can exclude it inadvertently)
-COPY social-media-module/backend/database /app/database
-RUN ls -la /app/database || echo "database directory not found after copy"
+# Visibility for debugging: list expected directories
+RUN ls -la /app || true && ls -la /app/database || echo "database directory not found after copy"
 
 # Expose port
 EXPOSE 8000
