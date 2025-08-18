@@ -20,8 +20,15 @@ logger = structlog.get_logger(__name__)
 
 router = APIRouter(prefix="/api/research-video", tags=["Research Video Workflow"])
 
-# Global workflow orchestrator instance
-workflow_orchestrator = ResearchToVideoWorkflow()
+# Lazy initialization to avoid import-time environment variable issues
+_workflow_orchestrator = None
+
+def get_workflow_orchestrator():
+    """Get workflow orchestrator with lazy initialization."""
+    global _workflow_orchestrator
+    if _workflow_orchestrator is None:
+        _workflow_orchestrator = ResearchToVideoWorkflow()
+    return _workflow_orchestrator
 
 
 # Request/Response Models
@@ -177,7 +184,7 @@ async def start_research_video_workflow(
 async def get_workflow_status(workflow_id: str):
     """Get the current status of a workflow"""
     try:
-        status_data = await workflow_orchestrator.get_workflow_status(workflow_id)
+        status_data = await get_workflow_orchestrator().get_workflow_status(workflow_id)
         
         if not status_data:
             raise HTTPException(status_code=404, detail="Workflow not found")
@@ -222,7 +229,7 @@ async def get_pending_approvals(
 ):
     """Get all workflows awaiting approval for the user"""
     try:
-        pending_approvals = await workflow_orchestrator.list_pending_approvals(user_id)
+        pending_approvals = await get_workflow_orchestrator().list_pending_approvals(user_id)
         
         responses = []
         for approval in pending_approvals:
@@ -256,7 +263,7 @@ async def approve_workflow(
 ):
     """Approve or reject a workflow awaiting approval"""
     try:
-        result = await workflow_orchestrator.approve_and_publish(
+        result = await get_workflow_orchestrator().approve_and_publish(
             workflow_id=workflow_id,
             approved=request.approved,
             user_feedback=request.feedback
@@ -297,7 +304,7 @@ async def cancel_workflow(workflow_id: str):
     """Cancel a running workflow"""
     try:
         # TODO: Implement workflow cancellation
-        await workflow_orchestrator._update_workflow_status(
+        await get_workflow_orchestrator()._update_workflow_status(
             workflow_id, 
             WorkflowStatus.CANCELLED
         )
@@ -314,13 +321,13 @@ async def health_check():
     """Health check for research-video workflow system"""
     try:
         # Check Chrome MCP connection
-        chrome_healthy = await workflow_orchestrator.chrome_worker.health_check()
+        chrome_healthy = await get_workflow_orchestrator().chrome_worker.health_check()
         
         # Check HeyGen connection
-        heygen_healthy = workflow_orchestrator.video_worker.heygen_client is not None
+        heygen_healthy = get_workflow_orchestrator().video_worker.heygen_client is not None
         
         # Check Ayrshare connection
-        ayrshare_healthy = await workflow_orchestrator.ayrshare_client.health_check()
+        ayrshare_healthy = await get_workflow_orchestrator().ayrshare_client.health_check()
         
         return {
             "status": "healthy",
@@ -349,7 +356,7 @@ async def _execute_workflow_background(
 ):
     """Execute workflow in background"""
     try:
-        result = await workflow_orchestrator.execute_workflow(
+        result = await get_workflow_orchestrator().execute_workflow(
             config=config,
             user_id=user_id,
             workspace_id=workspace_id
