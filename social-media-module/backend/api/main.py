@@ -67,8 +67,6 @@ from workers.midjourney_worker import MidjourneyWorker
 # from agents.social_media_agent import SocialMediaAgent
 
 
-
-
 # Lazy initialization to avoid import-time environment variable issues
 _app_config = None
 

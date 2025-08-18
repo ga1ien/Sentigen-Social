@@ -80,7 +80,7 @@ export default function LoginPage() {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-primary-foreground" />
             </div>
-            <h1 className="text-xl font-bold">{env.NEXT_PUBLIC_APP_NAME}</h1>
+            <h1 className="text-xl font-semibold tracking-wide lowercase">{env.NEXT_PUBLIC_APP_NAME}</h1>
           </div>
           <CardTitle>Welcome back</CardTitle>
           <CardDescription>

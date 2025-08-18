@@ -10,8 +10,8 @@ import { env } from "@/lib/env";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: env.NEXT_PUBLIC_APP_NAME,
-  description: env.NEXT_PUBLIC_APP_DESCRIPTION,
+  title: "zyyn",
+  description: "the future of being seen",
 };
 
 export default function RootLayout({
