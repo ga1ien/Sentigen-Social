@@ -38,14 +38,9 @@ export function DashboardNav() {
 	}
 
 	return (
-		<header className="border-b bg-background/70 backdrop-blur supports-[backdrop-filter]:bg-background/40">
-			<div className="container mx-auto px-4 py-3 flex items-center justify-between">
-				<div className="flex items-center gap-3">
-					<h1 className="text-lg font-semibold tracking-wide lowercase">{env.NEXT_PUBLIC_APP_NAME}</h1>
-					<Badge variant="secondary">Dashboard</Badge>
-				</div>
-
-				<div className="flex items-center gap-2">
+		<header className="pointer-events-none">
+			<div className="container mx-auto px-4 py-3 flex items-center justify-end">
+				<div className="flex items-center gap-2 pointer-events-auto">
 					<Button variant="ghost" size="icon">
 						<Bell className="h-4 w-4" />
 					</Button>
@@ -62,17 +57,17 @@ export function DashboardNav() {
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="ghost" className="h-8 px-3 rounded-full">
-								<span className="text-sm">{loading ? '...' : (user?.email?.split('@')[0] || 'user')}</span>
+								<span className="text-sm">{loading ? '...' : (user?.user_metadata?.full_name || user?.email || 'signed out')}</span>
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent className="w-56" align="end" forceMount>
 							<DropdownMenuLabel className="font-normal">
 								<div className="flex flex-col space-y-1">
 									<p className="text-sm font-medium leading-none">
-										{loading ? "Loading..." : (user?.user_metadata?.full_name || user?.email?.split('@')[0] || "User")}
+										{loading ? 'Loading...' : (user?.user_metadata?.full_name || user?.email || 'User')}
 									</p>
 									<p className="text-xs leading-none text-muted-foreground">
-										{loading ? "..." : (user?.email || "No email")}
+										{loading ? '...' : (user?.email || '')}
 									</p>
 								</div>
 							</DropdownMenuLabel>
