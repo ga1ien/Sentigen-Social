@@ -138,6 +138,10 @@ export default function ResearchToContentPipelinePage() {
         }
       }, 3000)
     } catch (e: any) {
+      if (e?.response?.status === 401) {
+        toast({ title: "sign in required", description: "please sign in to start research", variant: "destructive" })
+        return
+      }
       toast({ title: "Failed to start research", description: e?.response?.data?.detail || String(e), variant: "destructive" })
     } finally {
       setIsStartingResearch(false)
@@ -160,6 +164,10 @@ export default function ResearchToContentPipelinePage() {
       setContent(data.content || "")
       toast({ title: "Draft ready", description: "Review and edit your content." })
     } catch (e: any) {
+      if (e?.response?.status === 401) {
+        toast({ title: "sign in required", description: "please sign in to generate content", variant: "destructive" })
+        return
+      }
       toast({ title: "Generation failed", description: e?.response?.data?.detail || String(e), variant: "destructive" })
     } finally {
       setIsGenerating(false)
@@ -176,6 +184,10 @@ export default function ResearchToContentPipelinePage() {
       const res = await apiClient.saveDraft({ platform: outputType === "linkedin_post" ? "linkedin" : undefined, title: generatedTitle, content })
       toast({ title: "Draft saved", description: `Draft ID ${res.data.id}` })
     } catch (e: any) {
+      if (e?.response?.status === 401) {
+        toast({ title: "sign in required", description: "please sign in to save drafts", variant: "destructive" })
+        return
+      }
       toast({ title: "Save failed", description: e?.response?.data?.detail || String(e), variant: "destructive" })
     } finally {
       setIsSavingDraft(false)
@@ -192,6 +204,10 @@ export default function ResearchToContentPipelinePage() {
       await apiClient.socialPostingCreate({ content, platforms: ["linkedin"] })
       toast({ title: "Posted", description: "LinkedIn post published." })
     } catch (e: any) {
+      if (e?.response?.status === 401) {
+        toast({ title: "sign in required", description: "please sign in to publish", variant: "destructive" })
+        return
+      }
       toast({ title: "Publish failed", description: e?.response?.data?.detail || String(e), variant: "destructive" })
     } finally {
       setIsPostingNow(false)
@@ -208,6 +224,10 @@ export default function ResearchToContentPipelinePage() {
       await apiClient.socialPostingCreate({ content, platforms: ["linkedin"], schedule_date: new Date(scheduleDate).toISOString() })
       toast({ title: "Scheduled", description: `LinkedIn post scheduled for ${new Date(scheduleDate).toLocaleString()}` })
     } catch (e: any) {
+      if (e?.response?.status === 401) {
+        toast({ title: "sign in required", description: "please sign in to schedule", variant: "destructive" })
+        return
+      }
       toast({ title: "Schedule failed", description: e?.response?.data?.detail || String(e), variant: "destructive" })
     } finally {
       setIsScheduling(false)
@@ -224,6 +244,10 @@ export default function ResearchToContentPipelinePage() {
       await apiClient.socialPostingCreate({ content, platforms: ["linkedin"], auto_schedule: { schedule: true, title: "default" } })
       toast({ title: "Queued", description: "Added to auto schedule." })
     } catch (e: any) {
+      if (e?.response?.status === 401) {
+        toast({ title: "sign in required", description: "please sign in to auto schedule", variant: "destructive" })
+        return
+      }
       toast({ title: "Auto schedule failed", description: e?.response?.data?.detail || String(e), variant: "destructive" })
     } finally {
       setIsAutoScheduling(false)
@@ -261,6 +285,10 @@ export default function ResearchToContentPipelinePage() {
         }
       }, 4000)
     } catch (e: any) {
+      if (e?.response?.status === 401) {
+        toast({ title: "sign in required", description: "please sign in to create video", variant: "destructive" })
+        return
+      }
       toast({ title: "Video start failed", description: e?.response?.data?.detail || String(e), variant: "destructive" })
     } finally {
       setIsCreatingVideo(false)
@@ -282,6 +310,10 @@ export default function ResearchToContentPipelinePage() {
       })
       toast({ title: "Shorts posted", description: `Published to ${shortPlatforms.join(", ")}.` })
     } catch (e: any) {
+      if (e?.response?.status === 401) {
+        toast({ title: "sign in required", description: "please sign in to publish", variant: "destructive" })
+        return
+      }
       toast({ title: "Publish failed", description: e?.response?.data?.detail || String(e), variant: "destructive" })
     } finally {
       setIsPostingShorts(false)

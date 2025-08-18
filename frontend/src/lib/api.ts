@@ -46,10 +46,8 @@ api.interceptors.response.use(
         console.warn('Failed to sign out:', signOutError)
       }
 
-      // Only redirect if not already on auth pages
-      if (!window.location.pathname.startsWith('/auth')) {
-        window.location.href = '/auth/login'
-      }
+      // Do NOT redirect. Let callers handle the 401 and show an inline error/modal.
+      // Staying on the current page avoids breaking multi-step flows.
     }
     return Promise.reject(error)
   }

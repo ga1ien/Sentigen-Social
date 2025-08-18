@@ -38,12 +38,10 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Protect dashboard routes
+  // Protect dashboard routes: do NOT redirect to home; let client handle with modal
+  // We still block API calls on the server side; the UI will show an auth modal/toast.
   if (request.nextUrl.pathname.startsWith('/dashboard') && !user) {
-    // no user, redirect to home page where they can use the auth modal
-    const url = request.nextUrl.clone()
-    url.pathname = '/'
-    return NextResponse.redirect(url)
+    return supabaseResponse
   }
 
   // Redirect authenticated users away from auth pages (except callback)
