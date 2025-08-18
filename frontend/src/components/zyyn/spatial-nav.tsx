@@ -8,8 +8,6 @@ import {
   Home,
   Brain,
   Image,
-  Users,
-  Settings,
   Search,
   Plus,
   Lightbulb,
@@ -23,7 +21,6 @@ const navItems = [
   { icon: Zap, label: "pipeline", href: "/dashboard/create/pipeline" },
   { icon: Brain, label: "intelligence", href: "/dashboard/intelligence" },
   { icon: Image, label: "media", href: "/dashboard/media" },
-  { icon: Users, label: "team", href: "/dashboard/team" },
 ]
 
 export function SpatialNav() {
@@ -124,24 +121,6 @@ export function SpatialNav() {
               </Link>
             )
           })}
-
-          <div className="h-px bg-white/10 my-2" />
-
-          <Link
-            href="/dashboard/settings"
-            className={cn(
-              "group relative flex items-center justify-center w-12 h-12 rounded-xl transition-all",
-              pathname === "/dashboard/settings" ? "bg-white/15" : "hover:bg-white/10"
-            )}
-          >
-            <Settings className={cn(
-              "w-5 h-5",
-              pathname === "/dashboard/settings" ? "text-white" : "text-white/80"
-            )} />
-            <span className="absolute left-full ml-3 px-2 py-1 bg-black/80 backdrop-blur-sm rounded-lg text-xs text-white/90 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
-              settings
-            </span>
-          </Link>
         </div>
       </div>
     </>

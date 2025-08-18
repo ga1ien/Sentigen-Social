@@ -8,8 +8,6 @@ import {
   PenTool,
   Calendar,
   BarChart3,
-  Settings,
-  Users,
   Image,
   Video,
   Bot,
@@ -75,16 +73,6 @@ const sidebarItems = [
     href: "/dashboard/research-video",
     icon: Zap,
     badge: "New",
-  },
-  {
-    title: "Team",
-    href: "/dashboard/team",
-    icon: Users,
-  },
-  {
-    title: "Settings",
-    href: "/dashboard/settings",
-    icon: Settings,
   },
 ]
 

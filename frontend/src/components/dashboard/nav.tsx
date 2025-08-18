@@ -11,7 +11,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Settings, LogOut, User } from "lucide-react"
+import { Settings, LogOut, User, Users } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { toast } from "@/lib/toast-filter"
 import { useUser } from "@/contexts/user-context"
@@ -74,6 +74,13 @@ export function DashboardNav() {
 							}}>
 								<User className="mr-2 h-4 w-4" />
 								<span>Account</span>
+							</DropdownMenuItem>
+							<DropdownMenuItem onClick={() => {
+								router.push('/dashboard/team')
+								setIsOpen(false)
+							}}>
+								<Users className="mr-2 h-4 w-4" />
+								<span>Team</span>
 							</DropdownMenuItem>
 							<DropdownMenuItem onClick={() => {
 								router.push('/dashboard/settings')
