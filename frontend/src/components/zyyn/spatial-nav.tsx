@@ -12,13 +12,15 @@ import {
   Settings,
   Search,
   Plus,
-  Lightbulb
+  Lightbulb,
+  Zap
 } from "lucide-react"
 
 const navItems = [
   { icon: Home, label: "home", href: "/dashboard" },
   { icon: Lightbulb, label: "research", href: "/dashboard/research" },
   { icon: Plus, label: "create", href: "/dashboard/create" },
+  { icon: Zap, label: "pipeline", href: "/dashboard/create/pipeline" },
   { icon: Brain, label: "intelligence", href: "/dashboard/intelligence" },
   { icon: Image, label: "media", href: "/dashboard/media" },
   { icon: Users, label: "team", href: "/dashboard/team" },

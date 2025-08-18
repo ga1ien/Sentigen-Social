@@ -19,6 +19,7 @@ import { env } from "@/lib/env"
 
 export function DashboardNav() {
 	const router = useRouter()
+	const [isOpen, setIsOpen] = useState(false)
 	// Using filtered toast that only shows warnings/errors
 	const { user, loading, signOut } = useUser()
 
@@ -36,13 +37,15 @@ export function DashboardNav() {
 	}
 
 	return (
-		<header className="pointer-events-none">
-			<div className="container mx-auto px-4 py-3 flex items-center justify-end">
-				<div className="flex items-center gap-2 pointer-events-auto">
-					<DropdownMenu>
+		<header className="fixed top-0 right-0 z-50 p-4">
+			<div className="flex items-center gap-2">
+				<DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
 						<DropdownMenuTrigger asChild>
-							<Button variant="ghost" className="relative h-10 w-10 rounded-full p-0">
-								<Avatar className="h-9 w-9">
+							<Button
+								variant="ghost"
+								className="relative h-10 w-10 rounded-full p-0 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-white/20 transition-opacity cursor-pointer"
+							>
+								<Avatar className="h-9 w-9 pointer-events-none">
 									<AvatarImage
 										src={user?.user_metadata?.avatar_url || user?.user_metadata?.picture || ''}
 										alt={user?.user_metadata?.full_name || user?.email || 'User avatar'}
@@ -65,22 +68,30 @@ export function DashboardNav() {
 								</div>
 							</DropdownMenuLabel>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem onClick={() => router.push('/dashboard/settings')}>
+							<DropdownMenuItem onClick={() => {
+								router.push('/dashboard/settings')
+								setIsOpen(false)
+							}}>
 								<User className="mr-2 h-4 w-4" />
 								<span>Account</span>
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={() => router.push('/dashboard/settings')}>
+							<DropdownMenuItem onClick={() => {
+								router.push('/dashboard/settings')
+								setIsOpen(false)
+							}}>
 								<Settings className="mr-2 h-4 w-4" />
 								<span>Settings</span>
 							</DropdownMenuItem>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem onClick={handleSignOut}>
+							<DropdownMenuItem onClick={() => {
+								handleSignOut()
+								setIsOpen(false)
+							}}>
 								<LogOut className="mr-2 h-4 w-4" />
 								<span>Log out</span>
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
-				</div>
 			</div>
 		</header>
 	)
