@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Separator } from "@/components/ui/separator"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Sparkles, Mail, Lock, User, Github } from "lucide-react"
+import { Mail, Lock, User, Github } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import { useToast } from "@/hooks/use-toast"
 import { env } from "@/lib/env"
@@ -114,9 +114,7 @@ export default function RegisterPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-primary-foreground" />
-            </div>
+            <div className="w-8 h-8 bg-white/10 backdrop-blur-sm rounded-lg" />
             <h1 className="text-xl font-semibold tracking-wide lowercase">{env.NEXT_PUBLIC_APP_NAME}</h1>
           </div>
           <CardTitle>Create your account</CardTitle>

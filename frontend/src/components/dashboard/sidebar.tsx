@@ -86,7 +86,7 @@ export function DashboardSidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="w-64 border-r bg-muted/10 p-4">
+    <div className="w-64 p-4">
       <nav className="space-y-2">
         {sidebarItems.map((item) => {
           const isActive = pathname === item.href
@@ -95,8 +95,8 @@ export function DashboardSidebar() {
               key={item.href}
               variant={isActive ? "secondary" : "ghost"}
               className={cn(
-                "w-full justify-start",
-                isActive && "bg-secondary"
+                "w-full justify-start border border-white/10 bg-white/5 backdrop-blur-sm",
+                isActive && "bg-white/10"
               )}
               asChild
             >
@@ -118,11 +118,11 @@ export function DashboardSidebar() {
       <div className="mt-8 space-y-4">
         <h3 className="text-sm font-medium text-muted-foreground">Quick Actions</h3>
         <div className="space-y-2">
-          <Button variant="outline" size="sm" className="w-full justify-start">
+          <Button variant="outline" size="sm" className="w-full justify-start border-white/10 bg-white/5 backdrop-blur-sm">
             <Zap className="mr-2 h-4 w-4" />
             Generate Post
           </Button>
-          <Button variant="outline" size="sm" className="w-full justify-start">
+          <Button variant="outline" size="sm" className="w-full justify-start border-white/10 bg-white/5 backdrop-blur-sm">
             <Video className="mr-2 h-4 w-4" />
             Create Video
           </Button>
