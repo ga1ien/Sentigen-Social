@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Separator } from "@/components/ui/separator"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Mail, Lock, User, Github } from "lucide-react"
+import { Mail, Lock, User } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import { useToast } from "@/hooks/use-toast"
 import { env } from "@/lib/env"
@@ -89,25 +89,7 @@ export default function RegisterPage() {
     }
   }
 
-  const handleGithubRegister = async () => {
-    setIsLoading(true)
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "github",
-        options: {
-          redirectTo: `${window.location.origin}/dashboard`,
-        },
-      })
 
-      if (error) {
-        setError(error.message)
-      }
-    } catch (err) {
-      setError("Failed to sign up with GitHub")
-    } finally {
-      setIsLoading(false)
-    }
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
@@ -217,25 +199,6 @@ export default function RegisterPage() {
               {isLoading ? "Creating account..." : "Create Account"}
             </Button>
           </form>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <Separator className="w-full" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-            </div>
-          </div>
-
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={handleGithubRegister}
-            disabled={isLoading}
-          >
-            <Github className="mr-2 h-4 w-4" />
-            GitHub
-          </Button>
 
           <div className="text-center text-sm">
             <span className="text-muted-foreground">Already have an account? </span>

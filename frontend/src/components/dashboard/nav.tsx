@@ -10,6 +10,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Bell, Settings, LogOut, User, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
@@ -56,8 +57,16 @@ export function DashboardNav() {
 
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<Button variant="ghost" className="h-8 px-3 rounded-full">
-								<span className="text-sm">{loading ? '...' : (user?.user_metadata?.full_name || user?.email || 'signed out')}</span>
+							<Button variant="ghost" className="relative h-10 w-10 rounded-full p-0">
+								<Avatar className="h-9 w-9">
+									<AvatarImage
+										src={user?.user_metadata?.avatar_url || user?.user_metadata?.picture || ''}
+										alt={user?.user_metadata?.full_name || user?.email || 'User avatar'}
+									/>
+									<AvatarFallback className="bg-gradient-to-br from-purple-500 to-pink-500 text-white">
+										{loading ? '...' : (user?.user_metadata?.full_name || user?.email || 'U')?.charAt(0).toUpperCase()}
+									</AvatarFallback>
+								</Avatar>
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent className="w-56" align="end" forceMount>
@@ -72,11 +81,11 @@ export function DashboardNav() {
 								</div>
 							</DropdownMenuLabel>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem>
+							<DropdownMenuItem onClick={() => router.push('/dashboard/settings')}>
 								<User className="mr-2 h-4 w-4" />
 								<span>Profile</span>
 							</DropdownMenuItem>
-							<DropdownMenuItem>
+							<DropdownMenuItem onClick={() => router.push('/dashboard/settings')}>
 								<Settings className="mr-2 h-4 w-4" />
 								<span>Settings</span>
 							</DropdownMenuItem>
