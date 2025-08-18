@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { QueryProvider } from "@/components/query-provider";
 import { UserProvider } from "@/contexts/user-context";
 import { env } from "@/lib/env";
-import { ThemeBackgrounds } from "@/components/zyyn/theme-backgrounds";
+import { CloudBackground } from "@/components/zyyn/cloud-background";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeBackgrounds />
+        <CloudBackground />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

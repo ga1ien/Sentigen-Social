@@ -1,6 +1,5 @@
-import { DashboardNav } from "@/components/dashboard/nav"
-import { DashboardSidebar } from "@/components/dashboard/sidebar"
-import { ThemeBackgrounds } from "@/components/zyyn/theme-backgrounds"
+import { CloudBackground } from "@/components/zyyn/cloud-background"
+import { SpatialNav } from "@/components/zyyn/spatial-nav"
 
 export default function DashboardLayout({
   children,
@@ -8,15 +7,14 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      <ThemeBackgrounds />
-      <DashboardNav />
-      <div className="flex">
-        <div className="border-r border-white/10 bg-white/5 backdrop-blur-sm"><DashboardSidebar /></div>
-        <main className="flex-1 p-6">
+    <div className="min-h-screen relative">
+      <CloudBackground />
+      <SpatialNav />
+      <main className="pt-20 pb-24 lg:pb-8 lg:pl-24 lg:pr-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {children}
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
   )
 }

@@ -1,325 +1,198 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
-import { useUser } from "@/contexts/user-context"
-import { apiClient } from "@/lib/api"
-import {
-  PenTool,
-  Calendar,
-  BarChart3,
-  TrendingUp,
-  Users,
-  Eye,
-  Heart,
-  MessageCircle,
-  Share,
-  Plus,
-} from "lucide-react"
-
-interface DashboardStats {
-  totalPosts: number
-  scheduledPosts: number
-  engagement: number
-  followers: number
-}
-
-interface RecentPost {
-  id: string
-  title: string
-  platform: string
-  time: string
-  engagement: {
-    views: number
-    likes: number
-    comments: number
-    shares: number
-  }
-  status: string
-}
+import { GlassCard, GlassCardContent, GlassCardDescription, GlassCardHeader, GlassCardTitle } from "@/components/zyyn/glass-card"
+import { TrendingUp, Users, FileText, Activity, Zap, Target, Calendar, BarChart3 } from "lucide-react"
 
 export default function DashboardPage() {
-  const { user, loading } = useUser()
-  const [stats, setStats] = useState<DashboardStats>({
-    totalPosts: 0,
-    scheduledPosts: 0,
-    engagement: 0,
-    followers: 0
-  })
-  const [recentPosts, setRecentPosts] = useState<RecentPost[]>([])
-  const [loadingData, setLoadingData] = useState(true)
-
-  useEffect(() => {
-    if (user && !loading) {
-      loadDashboardData()
-    }
-  }, [user, loading])
-
-  const loadDashboardData = async () => {
-    try {
-      setLoadingData(true)
-
-      // Load user's posts and calculate stats
-      // For now, we'll show empty state until backend integration is complete
-      setStats({
-        totalPosts: 0,
-        scheduledPosts: 0,
-        engagement: 0,
-        followers: 0
-      })
-      setRecentPosts([])
-
-    } catch (error) {
-      console.error('Error loading dashboard data:', error)
-    } finally {
-      setLoadingData(false)
-    }
-  }
-
-  if (loading) {
-    return (
-      <div className="space-y-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">Dashboard</h1>
-            <p className="text-muted-foreground">Loading your data...</p>
-          </div>
-        </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {[...Array(4)].map((_, i) => (
-            <Card key={i}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <div className="h-4 w-20 bg-muted animate-pulse rounded" />
-                <div className="h-4 w-4 bg-muted animate-pulse rounded" />
-              </CardHeader>
-              <CardContent>
-                <div className="h-8 w-16 bg-muted animate-pulse rounded mb-2" />
-                <div className="h-3 w-24 bg-muted animate-pulse rounded" />
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    )
-  }
-
-  if (!user) {
-    return (
-      <div className="space-y-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">Dashboard</h1>
-            <p className="text-muted-foreground">Please log in to view your dashboard.</p>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Dashboard</h1>
-          <p className="text-muted-foreground">
-            Welcome back, {user.user_metadata?.full_name || user.email?.split('@')[0]}! Here&apos;s what&apos;s happening with your social media.
-          </p>
+      <div className="space-y-2">
+        <h1 className="text-3xl font-light text-white/90">welcome back</h1>
+        <p className="text-white/60">here's what's happening with your content today</p>
+      </div>
+
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <GlassCard variant="elevated" glow>
+          <GlassCardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <GlassCardTitle className="text-base font-normal">total reach</GlassCardTitle>
+              <TrendingUp className="w-4 h-4 text-green-400" />
+            </div>
+          </GlassCardHeader>
+          <GlassCardContent>
+            <div className="space-y-1">
+              <p className="text-3xl font-light text-white">2.4M</p>
+              <p className="text-xs text-green-400">+12% from last week</p>
+            </div>
+          </GlassCardContent>
+        </GlassCard>
+
+        <GlassCard variant="elevated" glow>
+          <GlassCardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <GlassCardTitle className="text-base font-normal">engagement</GlassCardTitle>
+              <Activity className="w-4 h-4 text-blue-400" />
+            </div>
+          </GlassCardHeader>
+          <GlassCardContent>
+            <div className="space-y-1">
+              <p className="text-3xl font-light text-white">8.7%</p>
+              <p className="text-xs text-blue-400">+3.2% from last week</p>
+            </div>
+          </GlassCardContent>
+        </GlassCard>
+
+        <GlassCard variant="elevated" glow>
+          <GlassCardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <GlassCardTitle className="text-base font-normal">new followers</GlassCardTitle>
+              <Users className="w-4 h-4 text-purple-400" />
+            </div>
+          </GlassCardHeader>
+          <GlassCardContent>
+            <div className="space-y-1">
+              <p className="text-3xl font-light text-white">1,842</p>
+              <p className="text-xs text-purple-400">+24% from last week</p>
+            </div>
+          </GlassCardContent>
+        </GlassCard>
+
+        <GlassCard variant="elevated" glow>
+          <GlassCardHeader className="pb-3">
+            <div className="flex items-center justify-between">
+              <GlassCardTitle className="text-base font-normal">content created</GlassCardTitle>
+              <FileText className="w-4 h-4 text-orange-400" />
+            </div>
+          </GlassCardHeader>
+          <GlassCardContent>
+            <div className="space-y-1">
+              <p className="text-3xl font-light text-white">47</p>
+              <p className="text-xs text-orange-400">this week</p>
+            </div>
+          </GlassCardContent>
+        </GlassCard>
+      </div>
+
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Recent Activity */}
+        <div className="lg:col-span-2 space-y-4">
+          <GlassCard variant="default" blur="lg">
+            <GlassCardHeader>
+              <GlassCardTitle>recent activity</GlassCardTitle>
+              <GlassCardDescription>your latest content performance</GlassCardDescription>
+            </GlassCardHeader>
+            <GlassCardContent>
+              <div className="space-y-4">
+                {[
+                  { title: "AI trends in 2025", platform: "linkedin", engagement: "12.4K", trend: "up" },
+                  { title: "productivity tips thread", platform: "twitter", engagement: "8.2K", trend: "up" },
+                  { title: "behind the scenes", platform: "instagram", engagement: "24.1K", trend: "down" },
+                  { title: "weekly newsletter", platform: "email", engagement: "4.8K", trend: "up" },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                    <div className="space-y-1">
+                      <p className="text-sm text-white/90">{item.title}</p>
+                      <p className="text-xs text-white/50">{item.platform}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm text-white/70">{item.engagement}</span>
+                      {item.trend === "up" ? (
+                        <TrendingUp className="w-4 h-4 text-green-400" />
+                      ) : (
+                        <TrendingUp className="w-4 h-4 text-red-400 rotate-180" />
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </GlassCardContent>
+          </GlassCard>
+
+          {/* Quick Actions */}
+          <GlassCard variant="subtle" blur="lg">
+            <GlassCardHeader>
+              <GlassCardTitle>quick actions</GlassCardTitle>
+            </GlassCardHeader>
+            <GlassCardContent>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <button className="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                  <Zap className="w-5 h-5 mb-2 text-yellow-400" />
+                  <span className="text-xs text-white/70">generate</span>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                  <Calendar className="w-5 h-5 mb-2 text-blue-400" />
+                  <span className="text-xs text-white/70">schedule</span>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                  <BarChart3 className="w-5 h-5 mb-2 text-green-400" />
+                  <span className="text-xs text-white/70">analyze</span>
+                </button>
+                <button className="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                  <Target className="w-5 h-5 mb-2 text-purple-400" />
+                  <span className="text-xs text-white/70">optimize</span>
+                </button>
+              </div>
+            </GlassCardContent>
+          </GlassCard>
         </div>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          Create Post
-        </Button>
-      </div>
 
-      {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Posts</CardTitle>
-            <PenTool className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{loadingData ? "..." : stats.totalPosts}</div>
-            <p className="text-xs text-muted-foreground">
-              {stats.totalPosts === 0 ? "Start creating content!" : "Your published posts"}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Scheduled</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{loadingData ? "..." : stats.scheduledPosts}</div>
-            <p className="text-xs text-muted-foreground">
-              {stats.scheduledPosts === 0 ? "No scheduled posts" : "Ready to publish"}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Engagement</CardTitle>
-            <BarChart3 className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{loadingData ? "..." : `${stats.engagement}%`}</div>
-            <p className="text-xs text-muted-foreground">
-              {stats.engagement === 0 ? "Connect social accounts" : "Average engagement rate"}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Followers</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{loadingData ? "..." : stats.followers.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">
-              {stats.followers === 0 ? "Connect social accounts" : "Total followers"}
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Recent Activity */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>Your latest posts and their performance</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {recentPosts.length === 0 ? (
-              <div className="text-center py-8">
-                <PenTool className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No posts yet</h3>
-                <p className="text-muted-foreground mb-4">
-                  Start creating content to see your activity here.
-                </p>
-                <Button>
-                  <Plus className="mr-2 h-4 w-4" />
-                  Create Your First Post
-                </Button>
-              </div>
-            ) : (
-              recentPosts.map((post, index) => (
-                <div key={index} className="flex items-center space-x-4 p-4 border rounded-lg">
-                  <div className="flex-1 space-y-1">
-                    <p className="text-sm font-medium leading-none">{post.title}</p>
-                    <div className="flex items-center space-x-2">
-                      <Badge variant="secondary">{post.platform}</Badge>
-                      <Badge variant={post.status === "published" ? "default" : "outline"}>
-                        {post.status}
-                      </Badge>
-                      <span className="text-xs text-muted-foreground">{post.time}</span>
-                    </div>
-                  </div>
-                  <div className="flex space-x-4 text-sm text-muted-foreground">
-                    <div className="flex items-center">
-                      <Eye className="mr-1 h-3 w-3" />
-                      {post.engagement.views}
-                    </div>
-                    <div className="flex items-center">
-                      <Heart className="mr-1 h-3 w-3" />
-                      {post.engagement.likes}
-                    </div>
-                    <div className="flex items-center">
-                      <MessageCircle className="mr-1 h-3 w-3" />
-                      {post.engagement.comments}
-                    </div>
-                    <div className="flex items-center">
-                      <Share className="mr-1 h-3 w-3" />
-                      {post.engagement.shares}
-                    </div>
-                  </div>
+        {/* Sidebar */}
+        <div className="space-y-4">
+          {/* AI Suggestions */}
+          <GlassCard variant="elevated" blur="lg" glow>
+            <GlassCardHeader>
+              <GlassCardTitle>ai suggestions</GlassCardTitle>
+              <GlassCardDescription>personalized for you</GlassCardDescription>
+            </GlassCardHeader>
+            <GlassCardContent>
+              <div className="space-y-3">
+                <div className="p-3 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-white/10">
+                  <p className="text-xs text-white/90 mb-1">trending topic</p>
+                  <p className="text-sm text-white/70">AI automation tools are gaining traction. Create content about workflow optimization.</p>
                 </div>
-              ))
-            )}
-          </CardContent>
-        </Card>
-
-        {/* This Week */}
-        <Card>
-          <CardHeader>
-            <CardTitle>This Week</CardTitle>
-            <CardDescription>Your performance summary</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Posts Published</span>
-                <span className="text-sm text-muted-foreground">0 / 10</span>
+                <div className="p-3 rounded-xl bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-white/10">
+                  <p className="text-xs text-white/90 mb-1">best time to post</p>
+                  <p className="text-sm text-white/70">Your audience is most active at 2PM EST today.</p>
+                </div>
+                <div className="p-3 rounded-xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-white/10">
+                  <p className="text-xs text-white/90 mb-1">content idea</p>
+                  <p className="text-sm text-white/70">Share your morning routine for maximum productivity.</p>
+                </div>
               </div>
-              <Progress value={0} className="h-2" />
-            </div>
+            </GlassCardContent>
+          </GlassCard>
 
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Engagement Goal</span>
-                <span className="text-sm text-muted-foreground">0% / 8%</span>
+          {/* Upcoming */}
+          <GlassCard variant="default" blur="lg">
+            <GlassCardHeader>
+              <GlassCardTitle>upcoming</GlassCardTitle>
+              <GlassCardDescription>next 7 days</GlassCardDescription>
+            </GlassCardHeader>
+            <GlassCardContent>
+              <div className="space-y-3">
+                {[
+                  { day: "monday", posts: 3 },
+                  { day: "tuesday", posts: 2 },
+                  { day: "wednesday", posts: 4 },
+                  { day: "thursday", posts: 2 },
+                  { day: "friday", posts: 5 },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center justify-between">
+                    <span className="text-sm text-white/70">{item.day}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-white/50">{item.posts} posts</span>
+                      <div className="w-2 h-2 rounded-full bg-green-400/60" />
+                    </div>
+                  </div>
+                ))}
               </div>
-              <Progress value={0} className="h-2" />
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Follower Growth</span>
-                <span className="text-sm text-muted-foreground">0 / 200</span>
-              </div>
-              <Progress value={0} className="h-2" />
-            </div>
-
-            <div className="pt-4 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Top Performing Platform</span>
-                <Badge variant="outline">Connect accounts</Badge>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Best Posting Time</span>
-                <span className="text-sm text-muted-foreground">No data yet</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </GlassCardContent>
+          </GlassCard>
+        </div>
       </div>
-
-      {/* Quick Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-          <CardDescription>Get started with common tasks</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Button variant="outline" className="h-24 flex-col space-y-2">
-              <PenTool className="h-6 w-6" />
-              <span>Create Post</span>
-            </Button>
-            <Button variant="outline" className="h-24 flex-col space-y-2">
-              <Calendar className="h-6 w-6" />
-              <span>Schedule Content</span>
-            </Button>
-            <Button variant="outline" className="h-24 flex-col space-y-2">
-              <BarChart3 className="h-6 w-6" />
-              <span>View Analytics</span>
-            </Button>
-            <Button variant="outline" className="h-24 flex-col space-y-2">
-              <Users className="h-6 w-6" />
-              <span>Manage Team</span>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   )
 }

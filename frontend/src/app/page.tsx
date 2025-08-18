@@ -1,130 +1,195 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Bot, Calendar, BarChart3, Users, Zap } from "lucide-react";
-import { ThemeBackgrounds } from "@/components/zyyn/theme-backgrounds";
+"use client"
+
+import { GlassCard, GlassCardContent, GlassCardDescription, GlassCardHeader, GlassCardTitle } from "@/components/zyyn/glass-card";
+import { ArrowRight, Bot, Calendar, BarChart3, Users, Zap, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { env } from "@/lib/env";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      <ThemeBackgrounds />
-
-      {/* Minimal header */}
-      <header className="border-b bg-background/70 backdrop-blur supports-[backdrop-filter]:bg-background/40">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-lg font-semibold tracking-wide lowercase">{env.NEXT_PUBLIC_APP_NAME}</h1>
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" asChild>
-              <Link href="/auth/login">Sign in</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/auth/register">Get started</Link>
-            </Button>
+    <div className="min-h-screen flex flex-col">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <Link href="/" className="text-white/90 text-lg font-light tracking-wide">
+              zyyn
+            </Link>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/auth/login"
+                className="px-4 py-2 text-sm text-white/70 hover:text-white transition-colors"
+              >
+                sign in
+              </Link>
+              <Link
+                href="/auth/register"
+                className="px-4 py-2 text-sm bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl hover:bg-white/15 transition-all text-white/90"
+              >
+                get started
+              </Link>
+            </div>
           </div>
         </div>
-      </header>
+      </nav>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 text-center">
-        <Badge variant="secondary" className="mb-4">AI-native</Badge>
-        <h1 className="text-4xl md:text-6xl font-semibold mb-6 tracking-tight">zyyn</h1>
-        <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto lowercase">
-          {env.NEXT_PUBLIC_APP_DESCRIPTION}
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" asChild>
-            <Link href="/auth/register">
-              Start Creating <ArrowRight className="ml-2 w-4 h-4" />
+      <section className="flex-1 flex items-center justify-center px-4 pt-24 pb-16">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
+            <Sparkles className="w-4 h-4 text-yellow-400" />
+            <span className="text-sm text-white/80">ai-native</span>
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-extralight text-white/90 tracking-tight">
+            zyyn
+          </h1>
+
+          <p className="text-xl md:text-2xl text-white/60 font-light max-w-2xl mx-auto">
+            the future of being seen
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
+            <Link
+              href="/auth/register"
+              className="group px-8 py-3 bg-white/15 backdrop-blur-sm border border-white/30 rounded-2xl hover:bg-white/20 transition-all flex items-center gap-2 text-white"
+            >
+              start creating
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-          </Button>
-          <Button size="lg" variant="outline" asChild>
-            <Link href="/demo">View Demo</Link>
-          </Button>
+            <Link
+              href="#features"
+              className="px-8 py-3 text-white/70 hover:text-white transition-colors"
+            >
+              view demo
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-semibold mb-4">Less, but better</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Clean, spatial interfaces for content creation, scheduling, and insights.
-          </p>
-        </div>
+      <section id="features" className="py-24 px-4">
+        <div className="max-w-6xl mx-auto space-y-16">
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl md:text-4xl font-light text-white/90">
+              less, but better
+            </h2>
+            <p className="text-lg text-white/60 max-w-2xl mx-auto">
+              clean, spatial interfaces for content creation, scheduling, and insights
+            </p>
+          </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-[0_0_1px_rgba(255,255,255,0.2)]">
-            <CardHeader>
-              <Bot className="w-12 h-12 text-primary mb-4" />
-              <CardTitle>AI Content Generation</CardTitle>
-              <CardDescription>
-                Generate engaging posts with advanced AI models. Create variations, optimize for platforms, and maintain your brand voice.
-              </CardDescription>
-            </CardHeader>
-          </Card>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <GlassCard variant="elevated" blur="lg" glow className="group hover:scale-[1.02] transition-transform">
+              <GlassCardHeader>
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center mb-4">
+                  <Bot className="w-6 h-6 text-white/80" />
+                </div>
+                <GlassCardTitle>ai content generation</GlassCardTitle>
+                <GlassCardDescription>
+                  generate engaging posts with advanced ai models. create variations, optimize for platforms, and maintain your brand voice.
+                </GlassCardDescription>
+              </GlassCardHeader>
+            </GlassCard>
 
-          <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-[0_0_1px_rgba(255,255,255,0.2)]">
-            <CardHeader>
-              <Calendar className="w-12 h-12 text-primary mb-4" />
-              <CardTitle>Smart Scheduling</CardTitle>
-              <CardDescription>
-                Schedule posts across multiple platforms with optimal timing suggestions and drag-and-drop calendar interface.
-              </CardDescription>
-            </CardHeader>
-          </Card>
+            <GlassCard variant="elevated" blur="lg" glow className="group hover:scale-[1.02] transition-transform">
+              <GlassCardHeader>
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500/20 to-blue-500/20 flex items-center justify-center mb-4">
+                  <Calendar className="w-6 h-6 text-white/80" />
+                </div>
+                <GlassCardTitle>smart scheduling</GlassCardTitle>
+                <GlassCardDescription>
+                  schedule posts across multiple platforms with optimal timing suggestions and drag-and-drop calendar interface.
+                </GlassCardDescription>
+              </GlassCardHeader>
+            </GlassCard>
 
-          <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-[0_0_1px_rgba(255,255,255,0.2)]">
-            <CardHeader>
-              <BarChart3 className="w-12 h-12 text-primary mb-4" />
-              <CardTitle>Advanced Analytics</CardTitle>
-              <CardDescription>
-                Track performance, engagement metrics, and ROI across all platforms with beautiful, actionable insights.
-              </CardDescription>
-            </CardHeader>
-          </Card>
+            <GlassCard variant="elevated" blur="lg" glow className="group hover:scale-[1.02] transition-transform">
+              <GlassCardHeader>
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center mb-4">
+                  <BarChart3 className="w-6 h-6 text-white/80" />
+                </div>
+                <GlassCardTitle>advanced analytics</GlassCardTitle>
+                <GlassCardDescription>
+                  track performance, engagement metrics, and roi across all platforms with beautiful, actionable insights.
+                </GlassCardDescription>
+              </GlassCardHeader>
+            </GlassCard>
 
-          <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-[0_0_1px_rgba(255,255,255,0.2)]">
-            <CardHeader>
-              <Users className="w-12 h-12 text-primary mb-4" />
-              <CardTitle>Team Collaboration</CardTitle>
-              <CardDescription>
-                Work together with your team, assign roles, review content, and maintain consistent brand messaging.
-              </CardDescription>
-            </CardHeader>
-          </Card>
+            <GlassCard variant="elevated" blur="lg" glow className="group hover:scale-[1.02] transition-transform">
+              <GlassCardHeader>
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500/20 to-red-500/20 flex items-center justify-center mb-4">
+                  <Users className="w-6 h-6 text-white/80" />
+                </div>
+                <GlassCardTitle>team collaboration</GlassCardTitle>
+                <GlassCardDescription>
+                  work together with your team, assign roles, review content, and maintain consistent brand messaging.
+                </GlassCardDescription>
+              </GlassCardHeader>
+            </GlassCard>
 
-          <Card className="border border-white/10 bg-white/5 backdrop-blur-sm shadow-[0_0_1px_rgba(255,255,255,0.2)]">
-            <CardHeader>
-              <CardTitle>Rich Media Editor</CardTitle>
-              <CardDescription>
-                Create stunning posts with our rich text editor, image uploads, emoji picker, and media management.
-              </CardDescription>
-            </CardHeader>
-          </Card>
+            <GlassCard variant="elevated" blur="lg" glow className="group hover:scale-[1.02] transition-transform">
+              <GlassCardHeader>
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500/20 to-orange-500/20 flex items-center justify-center mb-4">
+                  <Zap className="w-6 h-6 text-white/80" />
+                </div>
+                <GlassCardTitle>multi-platform support</GlassCardTitle>
+                <GlassCardDescription>
+                  connect and post to twitter/x, linkedin, facebook, instagram, and more from a single dashboard.
+                </GlassCardDescription>
+              </GlassCardHeader>
+            </GlassCard>
+
+            <GlassCard variant="elevated" blur="lg" glow className="group hover:scale-[1.02] transition-transform">
+              <GlassCardHeader>
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center mb-4">
+                  <Sparkles className="w-6 h-6 text-white/80" />
+                </div>
+                <GlassCardTitle>rich media editor</GlassCardTitle>
+                <GlassCardDescription>
+                  create stunning posts with our rich text editor, image uploads, emoji picker, and media management.
+                </GlassCardDescription>
+              </GlassCardHeader>
+            </GlassCard>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="container mx-auto px-4 py-20">
-        <Card className="border border-white/10 bg-white/10 backdrop-blur text-foreground">
-          <CardContent className="p-12 text-center">
-            <h2 className="text-3xl font-semibold mb-4">Create at the speed of thought</h2>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto lowercase">{env.NEXT_PUBLIC_APP_DESCRIPTION}</p>
-            <Button size="lg">
-              <Link href="/auth/register">
-                Get Started Free <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
+      <section className="py-24 px-4">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <GlassCard variant="elevated" blur="xl" glow className="p-12">
+            <h2 className="text-3xl md:text-4xl font-light text-white/90 mb-4">
+              ready to be seen?
+            </h2>
+            <p className="text-lg text-white/60 mb-8 max-w-2xl mx-auto">
+              join thousands of creators using zyyn to amplify their voice and grow their audience
+            </p>
+            <Link
+              href="/auth/register"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl hover:bg-white/25 transition-all text-white"
+            >
+              get started free
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </GlassCard>
+        </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t">
-        <div className="container mx-auto px-4 py-8 text-center text-muted-foreground">
-          <p className="lowercase">&copy; 2024 {env.NEXT_PUBLIC_APP_NAME}. all rights reserved.</p>
+      <footer className="py-8 px-4 border-t border-white/10">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-white/50">© 2025 zyyn. all rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <Link href="#" className="text-sm text-white/50 hover:text-white/70 transition-colors">
+              privacy
+            </Link>
+            <Link href="#" className="text-sm text-white/50 hover:text-white/70 transition-colors">
+              terms
+            </Link>
+            <Link href="#" className="text-sm text-white/50 hover:text-white/70 transition-colors">
+              contact
+            </Link>
+          </div>
         </div>
       </footer>
     </div>
