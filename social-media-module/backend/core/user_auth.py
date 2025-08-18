@@ -44,6 +44,12 @@ class UserAuthService:
         self.supabase_client = SupabaseClient()
         self.security = HTTPBearer()
         self.jwt_secret = os.getenv("JWT_SECRET", "your-secret-key")
+        
+        # Log JWT secret status for debugging
+        if self.jwt_secret == "your-secret-key":
+            print("WARNING: JWT_SECRET not set in environment, using default (will fail)")
+        else:
+            print(f"JWT_SECRET loaded from environment: {self.jwt_secret[:10]}...")
 
     async def authenticate_user(self, token: str) -> Optional[UserContext]:
         """Authenticate user from JWT token or Supabase session"""
@@ -120,14 +126,38 @@ class UserAuthService:
             try:
                 # Use the Supabase JWT secret to validate the token
                 print(f"Attempting to decode JWT with secret: {self.jwt_secret[:10]}...")
-                payload = jwt.decode(token, self.jwt_secret, algorithms=["HS256"])
-                user_id = payload.get("sub")  # 'sub' is the user ID in Supabase JWTs
-                print(f"JWT decoded successfully, user_id (sub): {user_id}")
+                
+                # Supabase JWTs use HS256 algorithm
+                payload = jwt.decode(
+                    token, 
+                    self.jwt_secret, 
+                    algorithms=["HS256"],
+                    options={
+                        "verify_signature": True,
+                        "verify_exp": True,
+                        "verify_nbf": False,
+                        "verify_iat": False,
+                        "verify_aud": False
+                    }
+                )
+                
+                # Supabase stores user ID in 'sub' claim
+                user_id = payload.get("sub")
+                print(f"JWT decoded successfully, payload: {payload}")
+                print(f"User ID from token (sub): {user_id}")
+                
                 if user_id:
                     return user_id
             except JWTError as e:
                 print(f"JWT decode error: {e}")
-                print(f"Token header: {token.split('.')[0] if '.' in token else 'Invalid format'}")
+                print(f"Token first 50 chars: {token[:50]}...")
+                # Try without signature verification as a diagnostic
+                try:
+                    unverified = jwt.decode(token, options={"verify_signature": False})
+                    print(f"Unverified payload: {unverified}")
+                    print(f"Token algorithm: {jwt.get_unverified_header(token).get('alg')}")
+                except Exception as e2:
+                    print(f"Cannot decode even without verification: {e2}")
                 pass
 
             # Fallback: Use Supabase client to validate token
