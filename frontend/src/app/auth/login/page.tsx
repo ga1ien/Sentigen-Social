@@ -39,11 +39,7 @@ export default function LoginPage() {
         return
       }
 
-      toast({
-        title: "Welcome back!",
-        description: "You have been successfully signed in.",
-      })
-
+      // Success - no toast notification, just redirect
       router.push("/dashboard")
     } catch (err) {
       setError("An unexpected error occurred. Please try again.")

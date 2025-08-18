@@ -11,18 +11,15 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Bell, Settings, LogOut, User, Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
+import { Settings, LogOut, User } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "@/lib/toast-filter"
 import { useUser } from "@/contexts/user-context"
 import { env } from "@/lib/env"
 
 export function DashboardNav() {
-	const { theme, setTheme } = useTheme()
 	const router = useRouter()
-	const { toast } = useToast()
+	// Using filtered toast that only shows warnings/errors
 	const { user, loading, signOut } = useUser()
 
 	const handleSignOut = async () => {
@@ -42,19 +39,6 @@ export function DashboardNav() {
 		<header className="pointer-events-none">
 			<div className="container mx-auto px-4 py-3 flex items-center justify-end">
 				<div className="flex items-center gap-2 pointer-events-auto">
-					<Button variant="ghost" size="icon">
-						<Bell className="h-4 w-4" />
-					</Button>
-					<Button
-						variant="ghost"
-						size="icon"
-						onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-					>
-						<Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-						<Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-						<span className="sr-only">Toggle theme</span>
-					</Button>
-
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="ghost" className="relative h-10 w-10 rounded-full p-0">
@@ -83,7 +67,7 @@ export function DashboardNav() {
 							<DropdownMenuSeparator />
 							<DropdownMenuItem onClick={() => router.push('/dashboard/settings')}>
 								<User className="mr-2 h-4 w-4" />
-								<span>Profile</span>
+								<span>Account</span>
 							</DropdownMenuItem>
 							<DropdownMenuItem onClick={() => router.push('/dashboard/settings')}>
 								<Settings className="mr-2 h-4 w-4" />

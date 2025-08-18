@@ -25,7 +25,7 @@ import {
   CheckCircle,
   AlertCircle
 } from 'lucide-react'
-import { useToast } from '@/hooks/use-toast'
+import { toast } from '@/lib/toast-filter'
 
 interface AITool {
   id: string
@@ -101,7 +101,7 @@ export default function AIToolsPage() {
   const [result, setResult] = useState<string>('')
   const [prompt, setPrompt] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  const { toast } = useToast()
+  // Using filtered toast that only shows warnings/errors
 
   const filteredTools = selectedCategory === 'all'
     ? aiTools

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { GlassCard, GlassCardContent, GlassCardDescription, GlassCardHeader, GlassCardTitle } from "@/components/zyyn/glass-card"
 import { TrendingUp, Users, FileText, Activity, Zap, Target, Calendar, BarChart3, Loader2 } from "lucide-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "@/lib/toast-filter"
 
 interface Stats {
   totalReach: number
@@ -54,7 +54,7 @@ export default function DashboardPage() {
   const [upcomingPosts, setUpcomingPosts] = useState<ScheduledPost[]>([])
 
   const supabase = createClientComponentClient()
-  const { toast } = useToast()
+  // Using filtered toast that only shows warnings/errors
 
   useEffect(() => {
     fetchDashboardData()

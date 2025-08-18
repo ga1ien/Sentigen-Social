@@ -12,14 +12,14 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
 import { RichTextEditor } from "@/components/editor/rich-text-editor"
-import { useToast } from "@/hooks/use-toast"
-import { 
-  Wand2, 
-  Send, 
-  Save, 
-  Calendar, 
-  Image, 
-  Video, 
+import { toast } from "@/lib/toast-filter"
+import {
+  Wand2,
+  Send,
+  Save,
+  Calendar,
+  Image,
+  Video,
   Sparkles,
   Twitter,
   Linkedin,
@@ -47,7 +47,7 @@ const contentTypes = [
 ]
 
 const tones = [
-  'Professional', 'Casual', 'Friendly', 'Authoritative', 'Humorous', 
+  'Professional', 'Casual', 'Friendly', 'Authoritative', 'Humorous',
   'Inspirational', 'Educational', 'Promotional', 'Conversational'
 ]
 
@@ -61,13 +61,13 @@ export default function CreatePostPage() {
   const [scheduledDate, setScheduledDate] = useState('')
   const [tags, setTags] = useState<string[]>([])
   const [newTag, setNewTag] = useState('')
-  
+
   const router = useRouter()
-  const { toast } = useToast()
+  // Using filtered toast that only shows warnings/errors
 
   const handlePlatformToggle = (platformId: string) => {
-    setSelectedPlatforms(prev => 
-      prev.includes(platformId) 
+    setSelectedPlatforms(prev =>
+      prev.includes(platformId)
         ? prev.filter(id => id !== platformId)
         : [...prev, platformId]
     )
@@ -93,10 +93,10 @@ export default function CreatePostPage() {
     }
 
     setIsGenerating(true)
-    
+
     try {
       const { apiClient } = await import('@/lib/api')
-      
+
       const response = await apiClient.generateContent({
         prompt: aiPrompt,
         content_type: contentType,
@@ -110,7 +110,7 @@ export default function CreatePostPage() {
 
       if (response.data?.variations?.length > 0) {
         setContent(response.data.variations[0].content)
-        
+
         toast({
           title: "Content Generated!",
           description: "AI has generated optimized content for your selected platforms.",
@@ -120,7 +120,7 @@ export default function CreatePostPage() {
       }
     } catch (error) {
       console.error('Content generation error:', error)
-      
+
       // Fallback to mock content if API fails
       const mockContent = `🚀 ${aiPrompt}
 
@@ -128,14 +128,14 @@ Here's some AI-generated content that's optimized for ${selectedPlatforms.join('
 
 Key points:
 • Engaging hook to capture attention
-• Valuable insights for your audience  
+• Valuable insights for your audience
 • Clear call-to-action
 • Relevant hashtags for discoverability
 
 #AI #ContentCreation #SocialMedia #Innovation`
 
       setContent(mockContent)
-      
+
       toast({
         title: "Content Generated (Demo Mode)",
         description: "Using demo content. Connect your backend API for real AI generation.",
@@ -188,7 +188,7 @@ Key points:
       title: "Post Scheduled",
       description: `Your post has been scheduled for ${selectedPlatforms.join(', ')}.`,
     })
-    
+
     router.push('/dashboard/calendar')
   }
 
@@ -213,7 +213,7 @@ Key points:
 
     try {
       const { apiClient } = await import('@/lib/api')
-      
+
       // Create the post
       const createResponse = await apiClient.createPost({
         content,
@@ -225,17 +225,17 @@ Key points:
       if (createResponse.data?.post?.id) {
         // Publish the post immediately
         await apiClient.publishPost(createResponse.data.post.id)
-        
+
         toast({
           title: "Post Published",
           description: `Your post has been published to ${selectedPlatforms.join(', ')}.`,
         })
-        
+
         router.push('/dashboard')
       }
     } catch (error) {
       console.error('Publish error:', error)
-      
+
       toast({
         title: "Publish Failed (Demo Mode)",
         description: "Connect your backend API for real publishing. Demo mode active.",
@@ -290,7 +290,7 @@ Key points:
                   onChange={(e) => setAiPrompt(e.target.value)}
                 />
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Tone</Label>
@@ -307,7 +307,7 @@ Key points:
                     </SelectContent>
                   </Select>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label>Content Type</Label>
                   <Select value={contentType} onValueChange={setContentType}>
@@ -325,8 +325,8 @@ Key points:
                 </div>
               </div>
 
-              <Button 
-                onClick={handleGenerateContent} 
+              <Button
+                onClick={handleGenerateContent}
                 disabled={isGenerating}
                 className="w-full"
               >
@@ -399,7 +399,7 @@ Key points:
               {platforms.map((platform) => {
                 const Icon = platform.icon
                 const isSelected = selectedPlatforms.includes(platform.id)
-                
+
                 return (
                   <div
                     key={platform.id}
@@ -443,13 +443,13 @@ Key points:
                   onChange={(e) => setScheduledDate(e.target.value)}
                 />
               </div>
-              
+
               <Button variant="outline" className="w-full">
                 <Calendar className="mr-2 h-4 w-4" />
                 View Calendar
               </Button>
-              
-              <Button 
+
+              <Button
                 onClick={handleSchedulePost}
                 className="w-full"
                 variant="secondary"
@@ -480,7 +480,7 @@ Key points:
                   Add
                 </Button>
               </div>
-              
+
               {tags.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {tags.map((tag) => (

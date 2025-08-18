@@ -10,7 +10,6 @@ import {
   Image,
   Users,
   Settings,
-  Bell,
   Search,
   Plus,
   Lightbulb
@@ -58,13 +57,9 @@ export function SpatialNav() {
             </button>
           </div>
 
-          {/* Right Actions */}
+          {/* Right Actions - Removed duplicate bell and profile */}
           <div className="flex items-center gap-3">
-            <button className="relative p-2 rounded-xl hover:bg-white/10 transition-all">
-              <Bell className="w-4 h-4 text-gray-700" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-500 rounded-full" />
-            </button>
-            <button className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600" />
+            {/* Profile and notifications are handled by DashboardNav component */}
           </div>
         </div>
       </div>

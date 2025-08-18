@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "@/lib/toast-filter"
 
 interface AuthModalProps {
   isOpen: boolean
@@ -19,7 +19,7 @@ export function AuthModal({ isOpen, onClose, defaultMode = "signin" }: AuthModal
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-  const { toast } = useToast()
+  // Using filtered toast that only shows warnings/errors
   const supabase = createClientComponentClient()
 
   const handleSubmit = async (e: React.FormEvent) => {

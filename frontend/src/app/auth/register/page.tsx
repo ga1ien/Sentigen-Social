@@ -76,11 +76,7 @@ export default function RegisterPage() {
         return
       }
 
-      toast({
-        title: "Account created!",
-        description: "Please check your email to verify your account.",
-      })
-
+      // Success - no toast notification, just redirect
       router.push("/auth/verify-email")
     } catch (err) {
       setError("An unexpected error occurred. Please try again.")

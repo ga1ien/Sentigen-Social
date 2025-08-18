@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { GlassCard, GlassCardContent, GlassCardDescription, GlassCardHeader, GlassCardTitle } from "@/components/zyyn/glass-card"
 import { Linkedin, Twitter, Instagram, Youtube, Music2, TrendingUp, Sparkles, Clock, Hash, Send } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "@/lib/toast-filter"
 
 const platforms = [
   { id: "linkedin", name: "LinkedIn", icon: Linkedin, color: "blue" },
@@ -18,7 +18,7 @@ export default function ResearchPage() {
   const [loading, setLoading] = useState(false)
   const [insights, setInsights] = useState<any>(null)
   const [draftContent, setDraftContent] = useState("")
-  const { toast } = useToast()
+  // Using filtered toast that only shows warnings/errors
 
   const fetchInsights = async (platform: string) => {
     setLoading(true)

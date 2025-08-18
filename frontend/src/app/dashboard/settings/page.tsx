@@ -35,7 +35,7 @@ import {
   CheckCircle,
   AlertCircle
 } from 'lucide-react'
-import { useToast } from '@/hooks/use-toast'
+import { toast } from '@/lib/toast-filter'
 import { createClient } from '@/lib/supabase/client'
 
 interface SocialAccount {
@@ -48,7 +48,7 @@ interface SocialAccount {
 export default function SettingsPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const { toast } = useToast()
+  // Using filtered toast that only shows warnings/errors
   const supabase = createClient()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)

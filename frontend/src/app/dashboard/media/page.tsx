@@ -32,7 +32,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useToast } from '@/hooks/use-toast'
+import { toast } from '@/lib/toast-filter'
 
 interface MediaAsset {
   id: string
@@ -57,7 +57,7 @@ export default function MediaLibraryPage() {
   const [selectedType, setSelectedType] = useState<'all' | 'image' | 'video' | 'document'>('all')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [isUploading, setIsUploading] = useState(false)
-  const { toast } = useToast()
+  // Using filtered toast that only shows warnings/errors
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     setIsUploading(true)

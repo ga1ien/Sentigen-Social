@@ -40,7 +40,7 @@ import {
   Search,
   Filter
 } from 'lucide-react'
-import { useToast } from '@/hooks/use-toast'
+import { toast } from '@/lib/toast-filter'
 
 interface TeamMember {
   id: string
@@ -74,7 +74,7 @@ export default function TeamPage() {
   const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false)
   const [inviteEmail, setInviteEmail] = useState('')
   const [inviteRole, setInviteRole] = useState<'admin' | 'editor' | 'member'>('member')
-  const { toast } = useToast()
+  // Using filtered toast that only shows warnings/errors
 
   const filteredMembers = teamMembers.filter(member => {
     const matchesSearch = member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

@@ -6,13 +6,13 @@ import { AuthModal } from "@/components/zyyn/auth-modal";
 import { ArrowRight, Bot, Calendar, BarChart3, Users, Zap, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "@/lib/toast-filter";
 
 function HomePageContent() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"signin" | "signup">("signin");
   const searchParams = useSearchParams();
-  const { toast } = useToast();
+  // Using filtered toast that only shows warnings/errors;
 
   useEffect(() => {
     const error = searchParams.get("error");
