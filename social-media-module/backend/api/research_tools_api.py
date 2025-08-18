@@ -26,6 +26,11 @@ try:
     from google_trends_research.cli_google_trends_standardized import GoogleTrendsResearchTool
     from hackernews_research.cli_hackernews_standardized import HackerNewsResearchTool
     from reddit_research.cli_reddit_standardized import RedditResearchTool
+
+    # Standardized tool types
+    from STANDARDIZED_TOOL_TEMPLATE import AnalysisDepth as StdAnalysisDepth
+    from STANDARDIZED_TOOL_TEMPLATE import DataSource as StdDataSource
+    from STANDARDIZED_TOOL_TEMPLATE import ResearchConfig as StdResearchConfig
 except ImportError as e:
     # Fallback for development
     print(f"Warning: Could not import research tools: {e}")
@@ -33,12 +38,16 @@ except ImportError as e:
     HackerNewsResearchTool = None
     GitHubResearchTool = None
     GoogleTrendsResearchTool = None
+    StdResearchConfig = None
+    StdAnalysisDepth = None
+    StdDataSource = None
 
 logger = structlog.get_logger(__name__)
 router = APIRouter(prefix="/api/research", tags=["research"])
 
 # Lazy initialization to avoid import-time environment variable issues
 _supabase_client = None
+
 
 def get_supabase_client():
     """Get Supabase client with lazy initialization."""
@@ -239,125 +248,160 @@ async def execute_research_task(research_id: str, request: ResearchRequest, user
 
 
 async def run_reddit_research(tool, config) -> tuple[List[Dict], Dict]:
-    """Run Reddit research and return results."""
+    """Run Reddit research using the standardized tool (raw only to avoid external AI deps)."""
     try:
-        # This would call the actual research tool
-        # For now, return simulated results
-        results = [
-            {
-                "title": f"Reddit post about {config['query']}",
-                "url": "https://reddit.com/r/example/post1",
-                "score": 150,
-                "comments": 45,
-                "subreddit": "technology",
-                "content": f"Discussion about {config['query']} with community insights...",
-            }
-        ]
+        # Provide a no-op DB manager to avoid external DB dependency
+        class _NoOpDB:
+            async def initialize(self):
+                return None
 
-        insights = {
-            "summary": f"Research on '{config['query']}' found {len(results)} relevant discussions",
-            "key_themes": ["technology", "innovation", "community"],
-            "sentiment": "positive",
-            "recommendations": [
-                f"Consider creating content about {config['query']}",
-                "Engage with the community discussions",
-            ],
-        }
+            async def close(self):
+                return None
 
-        return results, insights
+            async def save_research_result(self, result):
+                return True
+
+        if hasattr(tool, "db_manager"):
+            tool.db_manager = _NoOpDB()
+
+        await tool.initialize()
+        depth = StdAnalysisDepth.BASIC if StdAnalysisDepth else None
+        std_cfg = StdResearchConfig(
+            source=StdDataSource.REDDIT,
+            query=config["query"],
+            max_items=config["max_items"],
+            analysis_depth=depth,
+        )
+        raw = await tool.collect_raw_data(std_cfg)
+        await tool.cleanup()
+
+        # Normalize
+        results = raw.get("posts") or raw.get("repositories") or raw.get("stories") or raw.get("data") or raw
+        if isinstance(results, dict):
+            results = [results]
+        if results is None:
+            results = []
+
+        return results, {"summary": f"Collected {len(results)} items from reddit"}
     except Exception as e:
         logger.error("Reddit research failed", error=str(e))
         return [], {"error": str(e)}
 
 
 async def run_hackernews_research(tool, config) -> tuple[List[Dict], Dict]:
-    """Run Hacker News research and return results."""
+    """Run Hacker News research using the standardized tool (raw only)."""
     try:
-        results = [
-            {
-                "title": f"HN story about {config['query']}",
-                "url": "https://news.ycombinator.com/item?id=123456",
-                "score": 200,
-                "comments": 89,
-                "content": f"Hacker News discussion about {config['query']}...",
-            }
-        ]
 
-        insights = {
-            "summary": f"Hacker News research on '{config['query']}' found {len(results)} stories",
-            "key_themes": ["startups", "technology", "innovation"],
-            "sentiment": "neutral",
-            "recommendations": [f"Share insights about {config['query']} on HN", "Participate in relevant discussions"],
-        }
+        class _NoOpDB:
+            async def initialize(self):
+                return None
 
-        return results, insights
+            async def close(self):
+                return None
+
+            async def save_research_result(self, result):
+                return True
+
+        if hasattr(tool, "db_manager"):
+            tool.db_manager = _NoOpDB()
+
+        await tool.initialize()
+        depth = StdAnalysisDepth.BASIC if StdAnalysisDepth else None
+        std_cfg = StdResearchConfig(
+            source=StdDataSource.HACKERNEWS,
+            query=config["query"],
+            max_items=config["max_items"],
+            analysis_depth=depth,
+        )
+        raw = await tool.collect_raw_data(std_cfg)
+        await tool.cleanup()
+
+        results = raw.get("stories") or raw.get("repositories") or raw.get("posts") or raw.get("data") or raw
+        if isinstance(results, dict):
+            results = [results]
+        if results is None:
+            results = []
+
+        return results, {"summary": f"Collected {len(results)} items from hackernews"}
     except Exception as e:
         logger.error("Hacker News research failed", error=str(e))
         return [], {"error": str(e)}
 
 
 async def run_github_research(tool, config) -> tuple[List[Dict], Dict]:
-    """Run GitHub research and return results."""
+    """Run GitHub research using the standardized tool (raw only)."""
     try:
-        results = [
-            {
-                "name": f"awesome-{config['query']}",
-                "url": "https://github.com/user/repo",
-                "stars": 1500,
-                "forks": 200,
-                "description": f"A curated list of {config['query']} resources",
-                "language": "Python",
-            }
-        ]
 
-        insights = {
-            "summary": f"GitHub research on '{config['query']}' found {len(results)} repositories",
-            "key_themes": ["open source", "development", "tools"],
-            "trending_languages": ["Python", "JavaScript", "Go"],
-            "recommendations": [
-                f"Consider contributing to {config['query']} projects",
-                "Create content about trending repositories",
-            ],
-        }
+        class _NoOpDB:
+            async def initialize(self):
+                return None
 
-        return results, insights
+            async def close(self):
+                return None
+
+            async def save_research_result(self, result):
+                return True
+
+        if hasattr(tool, "db_manager"):
+            tool.db_manager = _NoOpDB()
+
+        await tool.initialize()
+        depth = StdAnalysisDepth.BASIC if StdAnalysisDepth else None
+        std_cfg = StdResearchConfig(
+            source=StdDataSource.GITHUB,
+            query=config["query"],
+            max_items=config["max_items"],
+            analysis_depth=depth,
+        )
+        raw = await tool.collect_raw_data(std_cfg)
+        await tool.cleanup()
+
+        # GitHub tool returns repositories list
+        results = raw.get("repositories") or raw.get("stories") or raw.get("posts") or raw.get("data") or raw
+        if isinstance(results, dict):
+            results = [results]
+        if results is None:
+            results = []
+
+        return results, {"summary": f"Collected {len(results)} repositories from github"}
     except Exception as e:
         logger.error("GitHub research failed", error=str(e))
         return [], {"error": str(e)}
 
 
 async def run_google_trends_research(tool, config) -> tuple[List[Dict], Dict]:
-    """Run Google Trends research and return results."""
+    """Run Google Trends research using the standardized tool (raw only)."""
     try:
-        results = [
-            {
-                "title": f"Trending: {config['query']}",
-                "interest_over_time": "Rising",
-                "related_queries": [
-                    f"{config['query']} tutorial",
-                    f"best {config['query']}",
-                    f"{config['query']} 2024",
-                ],
-                "regional_interest": {"United States": 100, "United Kingdom": 75, "Canada": 60},
-                "category": "Technology",
-                "timeframe": "Past 12 months",
-            }
-        ]
 
-        insights = {
-            "summary": f"Google Trends research on '{config['query']}' shows rising interest",
-            "key_themes": ["search trends", "public interest", "seasonal patterns"],
-            "trending_regions": ["United States", "United Kingdom", "Canada"],
-            "search_volume": "High",
-            "trend_direction": "Rising",
-            "recommendations": [
-                f"Create content about {config['query']} while interest is high",
-                "Target content for high-interest regions",
-                "Consider seasonal content planning",
-            ],
-        }
+        class _NoOpDB:
+            async def initialize(self):
+                return None
 
-        return results, insights
+            async def close(self):
+                return None
+
+            async def save_research_result(self, result):
+                return True
+
+        if hasattr(tool, "db_manager"):
+            tool.db_manager = _NoOpDB()
+
+        await tool.initialize()
+        depth = StdAnalysisDepth.BASIC if StdAnalysisDepth else None
+        std_cfg = StdResearchConfig(
+            source=StdDataSource.GOOGLE_TRENDS,
+            query=config["query"],
+            max_items=config["max_items"],
+            analysis_depth=depth,
+        )
+        raw = await tool.collect_raw_data(std_cfg)
+        await tool.cleanup()
+
+        # Google Trends returns a dict under data
+        data = raw.get("data") or raw
+        # Flatten into a list of one item to satisfy current storage expectations
+        results = [data] if isinstance(data, dict) else (data or [])
+        return results, {"summary": "Collected Google Trends data"}
     except Exception as e:
         logger.error("Google Trends research failed", error=str(e))
         return [], {"error": str(e)}
@@ -375,7 +419,8 @@ async def get_research_sessions(
     try:
         # Build query
         query = (
-            get_supabase_client().client.table("research_sessions")
+            get_supabase_client()
+            .client.table("research_sessions")
             .select("id, source, query, status, results_count, created_at, completed_at")
             .eq("user_id", current_user.user_id)
         )
@@ -406,7 +451,8 @@ async def get_research_result(session_id: str, current_user: UserContext = Depen
     try:
         # Get session info
         session_result = (
-            get_supabase_client().client.table("research_sessions")
+            get_supabase_client()
+            .client.table("research_sessions")
             .select("*")
             .eq("id", session_id)
             .eq("user_id", current_user.user_id)
@@ -420,7 +466,11 @@ async def get_research_result(session_id: str, current_user: UserContext = Depen
 
         # Get research results
         results_query = (
-            get_supabase_client().client.table("research_results").select("*").eq("research_session_id", session_id).execute()
+            get_supabase_client()
+            .client.table("research_results")
+            .select("*")
+            .eq("research_session_id", session_id)
+            .execute()
         )
 
         results_data = results_query.data[0] if results_query.data else None
@@ -456,7 +506,8 @@ async def delete_research_session(
     try:
         # Check if session exists and belongs to user
         session_result = (
-            get_supabase_client().client.table("research_sessions")
+            get_supabase_client()
+            .client.table("research_sessions")
             .select("id")
             .eq("id", session_id)
             .eq("user_id", current_user.user_id)

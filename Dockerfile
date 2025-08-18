@@ -4,6 +4,9 @@ FROM python:3.11-slim
 # Set working directory
 WORKDIR /app
 
+# Ensure application root is on Python path for imports like `database.*`
+ENV PYTHONPATH=/app
+
 # Copy backend requirements
 COPY social-media-module/backend/requirements-prod.txt ./requirements-prod.txt
 
@@ -12,6 +15,10 @@ RUN pip install --no-cache-dir -r requirements-prod.txt
 
 # Copy backend source code
 COPY social-media-module/backend/ ./
+
+# Explicitly ensure the database package is copied (some builders can exclude it inadvertently)
+COPY social-media-module/backend/database /app/database
+RUN ls -la /app/database || echo "database directory not found after copy"
 
 # Expose port
 EXPOSE 8000

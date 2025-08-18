@@ -60,6 +60,42 @@ export const apiClient = {
   // Health check
   health: () => api.get('/health'),
 
+  // Research pipeline
+  startResearch: (data: {
+    query: string
+    source: 'reddit' | 'hackernews' | 'github' | 'google_trends'
+    max_items?: number
+    analysis_depth?: 'quick' | 'standard' | 'comprehensive'
+    config?: Record<string, any>
+  }) => api.post('/api/research/start', data),
+
+  listResearchSessions: (params?: { limit?: number; offset?: number; status_filter?: string; source_filter?: string }) =>
+    api.get('/api/research/sessions', { params }),
+
+  getResearchSession: (sessionId: string) => api.get(`/api/research/sessions/${sessionId}`),
+
+  generateFromResearch: (data: {
+    research_session_id: string
+    content_type: 'post' | 'article' | 'thread' | 'summary'
+    platform?: string
+    tone?: string
+    length?: 'short' | 'medium' | 'long'
+  }) => api.post('/api/research/generate-content', data),
+
+  // Drafts (re-using research draft endpoint)
+  saveDraft: (data: { platform?: string; title?: string; content: string }) =>
+    api.post('/api/research/save-draft', data),
+
+  // Social posting (Ayrshare)
+  socialPostingCreate: (data: {
+    content: string
+    platforms: string[]
+    media_urls?: string[]
+    schedule_date?: string
+    platform_options?: Record<string, Record<string, any>>
+    auto_schedule?: { schedule: boolean; title?: string }
+  }) => api.post('/api/social-posting/create', data),
+
   // Content generation
   generateContent: (data: {
     prompt: string

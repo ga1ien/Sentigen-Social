@@ -347,3 +347,42 @@ async def schedule_content_with_ayrshare(
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+class SaveDraftRequest(BaseModel):
+    platform: Optional[str] = None
+    title: Optional[str] = None
+    content: str
+
+
+class SaveDraftResponse(BaseModel):
+    id: str
+    created_at: str
+
+
+@router.post("/save-draft", response_model=SaveDraftResponse)
+async def save_draft(
+    request: SaveDraftRequest,
+    current_user: dict = Depends(get_current_user),
+):
+    """Save a user's edited draft to content_drafts."""
+    try:
+        db_client = get_supabase_client()
+        insert_data = {
+            "user_id": current_user["id"],
+            "platform": request.platform,
+            "title": request.title,
+            "content": request.content,
+            "status": "draft",
+            "created_at": datetime.now().isoformat(),
+            "updated_at": datetime.now().isoformat(),
+        }
+        result = db_client.client.table("content_drafts").insert(insert_data).execute()
+        if not result.data:
+            raise HTTPException(status_code=500, detail="Failed to save draft")
+        row = result.data[0]
+        return SaveDraftResponse(id=row.get("id"), created_at=row.get("created_at"))
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

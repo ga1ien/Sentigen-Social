@@ -30,6 +30,7 @@ python-multipart==0.0.9
 # Logging & Monitoring - Production
 structlog==24.4.0
 python-dateutil==2.9.0
+requests>=2.32.2
 
 # Media Processing - Essential Only
 pillow==10.4.0

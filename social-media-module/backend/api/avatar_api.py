@@ -1,3 +1,5 @@
+from services.avatar_service import AvatarService
+
 """
 Avatar Management API
 Handles avatar profiles, script generation, and video creation
@@ -27,7 +29,15 @@ from models.avatar_models import (
     VideoStatus,
     VideoStatusResponse,
 )
-from services.avatar_service import AvatarService
+
+try:
+    from services.avatar_service import AvatarService
+except ModuleNotFoundError:
+    import os
+    import sys
+
+    sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+    from services.avatar_service import AvatarService
 
 logger = structlog.get_logger(__name__)
 

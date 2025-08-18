@@ -1,9 +1,13 @@
 """
-GPT-5 Mini Client with Normalization Support
-Based on proven architecture from successful scraping app
+OpenAI client utilities
+
+Includes:
+- GPT5MiniClient: helpers tailored for gpt-5-mini normalization flows
+- OpenAIClient: generic wrapper exposing generate_completion used by APIs
 """
 
 import json
+import os
 from typing import Any, Dict, List, Optional
 
 from openai import AsyncOpenAI
@@ -231,3 +235,40 @@ Return JSON strategy with specific, actionable search parameters.
                 "quality_indicators": ["high engagement", "recent posts", "detailed content"],
                 "platform_tactics": [f"standard {platform} search"],
             }
+
+
+class OpenAIClient:
+    """
+    Backwards-compatible wrapper used by some API modules.
+
+    Provides a simple generate_completion(prompt, ...) that returns string content.
+    Model can be set via LLM_CHOICE env; defaults to gpt-4o-mini. Uses the same
+    normalization approach as GPT5MiniClient for compatibility with gpt-5-* models.
+    """
+
+    def __init__(self, model: Optional[str] = None):
+        self.client = AsyncOpenAI()
+        self.model = model or os.getenv("LLM_CHOICE", "gpt-4o-mini")
+        # Reuse normalization behavior to support gpt-5 parameter schema if selected
+        self._normalizer = GPT5MiniClient().normalize_chat_params
+
+    async def generate_completion(self, *, prompt: str, max_tokens: int = 1000, temperature: float = 0.7) -> str:
+        try:
+            params: Dict[str, Any] = {
+                "model": self.model,
+                "messages": [
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {"role": "user", "content": prompt},
+                ],
+                # Prefer the older name; the normalizer will translate when needed
+                "max_tokens": max_tokens,
+                # Temperature is removed for gpt-5-mini by normalizer
+                "temperature": temperature,
+            }
+
+            resp = await self.client.chat.completions.create(**self._normalizer(params))
+            return resp.choices[0].message.content or ""
+        except Exception as e:
+            # Fail soft with empty string; callers often have fallbacks
+            print(f"❌ OpenAIClient.generate_completion failed: {e}")
+            return ""

@@ -32,6 +32,12 @@ const sidebarItems = [
     badge: "AI",
   },
   {
+    title: "Pipeline (new)",
+    href: "/dashboard/create/pipeline",
+    icon: Zap,
+    badge: "v1",
+  },
+  {
     title: "Calendar",
     href: "/dashboard/calendar",
     icon: Calendar,

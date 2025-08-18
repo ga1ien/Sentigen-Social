@@ -3,6 +3,13 @@ Main FastAPI application for the AI Social Media Platform.
 Follows the Project Server Standards v1.0.
 """
 
+# Ensure /app is in sys.path for absolute imports when running under different cwd
+import os as _os
+import sys as _sys
+
+if "/app" not in _sys.path:
+    _sys.path.insert(0, "/app")
+
 import asyncio
 import os
 from contextlib import asynccontextmanager
@@ -18,8 +25,10 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sse_starlette.sse import EventSourceResponse
 
-# Import API routes
+# Import routers using absolute package paths to avoid relative import issues
 from api.avatar_api import router as avatar_router
+
+# Import API routes
 from api.content_research_api import router as content_research_router
 from api.media_storage_api import router as media_storage_router
 from api.research_tools_api import router as research_tools_router
