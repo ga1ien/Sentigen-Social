@@ -435,5 +435,12 @@ class ResearchService:
             return {"access_granted": False, "error": str(e)}
 
 
-# Global research service instance
-research_service = ResearchService()
+# Lazy initialization to avoid import-time environment variable issues
+_research_service = None
+
+def get_research_service():
+    """Get research service with lazy initialization."""
+    global _research_service
+    if _research_service is None:
+        _research_service = ResearchService()
+    return _research_service

@@ -37,8 +37,15 @@ except ImportError as e:
 logger = structlog.get_logger(__name__)
 router = APIRouter(prefix="/api/research", tags=["research"])
 
-# Initialize clients
-supabase_client = SupabaseClient()
+# Lazy initialization to avoid import-time environment variable issues
+_supabase_client = None
+
+def get_supabase_client():
+    """Get Supabase client with lazy initialization."""
+    global _supabase_client
+    if _supabase_client is None:
+        _supabase_client = SupabaseClient()
+    return _supabase_client
 
 
 class ResearchRequest(BaseModel):
@@ -110,7 +117,7 @@ async def start_research(
         }
 
         # Save to database
-        result = supabase_client.client.table("research_sessions").insert(session_data).execute()
+        result = get_supabase_client().client.table("research_sessions").insert(session_data).execute()
 
         if not result.data:
             raise HTTPException(
@@ -142,7 +149,7 @@ async def execute_research_task(research_id: str, request: ResearchRequest, user
         logger.info("Executing research task", research_id=research_id, source=request.source)
 
         # Update status to running
-        supabase_client.client.table("research_sessions").update(
+        get_supabase_client().client.table("research_sessions").update(
             {
                 "status": "running",
                 "started_at": datetime.utcnow().isoformat(),
@@ -208,10 +215,10 @@ async def execute_research_task(research_id: str, request: ResearchRequest, user
             "created_at": datetime.utcnow().isoformat(),
         }
 
-        supabase_client.client.table("research_results").insert(research_data).execute()
+        get_supabase_client().client.table("research_results").insert(research_data).execute()
 
         # Update session status to completed
-        supabase_client.client.table("research_sessions").update(
+        get_supabase_client().client.table("research_sessions").update(
             {
                 "status": "completed",
                 "results_count": len(results),
@@ -226,7 +233,7 @@ async def execute_research_task(research_id: str, request: ResearchRequest, user
         logger.error("Research task failed", research_id=research_id, error=str(e))
 
         # Update session status to failed
-        supabase_client.client.table("research_sessions").update(
+        get_supabase_client().client.table("research_sessions").update(
             {"status": "failed", "error_message": str(e), "updated_at": datetime.utcnow().isoformat()}
         ).eq("id", research_id).execute()
 
@@ -368,7 +375,7 @@ async def get_research_sessions(
     try:
         # Build query
         query = (
-            supabase_client.client.table("research_sessions")
+            get_supabase_client().client.table("research_sessions")
             .select("id, source, query, status, results_count, created_at, completed_at")
             .eq("user_id", current_user.user_id)
         )
@@ -399,7 +406,7 @@ async def get_research_result(session_id: str, current_user: UserContext = Depen
     try:
         # Get session info
         session_result = (
-            supabase_client.client.table("research_sessions")
+            get_supabase_client().client.table("research_sessions")
             .select("*")
             .eq("id", session_id)
             .eq("user_id", current_user.user_id)
@@ -413,7 +420,7 @@ async def get_research_result(session_id: str, current_user: UserContext = Depen
 
         # Get research results
         results_query = (
-            supabase_client.client.table("research_results").select("*").eq("research_session_id", session_id).execute()
+            get_supabase_client().client.table("research_results").select("*").eq("research_session_id", session_id).execute()
         )
 
         results_data = results_query.data[0] if results_query.data else None
@@ -449,7 +456,7 @@ async def delete_research_session(
     try:
         # Check if session exists and belongs to user
         session_result = (
-            supabase_client.client.table("research_sessions")
+            get_supabase_client().client.table("research_sessions")
             .select("id")
             .eq("id", session_id)
             .eq("user_id", current_user.user_id)
@@ -460,10 +467,10 @@ async def delete_research_session(
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Research session not found")
 
         # Delete results first (foreign key constraint)
-        supabase_client.client.table("research_results").delete().eq("research_session_id", session_id).execute()
+        get_supabase_client().client.table("research_results").delete().eq("research_session_id", session_id).execute()
 
         # Delete session
-        supabase_client.client.table("research_sessions").delete().eq("id", session_id).eq(
+        get_supabase_client().client.table("research_sessions").delete().eq("id", session_id).eq(
             "user_id", current_user.user_id
         ).execute()
 

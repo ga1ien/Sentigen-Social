@@ -67,8 +67,15 @@ from utils.ayrshare_client import AyrshareClient
 from utils.heygen_client import HeyGenClient
 from workers.midjourney_worker import MidjourneyWorker
 
-# Get validated configuration
-app_config = get_config()
+# Lazy initialization to avoid import-time environment variable issues
+_app_config = None
+
+def get_app_config():
+    """Get app config with lazy initialization."""
+    global _app_config
+    if _app_config is None:
+        _app_config = get_config()
+    return _app_config
 
 # Initialize performance optimizations
 cache_config = CacheConfig(
@@ -77,7 +84,7 @@ cache_config = CacheConfig(
 cache_manager = initialize_cache(cache_config)
 
 # Configure structured logging
-log_level = app_config.server.log_level.value.upper()
+log_level = get_app_config().server.log_level.value.upper()
 structlog.configure(
     processors=[
         structlog.stdlib.filter_by_level,
@@ -188,7 +195,7 @@ app = FastAPI(
 # Add middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=app_config.server.cors_origins,
+    allow_origins=get_app_config().server.cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -308,8 +315,8 @@ async def performance_metrics():
             },
             "responses": response_optimizer.get_stats(),
             "system": {
-                "environment": app_config.server.environment.value,
-                "log_level": app_config.server.log_level.value,
+                "environment": get_app_config().server.environment.value,
+                "log_level": get_app_config().server.log_level.value,
             },
         }
     except Exception as e:
@@ -1054,8 +1061,8 @@ if __name__ == "__main__":
     # Use configuration for server settings
     uvicorn.run(
         "api.main:app",
-        host=app_config.server.host,
-        port=app_config.server.port,
-        reload=app_config.server.environment.value == "development",
-        log_level=app_config.server.log_level.value,
+        host=get_app_config().server.host,
+        port=get_app_config().server.port,
+        reload=get_app_config().server.environment.value == "development",
+        log_level=get_app_config().server.log_level.value,
     )

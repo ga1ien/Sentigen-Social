@@ -19,9 +19,23 @@ from utils.ayrshare_client import AyrshareClient
 logger = structlog.get_logger(__name__)
 router = APIRouter(prefix="/api/social-posting", tags=["social-posting"])
 
-# Initialize clients
-config = get_config()
-supabase_client = SupabaseClient()
+# Lazy initialization to avoid import-time environment variable issues
+_config = None
+_supabase_client = None
+
+def get_app_config():
+    """Get config with lazy initialization."""
+    global _config
+    if _config is None:
+        _config = get_config()
+    return _config
+
+def get_supabase_client():
+    """Get Supabase client with lazy initialization."""
+    global _supabase_client
+    if _supabase_client is None:
+        _supabase_client = SupabaseClient()
+    return _supabase_client
 
 
 class PostRequest(BaseModel):
@@ -62,7 +76,7 @@ async def create_post(post_request: PostRequest, current_user: UserContext = Dep
 
         # Check if user has connected accounts for requested platforms
         connected_result = (
-            supabase_client.client.table("social_media_accounts")
+            get_supabase_client().client.table("social_media_accounts")
             .select("platform, is_connected")
             .eq("user_id", current_user.user_id)
             .in_("platform", post_request.platforms)
@@ -104,7 +118,7 @@ async def create_post(post_request: PostRequest, current_user: UserContext = Dep
         }
 
         # Insert into database
-        db_result = supabase_client.client.table("social_media_posts").insert(post_data).execute()
+        db_result = get_supabase_client().client.table("social_media_posts").insert(post_data).execute()
 
         if not db_result.data:
             raise HTTPException(
@@ -127,7 +141,7 @@ async def create_post(post_request: PostRequest, current_user: UserContext = Dep
                 ayrshare_id = ayrshare_response.get("id")
 
                 # Update post with Ayrshare ID and success status
-                supabase_client.client.table("social_media_posts").update(
+                get_supabase_client().client.table("social_media_posts").update(
                     {
                         "ayrshare_id": ayrshare_id,
                         "status": "published",
@@ -144,7 +158,7 @@ async def create_post(post_request: PostRequest, current_user: UserContext = Dep
                 logger.error("Failed to publish post via Ayrshare", post_id=post_id, error=str(e))
 
                 # Update post status to failed
-                supabase_client.client.table("social_media_posts").update(
+                get_supabase_client().client.table("social_media_posts").update(
                     {"status": "failed", "error_message": str(e), "updated_at": datetime.utcnow().isoformat()}
                 ).eq("id", post_id).execute()
 
@@ -182,7 +196,7 @@ async def get_user_posts(
 
         # Build query
         query = (
-            supabase_client.client.table("social_media_posts")
+            get_supabase_client().client.table("social_media_posts")
             .select(
                 "id, content, platforms, status, scheduled_for, published_at, "
                 "created_at, media_urls, engagement_metrics, ayrshare_id"
@@ -204,7 +218,7 @@ async def get_user_posts(
 
         # Get total count for pagination
         count_result = (
-            supabase_client.client.table("social_media_posts")
+            get_supabase_client().client.table("social_media_posts")
             .select("id", count="exact")
             .eq("user_id", current_user.user_id)
             .execute()
@@ -233,7 +247,7 @@ async def get_post_details(post_id: str, current_user: UserContext = Depends(get
 
         # Get post from database
         result = (
-            supabase_client.client.table("social_media_posts")
+            get_supabase_client().client.table("social_media_posts")
             .select("*")
             .eq("id", post_id)
             .eq("user_id", current_user.user_id)
@@ -272,7 +286,7 @@ async def delete_post(post_id: str, current_user: UserContext = Depends(get_curr
 
         # Get post to check status
         result = (
-            supabase_client.client.table("social_media_posts")
+            get_supabase_client().client.table("social_media_posts")
             .select("status, ayrshare_id")
             .eq("id", post_id)
             .eq("user_id", current_user.user_id)
@@ -289,7 +303,7 @@ async def delete_post(post_id: str, current_user: UserContext = Depends(get_curr
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Cannot delete published posts")
 
         # Delete from database
-        supabase_client.client.table("social_media_posts").delete().eq("id", post_id).eq(
+        get_supabase_client().client.table("social_media_posts").delete().eq("id", post_id).eq(
             "user_id", current_user.user_id
         ).execute()
 
@@ -310,7 +324,7 @@ async def publish_scheduled_post(post_id: str, current_user: UserContext = Depen
 
         # Get post details
         result = (
-            supabase_client.client.table("social_media_posts")
+            get_supabase_client().client.table("social_media_posts")
             .select("*")
             .eq("id", post_id)
             .eq("user_id", current_user.user_id)
@@ -339,7 +353,7 @@ async def publish_scheduled_post(post_id: str, current_user: UserContext = Depen
             )
 
             # Update post status
-            supabase_client.client.table("social_media_posts").update(
+            get_supabase_client().client.table("social_media_posts").update(
                 {
                     "status": "published",
                     "published_at": datetime.utcnow().isoformat(),

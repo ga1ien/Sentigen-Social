@@ -18,7 +18,7 @@ import structlog
 # Add parent directories to path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
-from core.research_service import JobStatus, ResearchJob, research_service
+from core.research_service import JobStatus, ResearchJob, get_research_service
 from database.supabase_client import SupabaseClient
 from services.avatar_video_system.heygen_client import (
     AspectRatio,
@@ -417,7 +417,7 @@ class AvatarVideoService:
         """Create video from completed research job"""
         try:
             # Get research job
-            job = await research_service.get_job_by_id(research_job_id)
+            job = await get_research_service().get_job_by_id(research_job_id)
             if not job:
                 raise ValueError(f"Research job not found: {research_job_id}")
 
@@ -627,7 +627,7 @@ class AvatarVideoService:
 
             # Get completed research jobs from the last 24 hours
             since = datetime.now() - timedelta(hours=24)
-            jobs = await research_service.get_jobs_by_config(
+            jobs = await get_research_service().get_jobs_by_config(
                 research_config_id, since=since, status=JobStatus.COMPLETED
             )
 
@@ -714,8 +714,15 @@ class AvatarVideoService:
             return 0
 
 
-# Global service instance
-avatar_video_service = AvatarVideoService()
+# Lazy initialization to avoid import-time environment variable issues
+_avatar_video_service = None
+
+def get_avatar_video_service():
+    """Get avatar video service with lazy initialization."""
+    global _avatar_video_service
+    if _avatar_video_service is None:
+        _avatar_video_service = AvatarVideoService()
+    return _avatar_video_service
 
 
 # Convenience functions
@@ -742,7 +749,7 @@ async def create_video_from_research_content(
         config=config,
     )
 
-    return await avatar_video_service.create_video_from_research(request)
+    return await get_avatar_video_service().create_video_from_research(request)
 
 
 if __name__ == "__main__":
@@ -751,7 +758,7 @@ if __name__ == "__main__":
         """Test avatar video service"""
         try:
             # Test getting available avatars
-            avatars = await avatar_video_service.get_available_avatars("free")
+            avatars = await get_avatar_video_service().get_available_avatars("free")
             print(f"✅ Found {len(avatars)} available avatars")
 
             # Test creating video from content
