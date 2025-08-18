@@ -32,7 +32,7 @@ function HomePageContent() {
       <nav className="fixed top-0 left-0 right-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className="text-white text-lg font-light tracking-wide">
+            <Link href="/" className="text-gray-900 text-lg font-light tracking-wide">
               zyyn
             </Link>
             <div className="flex items-center gap-4">
@@ -41,7 +41,7 @@ function HomePageContent() {
                   setAuthMode("signin");
                   setAuthModalOpen(true);
                 }}
-                className="px-4 py-2 text-sm text-white/85 hover:text-white transition-colors"
+                className="px-4 py-2 text-sm text-gray-700 hover:text-gray-900 transition-colors"
               >
                 sign in
               </button>
@@ -50,7 +50,7 @@ function HomePageContent() {
                   setAuthMode("signup");
                   setAuthModalOpen(true);
                 }}
-                className="px-4 py-2 text-sm bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl hover:bg-white/15 transition-all text-white"
+                className="px-4 py-2 text-sm bg-white/10 backdrop-blur-sm border border-gray-300 rounded-xl hover:bg-white/15 transition-all text-gray-900"
               >
                 get started
               </button>
@@ -64,14 +64,14 @@ function HomePageContent() {
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
             <Sparkles className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm text-white/80">ai-native</span>
+            <span className="text-sm text-gray-700">ai-native</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-extralight text-white tracking-tight">
+          <h1 className="text-5xl md:text-7xl font-extralight text-gray-900 tracking-tight">
             zyyn
           </h1>
 
-          <p className="text-xl md:text-2xl text-white/80 font-light max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-700 font-light max-w-2xl mx-auto">
             create at the speed of thought
           </p>
 
@@ -81,14 +81,14 @@ function HomePageContent() {
                 setAuthMode("signup");
                 setAuthModalOpen(true);
               }}
-              className="group px-8 py-3 bg-white/15 backdrop-blur-sm border border-white/30 rounded-2xl hover:bg-white/20 transition-all flex items-center gap-2 text-white"
+              className="group px-8 py-3 bg-white/15 backdrop-blur-sm border border-gray-300 rounded-2xl hover:bg-white/20 transition-all flex items-center gap-2 text-gray-900"
             >
               start creating
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
             <Link
               href="#features"
-              className="px-8 py-3 text-white/85 hover:text-white transition-colors"
+              className="px-8 py-3 text-gray-700 hover:text-gray-900 transition-colors"
             >
               view demo
             </Link>
@@ -199,7 +199,7 @@ function HomePageContent() {
                 setAuthMode("signup");
                 setAuthModalOpen(true);
               }}
-              className="inline-flex items-center gap-2 px-8 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl hover:bg-white/25 transition-all text-white"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-white/20 backdrop-blur-sm border border-gray-300 rounded-2xl hover:bg-white/25 transition-all text-gray-900"
             >
               get started free
               <ArrowRight className="w-4 h-4" />
@@ -209,17 +209,17 @@ function HomePageContent() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 border-t border-white/10">
+      <footer className="py-8 px-4 border-t border-gray-200">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/70">© 2025 zyyn. all rights reserved.</p>
+          <p className="text-sm text-gray-600">© 2025 zyyn. all rights reserved.</p>
           <div className="flex items-center gap-6">
-            <Link href="#" className="text-sm text-white/70 hover:text-white/85 transition-colors">
+            <Link href="#" className="text-sm text-gray-600 hover:text-gray-800 transition-colors">
               privacy
             </Link>
-            <Link href="#" className="text-sm text-white/70 hover:text-white/85 transition-colors">
+            <Link href="#" className="text-sm text-gray-600 hover:text-gray-800 transition-colors">
               terms
             </Link>
-            <Link href="#" className="text-sm text-white/70 hover:text-white/85 transition-colors">
+            <Link href="#" className="text-sm text-gray-600 hover:text-gray-800 transition-colors">
               contact
             </Link>
           </div>

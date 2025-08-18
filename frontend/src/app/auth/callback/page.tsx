@@ -76,8 +76,8 @@ function AuthCallbackContent() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="text-center space-y-4">
-        <Loader2 className="h-8 w-8 text-white/80 animate-spin mx-auto" />
-        <p className="text-white/80 font-light">{message}</p>
+        <Loader2 className="h-8 w-8 text-gray-700 animate-spin mx-auto" />
+        <p className="text-gray-700 font-light">{message}</p>
       </div>
     </div>
   )
@@ -88,8 +88,8 @@ export default function AuthCallbackPage() {
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center space-y-4">
-          <Loader2 className="h-8 w-8 text-white/80 animate-spin mx-auto" />
-          <p className="text-white/80 font-light">loading...</p>
+          <Loader2 className="h-8 w-8 text-gray-700 animate-spin mx-auto" />
+          <p className="text-gray-700 font-light">loading...</p>
         </div>
       </div>
     }>

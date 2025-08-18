@@ -177,8 +177,8 @@ export default function DashboardPage() {
     <div className="space-y-8">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-light text-white">welcome back{userName && `, ${userName}`}</h1>
-        <p className="text-white/80">here's what's happening with your content today</p>
+        <h1 className="text-3xl font-light text-gray-900">welcome back{userName && `, ${userName}`}</h1>
+        <p className="text-gray-700">here's what's happening with your content today</p>
       </div>
 
       {/* Stats Grid */}
@@ -192,7 +192,7 @@ export default function DashboardPage() {
           </GlassCardHeader>
           <GlassCardContent>
             <div className="space-y-1">
-              <p className="text-3xl font-light text-white">{formatNumber(stats.totalReach)}</p>
+              <p className="text-3xl font-light text-gray-900">{formatNumber(stats.totalReach)}</p>
               <p className={`text-xs ${stats.reachChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                 {formatChange(stats.reachChange)} from last week
               </p>
@@ -209,7 +209,7 @@ export default function DashboardPage() {
           </GlassCardHeader>
           <GlassCardContent>
             <div className="space-y-1">
-              <p className="text-3xl font-light text-white">{stats.engagement.toFixed(1)}%</p>
+              <p className="text-3xl font-light text-gray-900">{stats.engagement.toFixed(1)}%</p>
               <p className={`text-xs ${stats.engagementChange >= 0 ? 'text-blue-400' : 'text-red-400'}`}>
                 {formatChange(stats.engagementChange)} from last week
               </p>
@@ -226,7 +226,7 @@ export default function DashboardPage() {
           </GlassCardHeader>
           <GlassCardContent>
             <div className="space-y-1">
-              <p className="text-3xl font-light text-white">{formatNumber(stats.newFollowers)}</p>
+              <p className="text-3xl font-light text-gray-900">{formatNumber(stats.newFollowers)}</p>
               <p className={`text-xs ${stats.followersChange >= 0 ? 'text-purple-400' : 'text-red-400'}`}>
                 {formatChange(stats.followersChange)} from last week
               </p>
@@ -243,7 +243,7 @@ export default function DashboardPage() {
           </GlassCardHeader>
           <GlassCardContent>
             <div className="space-y-1">
-              <p className="text-3xl font-light text-white">{stats.contentCreated}</p>
+              <p className="text-3xl font-light text-gray-900">{stats.contentCreated}</p>
               <p className="text-xs text-orange-400">this week</p>
             </div>
           </GlassCardContent>

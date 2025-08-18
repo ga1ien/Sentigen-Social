@@ -64,7 +64,7 @@ const GlassCardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "text-xl font-medium leading-none tracking-tight text-white/90",
+      "text-xl font-medium leading-none tracking-tight text-gray-900",
       className
     )}
     {...props}
@@ -78,7 +78,7 @@ const GlassCardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-white/80", className)}
+    className={cn("text-sm text-gray-700", className)}
     {...props}
   />
 ))

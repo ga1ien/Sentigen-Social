@@ -46,25 +46,25 @@ export function SpatialNav() {
       <div className="fixed top-0 left-0 right-0 z-40">
         <div className="flex items-center justify-between px-6 h-14">
           {/* Logo */}
-          <Link href="/dashboard" className="text-white text-sm font-light tracking-wide">
+          <Link href="/dashboard" className="text-gray-900 text-sm font-light tracking-wide">
             zyyn
           </Link>
 
           {/* Center Actions */}
           <div className="flex items-center gap-2">
             <button className="p-2 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
-              <Search className="w-4 h-4 text-white/80" />
+              <Search className="w-4 h-4 text-gray-700" />
             </button>
             <button className="px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/15 transition-all flex items-center gap-2">
-              <Plus className="w-4 h-4 text-white/80" />
-              <span className="text-sm text-white/80">create</span>
+              <Plus className="w-4 h-4 text-gray-700" />
+              <span className="text-sm text-gray-700">create</span>
             </button>
           </div>
 
           {/* Right Actions */}
           <div className="flex items-center gap-3">
             <button className="relative p-2 rounded-xl hover:bg-white/10 transition-all">
-              <Bell className="w-4 h-4 text-white/80" />
+              <Bell className="w-4 h-4 text-gray-700" />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-500 rounded-full" />
             </button>
             <button className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600" />
@@ -89,11 +89,11 @@ export function SpatialNav() {
               >
                 <Icon className={cn(
                   "w-5 h-5 mb-1",
-                  isActive ? "text-white" : "text-white/80"
+                  isActive ? "text-gray-900" : "text-gray-700"
                 )} />
                 <span className={cn(
                   "text-[10px]",
-                  isActive ? "text-white/90" : "text-white/70"
+                  isActive ? "text-gray-800" : "text-gray-600"
                 )}>
                   {item.label}
                 </span>
@@ -120,7 +120,7 @@ export function SpatialNav() {
               >
                 <Icon className={cn(
                   "w-5 h-5",
-                  isActive ? "text-white" : "text-white/80"
+                  isActive ? "text-gray-900" : "text-gray-700"
                 )} />
 
                 {/* Tooltip */}

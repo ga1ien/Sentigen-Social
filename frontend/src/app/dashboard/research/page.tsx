@@ -76,14 +76,14 @@ export default function ResearchPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-light text-white">content research</h1>
-        <p className="text-white/80">discover insights and create platform-optimized content</p>
+        <h1 className="text-3xl font-light text-gray-900">content research</h1>
+        <p className="text-gray-700">discover insights and create platform-optimized content</p>
       </div>
 
       {/* Platform Selector - Large Glass Container */}
       <GlassCard variant="elevated" blur="xl" className="p-8">
         <div className="space-y-6">
-          <h2 className="text-lg font-light text-white">select platform</h2>
+          <h2 className="text-lg font-light text-gray-900">select platform</h2>
           <div className="flex gap-4 flex-wrap">
             {platforms.map((platform) => {
               const PlatformIcon = platform.icon
@@ -102,8 +102,8 @@ export default function ResearchPage() {
                       : 'bg-white/10 border border-white/20 hover:bg-white/15'}
                   `}
                 >
-                  <PlatformIcon className="w-8 h-8 mb-2 text-white" />
-                  <span className="text-sm text-white">{platform.name}</span>
+                  <PlatformIcon className="w-8 h-8 mb-2 text-gray-900" />
+                  <span className="text-sm text-gray-900">{platform.name}</span>
                 </button>
               )
             })}
@@ -119,19 +119,19 @@ export default function ResearchPage() {
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <Icon className="w-6 h-6 text-white" />
-              <h2 className="text-xl font-light text-white">{selectedPlatformData?.name} insights</h2>
+              <h2 className="text-xl font-light text-gray-900">{selectedPlatformData?.name} insights</h2>
             </div>
 
             {/* Trending Topics */}
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-green-400" />
-                <h3 className="text-sm font-medium text-white">trending now</h3>
+                <h3 className="text-sm font-medium text-gray-900">trending now</h3>
               </div>
               <div className="space-y-2">
                 {["AI automation tools", "Sustainable business", "Remote work culture"].map((topic, i) => (
                   <div key={i} className="p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all cursor-pointer">
-                    <p className="text-sm text-white/85">{topic}</p>
+                    <p className="text-sm text-gray-700">{topic}</p>
                   </div>
                 ))}
               </div>
@@ -141,12 +141,12 @@ export default function ResearchPage() {
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-blue-400" />
-                <h3 className="text-sm font-medium text-white">best times to post</h3>
+                <h3 className="text-sm font-medium text-gray-900">best times to post</h3>
               </div>
               <div className="grid grid-cols-2 gap-2">
                 {["Tuesday 9am", "Wednesday 2pm", "Thursday 10am", "Friday 3pm"].map((time, i) => (
                   <div key={i} className="p-2 rounded-lg bg-white/5 text-center">
-                    <p className="text-xs text-white/85">{time}</p>
+                    <p className="text-xs text-gray-700">{time}</p>
                   </div>
                 ))}
               </div>
@@ -156,11 +156,11 @@ export default function ResearchPage() {
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Hash className="w-4 h-4 text-purple-400" />
-                <h3 className="text-sm font-medium text-white">recommended hashtags</h3>
+                <h3 className="text-sm font-medium text-gray-900">recommended hashtags</h3>
               </div>
               <div className="flex flex-wrap gap-2">
                 {["#AI", "#Innovation", "#TechTrends", "#FutureOfWork", "#Digital"].map((tag, i) => (
-                  <span key={i} className="px-3 py-1 rounded-full bg-white/10 text-xs text-white/85 hover:bg-white/15 cursor-pointer">
+                  <span key={i} className="px-3 py-1 rounded-full bg-white/10 text-xs text-gray-700 hover:bg-white/15 cursor-pointer">
                     {tag}
                   </span>
                 ))}
@@ -171,13 +171,13 @@ export default function ResearchPage() {
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-yellow-400" />
-                <h3 className="text-sm font-medium text-white">platform tips</h3>
+                <h3 className="text-sm font-medium text-gray-900">platform tips</h3>
               </div>
               <ul className="space-y-2">
-                <li className="text-sm text-white/80">• Use 3-5 hashtags for optimal reach</li>
-                <li className="text-sm text-white/80">• Include a clear call-to-action</li>
-                <li className="text-sm text-white/80">• Post during peak engagement hours</li>
-                <li className="text-sm text-white/80">• Engage with comments quickly</li>
+                <li className="text-sm text-gray-700">• Use 3-5 hashtags for optimal reach</li>
+                <li className="text-sm text-gray-700">• Include a clear call-to-action</li>
+                <li className="text-sm text-gray-700">• Post during peak engagement hours</li>
+                <li className="text-sm text-gray-700">• Engage with comments quickly</li>
               </ul>
             </div>
           </div>
@@ -187,11 +187,11 @@ export default function ResearchPage() {
         <GlassCard variant="elevated" blur="xl" className="p-8 min-h-[600px]">
           <div className="space-y-6 h-full flex flex-col">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-light text-white">create content</h2>
+              <h2 className="text-xl font-light text-gray-900">create content</h2>
               <button
                 onClick={generateDraft}
                 disabled={loading}
-                className="px-4 py-2 rounded-xl bg-white/15 hover:bg-white/20 transition-all text-sm text-white flex items-center gap-2"
+                className="px-4 py-2 rounded-xl bg-white/15 hover:bg-white/20 transition-all text-sm text-gray-900 flex items-center gap-2"
               >
                 <Sparkles className="w-4 h-4" />
                 {loading ? "generating..." : "generate draft"}
@@ -204,31 +204,31 @@ export default function ResearchPage() {
                 value={draftContent}
                 onChange={(e) => setDraftContent(e.target.value)}
                 placeholder={`Write your ${selectedPlatformData?.name} content here...`}
-                className="w-full h-[300px] p-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/20 resize-none"
+                className="w-full h-[300px] p-4 rounded-xl bg-white/5 border border-gray-300 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 resize-none"
               />
 
               {/* Character Count */}
               <div className="flex justify-between items-center">
-                <span className="text-xs text-white/60">
+                <span className="text-xs text-gray-600">
                   {draftContent.length} characters
                 </span>
-                <span className="text-xs text-white/60">
+                <span className="text-xs text-gray-600">
                   optimal: {selectedPlatform === "twitter" ? "280" : selectedPlatform === "linkedin" ? "1500" : "150"}
                 </span>
               </div>
 
               {/* Media Upload Area */}
               <div className="p-4 rounded-xl border-2 border-dashed border-white/20 text-center">
-                <p className="text-sm text-white/60">drag media here or click to upload</p>
+                <p className="text-sm text-gray-600">drag media here or click to upload</p>
               </div>
             </div>
 
             {/* Action Buttons */}
             <div className="flex gap-3">
-              <button className="flex-1 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition-all text-white">
+              <button className="flex-1 py-3 rounded-xl bg-white/10 hover:bg-white/15 transition-all text-gray-900">
                 save draft
               </button>
-              <button className="flex-1 py-3 rounded-xl bg-white/20 hover:bg-white/25 transition-all text-white flex items-center justify-center gap-2">
+              <button className="flex-1 py-3 rounded-xl bg-white/20 hover:bg-white/25 transition-all text-gray-900 flex items-center justify-center gap-2">
                 <Send className="w-4 h-4" />
                 schedule post
               </button>
@@ -240,17 +240,17 @@ export default function ResearchPage() {
       {/* Content Ideas - Full Width Glass Container */}
       <GlassCard variant="elevated" blur="xl" className="p-8">
         <div className="space-y-6">
-          <h2 className="text-xl font-light text-white">content ideas for {selectedPlatformData?.name}</h2>
+          <h2 className="text-xl font-light text-gray-900">content ideas for {selectedPlatformData?.name}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[1, 2, 3].map((i) => (
               <div key={i} className="p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all cursor-pointer">
-                <h3 className="text-sm font-medium text-white mb-2">Content Idea {i}</h3>
-                <p className="text-xs text-white/70 mb-3">
+                <h3 className="text-sm font-medium text-gray-900 mb-2">Content Idea {i}</h3>
+                <p className="text-xs text-gray-600 mb-3">
                   Share your insights on the latest AI trends and how they're transforming your industry...
                 </p>
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-green-400">High engagement</span>
-                  <button className="text-xs text-white/80 hover:text-white">use this →</button>
+                  <button className="text-xs text-gray-700 hover:text-gray-900">use this →</button>
                 </div>
               </div>
             ))}
