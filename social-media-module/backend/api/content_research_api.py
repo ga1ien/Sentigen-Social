@@ -12,7 +12,10 @@ from pydantic import BaseModel
 
 from core.openai_client import OpenAIClient
 from core.user_auth import get_current_user
-from database.supabase_client import get_supabase_client
+try:
+    from database.supabase_client import SupabaseClient
+except ModuleNotFoundError:
+    from core.supabase_client import SupabaseClient
 from utils.ayrshare_client import AyrshareClient
 
 router = APIRouter(prefix="/api/research", tags=["research"])
@@ -50,7 +53,7 @@ async def get_platform_insights(request: PlatformResearchRequest, current_user: 
     """Get research insights and suggestions for a specific platform"""
     try:
         openai_client = OpenAIClient()
-        db_client = get_supabase_client()
+        db_client = SupabaseClient()
 
         # Platform-specific content guidelines
         platform_guidelines = {
@@ -242,7 +245,7 @@ async def draft_platform_content(
         content = await openai_client.generate_completion(prompt=prompt, max_tokens=1000, temperature=0.7)
 
         # Store draft in database
-        db_client = get_supabase_client()
+        db_client = SupabaseClient()
         result = (
             await db_client.service_client.table("content_drafts")
             .insert(
@@ -327,7 +330,7 @@ async def schedule_content_with_ayrshare(
         result = await ayrshare_client.create_post(post_data)
 
         # Store in our database
-        db_client = get_supabase_client()
+        db_client = SupabaseClient()
         await db_client.service_client.table("scheduled_posts").insert(
             {
                 "user_id": current_user["id"],
@@ -367,7 +370,7 @@ async def save_draft(
 ):
     """Save a user's edited draft to content_drafts."""
     try:
-        db_client = get_supabase_client()
+        db_client = SupabaseClient()
         insert_data = {
             "user_id": current_user["id"],
             "platform": request.platform,
