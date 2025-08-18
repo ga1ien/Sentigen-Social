@@ -13,7 +13,10 @@ from pydantic import BaseModel, Field
 
 from core.env_config import get_config
 from core.user_auth import UserContext, get_current_user
-from database.supabase_client import SupabaseClient
+try:
+    from database.supabase_client import SupabaseClient
+except ModuleNotFoundError:
+    from core.supabase_client import SupabaseClient
 from utils.ayrshare_client import AyrshareClient
 
 logger = structlog.get_logger(__name__)

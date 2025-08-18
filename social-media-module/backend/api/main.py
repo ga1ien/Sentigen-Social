@@ -41,7 +41,10 @@ from core.db_optimizer import get_connection_optimizer, get_db_optimizer
 # Load and validate configuration
 from core.env_config import AppConfig, get_config
 from core.response_optimizer import PaginatedResponse, PaginationParams, get_response_optimizer
-from database.supabase_client import SupabaseClient
+try:
+    from database.supabase_client import SupabaseClient
+except ModuleNotFoundError:
+    from core.supabase_client import SupabaseClient
 
 # Import models
 from models.content import (

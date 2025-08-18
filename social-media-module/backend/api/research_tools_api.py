@@ -18,7 +18,10 @@ from pydantic import BaseModel, Field
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "features"))
 
 from core.user_auth import UserContext, get_current_user
-from database.supabase_client import SupabaseClient
+try:
+    from database.supabase_client import SupabaseClient
+except ModuleNotFoundError:
+    from core.supabase_client import SupabaseClient
 
 # Import research tools
 try:

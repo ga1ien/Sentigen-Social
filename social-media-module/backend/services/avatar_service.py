@@ -14,7 +14,10 @@ import httpx
 import structlog
 from anthropic import Anthropic
 
-from database.supabase_client import SupabaseClient
+try:
+    from database.supabase_client import SupabaseClient
+except ModuleNotFoundError:
+    from core.supabase_client import SupabaseClient
 from models.avatar_models import (
     AspectRatio,
     AvatarProfile,

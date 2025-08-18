@@ -7,7 +7,7 @@ public/
 
 # Ignore other non-backend files
 docs/
-database/
+/database/
 scripts/
 *.md
 .env
