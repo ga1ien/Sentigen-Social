@@ -8,7 +8,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 import structlog
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
 
 from core.env_config import get_config
@@ -46,6 +46,10 @@ class PostRequest(BaseModel):
     media_urls: Optional[List[str]] = Field(None, description="URLs of media to include")
     schedule_date: Optional[datetime] = Field(None, description="When to schedule the post")
     platform_options: Optional[Dict[str, Dict[str, Any]]] = Field(None, description="Platform-specific options")
+    auto_schedule: Optional[Dict[str, Any]] = Field(
+        None,
+        description="Ayrshare auto schedule object: { schedule: true, title?: 'default' }. Do not use with schedule_date.",
+    )
 
 
 class PostResponse(BaseModel):
@@ -103,7 +107,7 @@ async def create_post(post_request: PostRequest, current_user: UserContext = Dep
         post_id = str(uuid.uuid4())
 
         # Determine if this is immediate or scheduled
-        is_scheduled = post_request.schedule_date is not None
+        is_scheduled = post_request.schedule_date is not None or bool(post_request.auto_schedule)
         post_status = "scheduled" if is_scheduled else "publishing"
 
         # Store post in database
@@ -131,32 +135,48 @@ async def create_post(post_request: PostRequest, current_user: UserContext = Dep
         ayrshare_id = None
 
         # If not scheduled, post immediately via Ayrshare
-        if not is_scheduled:
+        # If auto_schedule provided, send to Ayrshare queue
+        if not is_scheduled or post_request.auto_schedule:
             # Only attempt Ayrshare if configured
             config = get_app_config()
             if config.social_media.ayrshare_api_key:
                 try:
                     ayrshare_client = AyrshareClient()
+                    # Build payload respecting Ayrshare guidance: use either scheduleDate or autoSchedule
+                    extra_kwargs: Dict[str, Any] = {}
+                    if post_request.auto_schedule:
+                        extra_kwargs["autoSchedule"] = post_request.auto_schedule
                     ayrshare_response = await ayrshare_client.post_to_social_media(
                         post_content=post_request.content,
                         platforms=post_request.platforms,
                         media_urls=post_request.media_urls,
                         platform_options=post_request.platform_options,
+                        **extra_kwargs,
                     )
 
                     ayrshare_id = ayrshare_response.get("id")
 
-                    # Update post with Ayrshare ID and success status
-                    get_supabase_client().client.table("social_media_posts").update(
-                        {
-                            "ayrshare_id": ayrshare_id,
-                            "status": "published",
-                            "published_at": datetime.utcnow().isoformat(),
-                            "ayrshare_response": ayrshare_response,
-                        }
-                    ).eq("id", post_id).execute()
-
-                    post_status = "published"
+                    # Update post with Ayrshare ID and status
+                    if post_request.auto_schedule:
+                        get_supabase_client().client.table("social_media_posts").update(
+                            {
+                                "ayrshare_id": ayrshare_id,
+                                "status": "scheduled",
+                                "ayrshare_response": ayrshare_response,
+                                "updated_at": datetime.utcnow().isoformat(),
+                            }
+                        ).eq("id", post_id).execute()
+                        post_status = "scheduled"
+                    else:
+                        get_supabase_client().client.table("social_media_posts").update(
+                            {
+                                "ayrshare_id": ayrshare_id,
+                                "status": "published",
+                                "published_at": datetime.utcnow().isoformat(),
+                                "ayrshare_response": ayrshare_response,
+                            }
+                        ).eq("id", post_id).execute()
+                        post_status = "published"
 
                     logger.info("Post published successfully", post_id=post_id, ayrshare_id=ayrshare_id)
 

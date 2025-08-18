@@ -6,10 +6,8 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
   Home,
-  BarChart3,
   Brain,
   Image,
-  Calendar,
   Users,
   Settings,
   Bell,
@@ -21,10 +19,9 @@ import {
 const navItems = [
   { icon: Home, label: "home", href: "/dashboard" },
   { icon: Lightbulb, label: "research", href: "/dashboard/research" },
-  { icon: BarChart3, label: "analytics", href: "/dashboard/analytics" },
+  { icon: Plus, label: "create", href: "/dashboard/create" },
   { icon: Brain, label: "intelligence", href: "/dashboard/intelligence" },
   { icon: Image, label: "media", href: "/dashboard/media" },
-  { icon: Calendar, label: "calendar", href: "/dashboard/calendar" },
   { icon: Users, label: "team", href: "/dashboard/team" },
 ]
 
