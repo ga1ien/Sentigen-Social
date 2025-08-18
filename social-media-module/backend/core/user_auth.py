@@ -11,9 +11,9 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
-import jwt
 from fastapi import Depends, HTTPException, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from jose import JWTError, jwt
 
 # Add parent directories to path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
@@ -49,7 +49,7 @@ class UserAuthService:
             try:
                 payload = jwt.decode(token, self.jwt_secret, algorithms=["HS256"])
                 user_id = payload.get("user_id")
-            except jwt.InvalidTokenError:
+            except JWTError:
                 # If JWT fails, try Supabase token validation
                 user_id = await self._validate_supabase_token(token)
 
@@ -90,10 +90,8 @@ class UserAuthService:
 
             # Fallback: Try to decode JWT manually for development
             try:
-                import jwt
-
                 # Decode without verification for development (should use proper verification in production)
-                payload = jwt.decode(token, options={"verify_signature": False})
+                payload = jwt.decode(token, self.jwt_secret, algorithms=["HS256"], options={"verify_signature": False})
                 return payload.get("sub")  # 'sub' is the user ID in Supabase JWTs
             except Exception:
                 pass
@@ -269,6 +267,7 @@ class UserAuthService:
 # Lazy initialization to avoid import-time environment variable issues
 _auth_service = None
 
+
 def get_auth_service():
     """Get the auth service with lazy initialization."""
     global _auth_service
@@ -343,7 +342,9 @@ async def get_user_research_context(user_id: str, workspace_id: str = None) -> D
                 subscription_tier="free",
                 is_admin=False,
                 workspaces=[],
-                permissions=get_auth_service()._calculate_permissions({"subscription_tier": "free", "is_admin": False}, []),
+                permissions=get_auth_service()._calculate_permissions(
+                    {"subscription_tier": "free", "is_admin": False}, []
+                ),
             )
 
         # Ensure workspace

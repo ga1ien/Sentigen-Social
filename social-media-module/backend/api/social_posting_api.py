@@ -23,12 +23,14 @@ router = APIRouter(prefix="/api/social-posting", tags=["social-posting"])
 _config = None
 _supabase_client = None
 
+
 def get_app_config():
     """Get config with lazy initialization."""
     global _config
     if _config is None:
         _config = get_config()
     return _config
+
 
 def get_supabase_client():
     """Get Supabase client with lazy initialization."""
@@ -76,7 +78,8 @@ async def create_post(post_request: PostRequest, current_user: UserContext = Dep
 
         # Check if user has connected accounts for requested platforms
         connected_result = (
-            get_supabase_client().client.table("social_media_accounts")
+            get_supabase_client()
+            .client.table("social_media_accounts")
             .select("platform, is_connected")
             .eq("user_id", current_user.user_id)
             .in_("platform", post_request.platforms)
@@ -128,43 +131,46 @@ async def create_post(post_request: PostRequest, current_user: UserContext = Dep
         ayrshare_id = None
 
         # If not scheduled, post immediately via Ayrshare
-        if not is_scheduled and env_config.AYRSHARE_API_KEY:
-            try:
-                ayrshare_client = AyrshareClient()
-                ayrshare_response = await ayrshare_client.post_to_social_media(
-                    post_content=post_request.content,
-                    platforms=post_request.platforms,
-                    media_urls=post_request.media_urls,
-                    platform_options=post_request.platform_options,
-                )
+        if not is_scheduled:
+            # Only attempt Ayrshare if configured
+            config = get_app_config()
+            if config.social_media.ayrshare_api_key:
+                try:
+                    ayrshare_client = AyrshareClient()
+                    ayrshare_response = await ayrshare_client.post_to_social_media(
+                        post_content=post_request.content,
+                        platforms=post_request.platforms,
+                        media_urls=post_request.media_urls,
+                        platform_options=post_request.platform_options,
+                    )
 
-                ayrshare_id = ayrshare_response.get("id")
+                    ayrshare_id = ayrshare_response.get("id")
 
-                # Update post with Ayrshare ID and success status
-                get_supabase_client().client.table("social_media_posts").update(
-                    {
-                        "ayrshare_id": ayrshare_id,
-                        "status": "published",
-                        "published_at": datetime.utcnow().isoformat(),
-                        "ayrshare_response": ayrshare_response,
-                    }
-                ).eq("id", post_id).execute()
+                    # Update post with Ayrshare ID and success status
+                    get_supabase_client().client.table("social_media_posts").update(
+                        {
+                            "ayrshare_id": ayrshare_id,
+                            "status": "published",
+                            "published_at": datetime.utcnow().isoformat(),
+                            "ayrshare_response": ayrshare_response,
+                        }
+                    ).eq("id", post_id).execute()
 
-                post_status = "published"
+                    post_status = "published"
 
-                logger.info("Post published successfully", post_id=post_id, ayrshare_id=ayrshare_id)
+                    logger.info("Post published successfully", post_id=post_id, ayrshare_id=ayrshare_id)
 
-            except Exception as e:
-                logger.error("Failed to publish post via Ayrshare", post_id=post_id, error=str(e))
+                except Exception as e:
+                    logger.error("Failed to publish post via Ayrshare", post_id=post_id, error=str(e))
 
-                # Update post status to failed
-                get_supabase_client().client.table("social_media_posts").update(
-                    {"status": "failed", "error_message": str(e), "updated_at": datetime.utcnow().isoformat()}
-                ).eq("id", post_id).execute()
+                    # Update post status to failed
+                    get_supabase_client().client.table("social_media_posts").update(
+                        {"status": "failed", "error_message": str(e), "updated_at": datetime.utcnow().isoformat()}
+                    ).eq("id", post_id).execute()
 
-                raise HTTPException(
-                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Failed to publish post: {str(e)}"
-                )
+                    raise HTTPException(
+                        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Failed to publish post: {str(e)}"
+                    )
 
         return PostResponse(
             id=post_id,
@@ -196,7 +202,8 @@ async def get_user_posts(
 
         # Build query
         query = (
-            get_supabase_client().client.table("social_media_posts")
+            get_supabase_client()
+            .client.table("social_media_posts")
             .select(
                 "id, content, platforms, status, scheduled_for, published_at, "
                 "created_at, media_urls, engagement_metrics, ayrshare_id"
@@ -218,7 +225,8 @@ async def get_user_posts(
 
         # Get total count for pagination
         count_result = (
-            get_supabase_client().client.table("social_media_posts")
+            get_supabase_client()
+            .client.table("social_media_posts")
             .select("id", count="exact")
             .eq("user_id", current_user.user_id)
             .execute()
@@ -247,7 +255,8 @@ async def get_post_details(post_id: str, current_user: UserContext = Depends(get
 
         # Get post from database
         result = (
-            get_supabase_client().client.table("social_media_posts")
+            get_supabase_client()
+            .client.table("social_media_posts")
             .select("*")
             .eq("id", post_id)
             .eq("user_id", current_user.user_id)
@@ -260,14 +269,16 @@ async def get_post_details(post_id: str, current_user: UserContext = Depends(get
         post = result.data[0]
 
         # If post has Ayrshare ID, get latest analytics
-        if post.get("ayrshare_id") and env_config.AYRSHARE_API_KEY:
-            try:
-                ayrshare_client = AyrshareClient()
-                analytics = await ayrshare_client.get_post_analytics(post["ayrshare_id"])
-                post["live_analytics"] = analytics
-            except Exception as e:
-                logger.warning("Failed to get live analytics", post_id=post_id, error=str(e))
-                post["live_analytics"] = None
+        if post.get("ayrshare_id"):
+            config = get_app_config()
+            if config.social_media.ayrshare_api_key:
+                try:
+                    ayrshare_client = AyrshareClient()
+                    analytics = await ayrshare_client.get_post_analytics(post["ayrshare_id"])
+                    post["live_analytics"] = analytics
+                except Exception as e:
+                    logger.warning("Failed to get live analytics", post_id=post_id, error=str(e))
+                    post["live_analytics"] = None
 
         return post
 
@@ -286,7 +297,8 @@ async def delete_post(post_id: str, current_user: UserContext = Depends(get_curr
 
         # Get post to check status
         result = (
-            get_supabase_client().client.table("social_media_posts")
+            get_supabase_client()
+            .client.table("social_media_posts")
             .select("status, ayrshare_id")
             .eq("id", post_id)
             .eq("user_id", current_user.user_id)
@@ -324,7 +336,8 @@ async def publish_scheduled_post(post_id: str, current_user: UserContext = Depen
 
         # Get post details
         result = (
-            get_supabase_client().client.table("social_media_posts")
+            get_supabase_client()
+            .client.table("social_media_posts")
             .select("*")
             .eq("id", post_id)
             .eq("user_id", current_user.user_id)
@@ -343,7 +356,8 @@ async def publish_scheduled_post(post_id: str, current_user: UserContext = Depen
             )
 
         # Publish via Ayrshare
-        if env_config.AYRSHARE_API_KEY:
+        config = get_app_config()
+        if config.social_media.ayrshare_api_key:
             ayrshare_client = AyrshareClient()
             ayrshare_response = await ayrshare_client.post_to_social_media(
                 post_content=post["content"],

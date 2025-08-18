@@ -45,6 +45,16 @@ class SupabaseClient:
 
         logger.info("Supabase client initialized successfully")
 
+    @property
+    def client(self) -> Client:
+        """Backward-compatible alias for the service client.
+
+        Several API modules reference `get_supabase_client().client`.
+        This property ensures those references continue to work by
+        returning the admin `service_client` instance.
+        """
+        return self.service_client
+
     async def _get_pg_pool(self) -> asyncpg.Pool:
         """Get or create PostgreSQL connection pool for vector operations."""
         if self._pg_pool is None:

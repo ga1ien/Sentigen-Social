@@ -21,12 +21,14 @@ router = APIRouter(prefix="/api/social-accounts", tags=["social-accounts"])
 _config = None
 _supabase_client = None
 
+
 def get_app_config():
     """Get config with lazy initialization."""
     global _config
     if _config is None:
         _config = get_config()
     return _config
+
 
 def get_supabase_client():
     """Get Supabase client with lazy initialization."""
@@ -44,7 +46,8 @@ async def get_connected_accounts(current_user: UserContext = Depends(get_current
 
         # Get user's social accounts from database
         result = (
-            get_supabase_client().client.table("social_media_accounts")
+            get_supabase_client()
+            .client.table("social_media_accounts")
             .select("platform, username, is_connected, last_sync_at, follower_count, profile_data")
             .eq("user_id", current_user.user_id)
             .execute()
@@ -55,7 +58,9 @@ async def get_connected_accounts(current_user: UserContext = Depends(get_current
         # Also get real-time status from Ayrshare if configured
         ayrshare_accounts = []
         try:
-            if env_config.AYRSHARE_API_KEY:
+            # Only attempt Ayrshare if configured
+            config = get_app_config()
+            if config.social_media.ayrshare_api_key:
                 ayrshare_client = AyrshareClient()
                 ayrshare_response = await ayrshare_client.get_connected_accounts()
                 ayrshare_accounts = ayrshare_response.get("profiles", [])
@@ -178,7 +183,8 @@ async def disconnect_social_account(
 
         # Update database record
         result = (
-            get_supabase_client().client.table("social_media_accounts")
+            get_supabase_client()
+            .client.table("social_media_accounts")
             .update({"is_connected": False, "disconnected_at": datetime.utcnow().isoformat(), "status": "disconnected"})
             .eq("user_id", current_user.user_id)
             .eq("platform", platform)
@@ -215,7 +221,8 @@ async def sync_social_account(platform: str, current_user: UserContext = Depends
 
         # Check if account is connected
         result = (
-            get_supabase_client().client.table("social_media_accounts")
+            get_supabase_client()
+            .client.table("social_media_accounts")
             .select("is_connected, platform")
             .eq("user_id", current_user.user_id)
             .eq("platform", platform)
@@ -241,9 +248,9 @@ async def sync_social_account(platform: str, current_user: UserContext = Depends
         }
 
         # Update database
-        get_supabase_client().client.table("social_media_accounts").update(sync_data).eq("user_id", current_user.user_id).eq(
-            "platform", platform
-        ).execute()
+        get_supabase_client().client.table("social_media_accounts").update(sync_data).eq(
+            "user_id", current_user.user_id
+        ).eq("platform", platform).execute()
 
         return {
             "platform": platform,
@@ -271,7 +278,8 @@ async def get_platform_analytics(
 
         # Check if account is connected
         result = (
-            get_supabase_client().client.table("social_media_accounts")
+            get_supabase_client()
+            .client.table("social_media_accounts")
             .select("is_connected")
             .eq("user_id", current_user.user_id)
             .eq("platform", platform)
@@ -285,7 +293,8 @@ async def get_platform_analytics(
 
         # Get posts for this platform from the last N days
         posts_result = (
-            get_supabase_client().client.table("social_media_posts")
+            get_supabase_client()
+            .client.table("social_media_posts")
             .select("id, content, published_at, engagement_metrics")
             .eq("user_id", current_user.user_id)
             .eq("platform", platform)

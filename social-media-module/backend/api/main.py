@@ -11,18 +11,12 @@ from typing import Any, Dict, List, Optional
 from uuid import UUID
 
 import structlog
-from dotenv import load_dotenv
 from fastapi import BackgroundTasks, Depends, FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sse_starlette.sse import EventSourceResponse
-
-# Import agents and services
-# Temporarily disabled to debug environment variables
-# from agents.content_agent import ContentGenerationAgent
-# from agents.social_media_agent import SocialMediaAgent
 
 # Import API routes
 from api.avatar_api import router as avatar_router
@@ -67,8 +61,17 @@ from utils.ayrshare_client import AyrshareClient
 from utils.heygen_client import HeyGenClient
 from workers.midjourney_worker import MidjourneyWorker
 
+# Import agents and services
+# Temporarily disabled to debug environment variables
+# from agents.content_agent import ContentGenerationAgent
+# from agents.social_media_agent import SocialMediaAgent
+
+
+
+
 # Lazy initialization to avoid import-time environment variable issues
 _app_config = None
+
 
 def get_app_config():
     """Get app config with lazy initialization."""
@@ -77,14 +80,14 @@ def get_app_config():
         _app_config = get_config()
     return _app_config
 
+
 # Initialize performance optimizations
 cache_config = CacheConfig(
     redis_url=None, default_ttl=300, max_memory_cache_size=1000  # Will use in-memory cache for now
 )
 cache_manager = initialize_cache(cache_config)
 
-# Configure structured logging
-log_level = get_app_config().server.log_level.value.upper()
+# Configure structured logging with default settings (will be reconfigured after app startup)
 structlog.configure(
     processors=[
         structlog.stdlib.filter_by_level,
@@ -115,17 +118,45 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("Starting AI Social Media Platform API")
 
+    # Configure application with environment variables (now available)
+    try:
+        config = get_app_config()
+
+        # Reconfigure logging with proper log level
+        log_level = config.server.log_level.value.upper()
+        import logging
+
+        logging.basicConfig(level=getattr(logging, log_level, logging.INFO))
+        logger.info("Application configured", log_level=log_level, environment=config.server.environment.value)
+
+    except Exception as e:
+        logger.warning("Failed to load full configuration, using defaults", error=str(e))
+
     # Initialize services
     try:
         # Database
         app.state.db = SupabaseClient()
 
         # Social media services
-        app.state.ayrshare_client = AyrshareClient()
+        try:
+            app.state.ayrshare_client = AyrshareClient()
+        except Exception as e:
+            app.state.ayrshare_client = None
+            logger.info("Ayrshare client not initialized", error=str(e))
 
         # AI agents
-        app.state.content_agent = ContentGenerationAgent()
-        app.state.social_media_agent = SocialMediaAgent()
+        try:
+            # Import agents only after environment is available
+            from agents.content_agent import ContentGenerationAgent
+            from agents.social_media_agent import SocialMediaAgent
+
+            app.state.content_agent = ContentGenerationAgent()
+            app.state.social_media_agent = SocialMediaAgent()
+            logger.info("AI agents initialized successfully")
+        except Exception as e:
+            app.state.content_agent = None
+            app.state.social_media_agent = None
+            logger.info("AI agents not initialized", error=str(e))
 
         # Optional services
         try:
@@ -195,7 +226,7 @@ app = FastAPI(
 # Add middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=get_app_config().server.cors_origins,
+    allow_origins=["*"],  # Will be configured properly after startup
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

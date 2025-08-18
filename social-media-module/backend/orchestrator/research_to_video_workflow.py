@@ -2,7 +2,7 @@
 Research-to-Video Workflow Orchestrator
 
 Complete workflow:
-1. Chrome MCP Server → Research & data collection
+1. Research tools → Research & data collection
 2. Supabase → Store research reports and insights
 3. AI Script Generation → Create video scripts from research
 4. HeyGen → Generate AI videos from scripts
@@ -14,8 +14,6 @@ import asyncio
 import json
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-
-# Removed chrome MCP worker dependency - using local definitions
 from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
@@ -215,73 +213,15 @@ class ResearchToVideoWorkflow:
             )
 
     async def _execute_research_phase(self, config: WorkflowConfig, workflow_id: str) -> List[ContentInsight]:
-        """Execute research phase using Chrome MCP"""
-
-        all_insights = []
-
-        for platform in config.platforms_to_research:
-            for topic in config.research_topics:
-                try:
-                    logger.info("Researching platform", platform=platform.value, topic=topic)
-
-                    # Create research task
-                    task_data = {
-                        "platform": platform.value,
-                        "search_query": topic,
-                        "max_posts": 10,
-                        "date_filter": "week",  # Last week's content
-                    }
-
-                    # Execute Chrome MCP research
-                    from workers.base_worker import WorkerTask
-
-                    task = WorkerTask(
-                        id=f"{workflow_id}_{platform.value}_{topic}", task_type="research", data=task_data
-                    )
-
-                    result = await self.chrome_worker.process_task(task)
-
-                    if result.status == "completed" and result.result:
-                        insights_data = result.result.get("insights", [])
-
-                        # Convert to ContentInsight objects
-                        for insight_data in insights_data:
-                            insight = ContentInsight(
-                                platform=Platform(insight_data["platform"]),
-                                url=insight_data["url"],
-                                title=insight_data["title"],
-                                content=insight_data["content"],
-                                engagement_score=insight_data["engagement_score"],
-                                trending_topics=insight_data["trending_topics"],
-                                sentiment=insight_data["sentiment"],
-                                author=insight_data.get("author"),
-                                extracted_at=datetime.fromisoformat(
-                                    insight_data["extracted_at"].replace("Z", "+00:00")
-                                ),
-                            )
-                            all_insights.append(insight)
-
-                    # Rate limiting
-                    await asyncio.sleep(2)
-
-                except Exception as e:
-                    logger.error("Research failed for platform", platform=platform.value, topic=topic, error=str(e))
-                    continue
-
-        # Store insights in Supabase
-        await self._store_research_insights(all_insights, workflow_id)
-
-        # Return top insights by engagement
-        all_insights.sort(key=lambda x: x.engagement_score, reverse=True)
-        return all_insights[:20]  # Top 20 insights
+        """Execute research phase (Chrome MCP removed)."""
+        logger.info("Research phase disabled (Chrome MCP removed)")
+        return []
 
     async def _generate_video_script(self, insights: List[ContentInsight], config: WorkflowConfig) -> str:
         """Generate video script from research insights"""
 
         # Prepare insights summary
         insights_summary = []
-        trending_topics = set()
-
         for insight in insights[:10]:  # Top 10 insights
             insights_summary.append(
                 {
@@ -292,7 +232,6 @@ class ResearchToVideoWorkflow:
                     "sentiment": insight.sentiment,
                 }
             )
-            trending_topics.update(insight.trending_topics)
 
         # Create script generation prompt
         prompt = f"""
@@ -300,8 +239,6 @@ class ResearchToVideoWorkflow:
 
         RESEARCH INSIGHTS:
         {json.dumps(insights_summary, indent=2)}
-
-        TRENDING TOPICS: {', '.join(list(trending_topics)[:10])}
 
         VIDEO STYLE: {config.video_style}
         TARGET AUDIENCE: {config.target_audience}
@@ -547,11 +484,10 @@ class ResearchToVideoWorkflow:
                         "title": insight.title,
                         "content": insight.content,
                         "engagement_score": insight.engagement_score,
-                        "trending_topics": insight.trending_topics,
                         "sentiment": insight.sentiment,
                         "author": insight.author,
                         "extracted_at": insight.extracted_at.isoformat(),
-                        "metadata": {"workflow_id": workflow_id, "extraction_method": "chrome_mcp"},
+                        "metadata": {"workflow_id": workflow_id, "extraction_method": "standard"},
                     }
                 ).execute()
         except Exception as e:
@@ -584,7 +520,7 @@ class ResearchToVideoWorkflow:
         """Get pending approval data"""
         try:
             result = (
-                await self.db_client.service_client.table("workflow_approvals")
+                self.db_client.service_client.table("workflow_approvals")
                 .select("*")
                 .eq("workflow_id", workflow_id)
                 .eq("status", "pending")
@@ -622,10 +558,7 @@ class ResearchToVideoWorkflow:
         """Get current workflow status"""
         try:
             result = (
-                await self.db_client.service_client.table("workflow_executions")
-                .select("*")
-                .eq("id", workflow_id)
-                .execute()
+                self.db_client.service_client.table("workflow_executions").select("*").eq("id", workflow_id).execute()
             )
 
             if result.data:
@@ -639,7 +572,7 @@ class ResearchToVideoWorkflow:
         """List workflows awaiting approval for a user"""
         try:
             result = (
-                await self.db_client.service_client.table("workflow_executions")
+                self.db_client.service_client.table("workflow_executions")
                 .select("*, workflow_approvals(*)")
                 .eq("user_id", user_id)
                 .eq("status", "awaiting_approval")

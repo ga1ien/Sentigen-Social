@@ -1,5 +1,4 @@
--- Content Intelligence Schema Migration
--- Adds tables for Chrome MCP-powered social media intelligence
+-- Content Intelligence Schema Migration (Chrome MCP references removed)
 
 -- Enable UUID extension if not already enabled
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -76,17 +75,7 @@ CREATE TABLE IF NOT EXISTS scheduled_scans (
     workspace_id UUID REFERENCES workspaces(id) ON DELETE CASCADE
 );
 
--- Chrome MCP sessions table (for tracking browser sessions)
-CREATE TABLE IF NOT EXISTS chrome_mcp_sessions (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    session_id TEXT UNIQUE NOT NULL,
-    browser_info JSONB DEFAULT '{}'::jsonb,
-    platforms_authenticated JSONB DEFAULT '[]'::jsonb,
-    last_activity TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    status TEXT DEFAULT 'active' CHECK (status IN ('active', 'inactive', 'error')),
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    workspace_id UUID REFERENCES workspaces(id) ON DELETE CASCADE
-);
+-- Removed Chrome MCP sessions table
 
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_content_insights_platform ON content_insights(platform);
@@ -107,8 +96,7 @@ CREATE INDEX IF NOT EXISTS idx_scheduled_scans_next_run ON scheduled_scans(next_
 CREATE INDEX IF NOT EXISTS idx_scheduled_scans_status ON scheduled_scans(status);
 CREATE INDEX IF NOT EXISTS idx_scheduled_scans_workspace ON scheduled_scans(workspace_id);
 
-CREATE INDEX IF NOT EXISTS idx_chrome_mcp_sessions_last_activity ON chrome_mcp_sessions(last_activity DESC);
-CREATE INDEX IF NOT EXISTS idx_chrome_mcp_sessions_status ON chrome_mcp_sessions(status);
+-- Removed Chrome MCP session indexes
 
 -- Full-text search indexes for content
 CREATE INDEX IF NOT EXISTS idx_content_insights_title_fts ON content_insights USING GIN(to_tsvector('english', title));
@@ -124,12 +112,12 @@ END;
 $$ language 'plpgsql';
 
 -- Apply update triggers
-CREATE TRIGGER update_content_insights_updated_at 
-    BEFORE UPDATE ON content_insights 
+CREATE TRIGGER update_content_insights_updated_at
+    BEFORE UPDATE ON content_insights
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_scheduled_scans_updated_at 
-    BEFORE UPDATE ON scheduled_scans 
+CREATE TRIGGER update_scheduled_scans_updated_at
+    BEFORE UPDATE ON scheduled_scans
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- Row Level Security (RLS) policies
@@ -137,7 +125,7 @@ ALTER TABLE content_insights ENABLE ROW LEVEL SECURITY;
 ALTER TABLE content_recommendations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE scan_history ENABLE ROW LEVEL SECURITY;
 ALTER TABLE scheduled_scans ENABLE ROW LEVEL SECURITY;
-ALTER TABLE chrome_mcp_sessions ENABLE ROW LEVEL SECURITY;
+-- Removed RLS for chrome MCP sessions
 
 -- Policies for content_insights
 CREATE POLICY "Users can view their workspace insights" ON content_insights
@@ -198,15 +186,11 @@ CREATE POLICY "Users can manage their workspace scheduled scans" ON scheduled_sc
         SELECT id FROM workspaces WHERE user_id = auth.uid()
     ));
 
--- Policies for chrome_mcp_sessions
-CREATE POLICY "Users can manage their workspace Chrome MCP sessions" ON chrome_mcp_sessions
-    FOR ALL USING (workspace_id IN (
-        SELECT id FROM workspaces WHERE user_id = auth.uid()
-    ));
+-- Removed policies for chrome MCP sessions
 
 -- Views for analytics
 CREATE OR REPLACE VIEW content_insights_analytics AS
-SELECT 
+SELECT
     platform,
     DATE_TRUNC('day', extracted_at) as date,
     COUNT(*) as insights_count,
@@ -219,14 +203,14 @@ WHERE extracted_at >= NOW() - INTERVAL '30 days'
 GROUP BY platform, DATE_TRUNC('day', extracted_at), jsonb_array_elements_text(trending_topics);
 
 CREATE OR REPLACE VIEW trending_topics_summary AS
-SELECT 
+SELECT
     topic,
     COUNT(*) as frequency,
     AVG(engagement_score) as avg_engagement,
     ARRAY_AGG(DISTINCT platform) as platforms,
     MAX(extracted_at) as last_seen
 FROM (
-    SELECT 
+    SELECT
         jsonb_array_elements_text(trending_topics) as topic,
         platform,
         engagement_score,
@@ -242,17 +226,15 @@ CREATE OR REPLACE FUNCTION cleanup_old_content_intelligence_data()
 RETURNS void AS $$
 BEGIN
     -- Delete insights older than 90 days
-    DELETE FROM content_insights 
+    DELETE FROM content_insights
     WHERE extracted_at < NOW() - INTERVAL '90 days';
-    
+
     -- Delete scan history older than 180 days
-    DELETE FROM scan_history 
+    DELETE FROM scan_history
     WHERE scan_timestamp < NOW() - INTERVAL '180 days';
-    
-    -- Delete inactive Chrome MCP sessions older than 7 days
-    DELETE FROM chrome_mcp_sessions 
-    WHERE status = 'inactive' AND last_activity < NOW() - INTERVAL '7 days';
-    
+
+    -- Removed Chrome MCP session cleanup
+
     -- Log cleanup
     RAISE NOTICE 'Content intelligence data cleanup completed at %', NOW();
 END;
@@ -261,11 +243,11 @@ $$ LANGUAGE plpgsql;
 -- Create a scheduled job to run cleanup (requires pg_cron extension)
 -- SELECT cron.schedule('cleanup-content-intelligence', '0 2 * * 0', 'SELECT cleanup_old_content_intelligence_data();');
 
-COMMENT ON TABLE content_insights IS 'Stores content insights extracted from social media platforms via Chrome MCP';
+COMMENT ON TABLE content_insights IS 'Stores content insights extracted from social media platforms';
 COMMENT ON TABLE content_recommendations IS 'AI-generated content recommendations based on social media insights';
 COMMENT ON TABLE scan_history IS 'History of platform scans and their results';
 COMMENT ON TABLE scheduled_scans IS 'Configuration and status of scheduled recurring scans';
-COMMENT ON TABLE chrome_mcp_sessions IS 'Tracks Chrome MCP browser sessions and authentication status';
+-- Removed comment for chrome MCP sessions
 
 COMMENT ON COLUMN content_insights.trending_topics IS 'Array of trending topics/keywords extracted from content';
 COMMENT ON COLUMN content_insights.metadata IS 'Additional metadata about the content extraction process';
