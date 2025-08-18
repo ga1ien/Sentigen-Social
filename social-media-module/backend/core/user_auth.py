@@ -266,8 +266,15 @@ class UserAuthService:
             raise
 
 
-# FastAPI dependency for authentication
-auth_service = UserAuthService()
+# Lazy initialization to avoid import-time environment variable issues
+_auth_service = None
+
+def get_auth_service():
+    """Get the auth service with lazy initialization."""
+    global _auth_service
+    if _auth_service is None:
+        _auth_service = UserAuthService()
+    return _auth_service
 
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())) -> UserContext:
@@ -275,7 +282,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(H
     if not credentials:
         raise HTTPException(status_code=401, detail="Authentication required")
 
-    user_context = await auth_service.authenticate_user(credentials.credentials)
+    user_context = await get_auth_service().authenticate_user(credentials.credentials)
     if not user_context:
         raise HTTPException(status_code=401, detail="Invalid authentication token")
 
@@ -290,7 +297,7 @@ async def get_optional_user(request: Request) -> Optional[UserContext]:
             return None
 
         token = auth_header.split(" ")[1]
-        return await auth_service.authenticate_user(token)
+        return await get_auth_service().authenticate_user(token)
     except Exception:
         return None
 
@@ -299,7 +306,7 @@ def require_workspace_access(workspace_id: str):
     """Decorator to require workspace access"""
 
     async def check_access(user_context: UserContext = Depends(get_current_user)):
-        if not await auth_service.check_workspace_access(user_context, workspace_id):
+        if not await get_auth_service().check_workspace_access(user_context, workspace_id):
             raise HTTPException(status_code=403, detail="Access denied to workspace")
         return user_context
 
@@ -325,7 +332,7 @@ def require_subscription_tier(min_tier: str):
 async def get_user_research_context(user_id: str, workspace_id: str = None) -> Dict[str, Any]:
     """Get research context for a user"""
     try:
-        user_context = await auth_service.authenticate_user(user_id)  # Simplified for internal use
+        user_context = await get_auth_service().authenticate_user(user_id)  # Simplified for internal use
 
         if not user_context:
             # For backwards compatibility, create a basic context
@@ -336,12 +343,12 @@ async def get_user_research_context(user_id: str, workspace_id: str = None) -> D
                 subscription_tier="free",
                 is_admin=False,
                 workspaces=[],
-                permissions=auth_service._calculate_permissions({"subscription_tier": "free", "is_admin": False}, []),
+                permissions=get_auth_service()._calculate_permissions({"subscription_tier": "free", "is_admin": False}, []),
             )
 
         # Ensure workspace
         if not workspace_id:
-            workspace_id = await auth_service.ensure_user_workspace(user_id)
+            workspace_id = await get_auth_service().ensure_user_workspace(user_id)
 
         return {"user_context": user_context, "workspace_id": workspace_id, "permissions": user_context.permissions}
 
