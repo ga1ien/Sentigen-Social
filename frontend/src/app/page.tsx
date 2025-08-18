@@ -1,14 +1,31 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { GlassCard, GlassCardContent, GlassCardDescription, GlassCardHeader, GlassCardTitle } from "@/components/zyyn/glass-card";
 import { AuthModal } from "@/components/zyyn/auth-modal";
 import { ArrowRight, Bot, Calendar, BarChart3, Users, Zap, Sparkles } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
-export default function HomePage() {
+function HomePageContent() {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"signin" | "signup">("signin");
+  const searchParams = useSearchParams();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const error = searchParams.get("error");
+    if (error) {
+      toast({
+        title: "authentication error",
+        description: decodeURIComponent(error),
+        variant: "destructive",
+      });
+      // Clear the error from URL
+      window.history.replaceState({}, "", "/");
+    }
+  }, [searchParams, toast]);
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation */}
@@ -216,5 +233,13 @@ export default function HomePage() {
         defaultMode={authMode}
       />
     </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen" />}>
+      <HomePageContent />
+    </Suspense>
   );
 }

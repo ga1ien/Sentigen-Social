@@ -38,6 +38,7 @@ export function AuthModal({ isOpen, onClose, defaultMode = "signin" }: AuthModal
           title: "welcome back",
           description: "redirecting to dashboard...",
         })
+        onClose() // Close the modal
         router.push("/dashboard")
       } else {
         const { error } = await supabase.auth.signUp({

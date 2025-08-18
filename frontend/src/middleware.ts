@@ -40,14 +40,16 @@ export async function middleware(request: NextRequest) {
 
   // Protect dashboard routes
   if (request.nextUrl.pathname.startsWith('/dashboard') && !user) {
-    // no user, potentially respond by redirecting the user to the login page
+    // no user, redirect to home page where they can use the auth modal
     const url = request.nextUrl.clone()
-    url.pathname = '/auth/login'
+    url.pathname = '/'
     return NextResponse.redirect(url)
   }
 
-  // Redirect authenticated users away from auth pages
-  if (request.nextUrl.pathname.startsWith('/auth') && user) {
+  // Redirect authenticated users away from auth pages (except callback)
+  if (request.nextUrl.pathname.startsWith('/auth') &&
+      !request.nextUrl.pathname.includes('/callback') &&
+      user) {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard'
     return NextResponse.redirect(url)

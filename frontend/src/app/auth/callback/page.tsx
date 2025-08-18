@@ -3,14 +3,10 @@
 import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Loader2, CheckCircle, XCircle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
+import { Loader2 } from 'lucide-react'
 
 function AuthCallbackContent() {
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
-  const [message, setMessage] = useState('Processing authentication...')
+  const [message, setMessage] = useState('authenticating...')
   const router = useRouter()
   const searchParams = useSearchParams()
   const supabase = createClient()
@@ -23,8 +19,11 @@ function AuthCallbackContent() {
         const errorDescription = searchParams.get('error_description')
 
         if (error) {
-          setStatus('error')
           setMessage(errorDescription || error)
+          // Redirect to home with error message after a brief delay
+          setTimeout(() => {
+            router.push('/?error=' + encodeURIComponent(errorDescription || error))
+          }, 2000)
           return
         }
 
@@ -32,41 +31,42 @@ function AuthCallbackContent() {
           const { data, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
 
           if (exchangeError) {
-            setStatus('error')
             setMessage(exchangeError.message)
+            setTimeout(() => {
+              router.push('/?error=' + encodeURIComponent(exchangeError.message))
+            }, 2000)
             return
           }
 
           if (data.session) {
-            setStatus('success')
-            setMessage('Authentication successful! Redirecting to dashboard...')
-
-            // Small delay to show success message
-            setTimeout(() => {
-              router.push('/dashboard')
-            }, 1500)
+            setMessage('welcome back! redirecting...')
+            // Immediate redirect to dashboard
+            router.push('/dashboard')
           }
         } else {
           // Handle other auth flows (like email confirmation)
           const { data: { session }, error: sessionError } = await supabase.auth.getSession()
 
           if (sessionError) {
-            setStatus('error')
             setMessage(sessionError.message)
-          } else if (session) {
-            setStatus('success')
-            setMessage('Authentication successful! Redirecting to dashboard...')
             setTimeout(() => {
-              router.push('/dashboard')
-            }, 1500)
+              router.push('/?error=' + encodeURIComponent(sessionError.message))
+            }, 2000)
+          } else if (session) {
+            setMessage('welcome back! redirecting...')
+            router.push('/dashboard')
           } else {
-            setStatus('error')
-            setMessage('No active session found')
+            setMessage('no active session')
+            setTimeout(() => {
+              router.push('/')
+            }, 2000)
           }
         }
       } catch (error) {
-        setStatus('error')
-        setMessage('An unexpected error occurred during authentication')
+        setMessage('something went wrong')
+        setTimeout(() => {
+          router.push('/?error=authentication_failed')
+        }, 2000)
       }
     }
 
@@ -74,48 +74,11 @@ function AuthCallbackContent() {
   }, [searchParams, router, supabase.auth])
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4">
-            {status === 'loading' && <Loader2 className="h-12 w-12 text-blue-600 animate-spin" />}
-            {status === 'success' && <CheckCircle className="h-12 w-12 text-green-600" />}
-            {status === 'error' && <XCircle className="h-12 w-12 text-red-600" />}
-          </div>
-          <CardTitle className="text-2xl">
-            {status === 'loading' && 'Processing...'}
-            {status === 'success' && 'Success!'}
-            {status === 'error' && 'Authentication Failed'}
-          </CardTitle>
-          <CardDescription>
-            {message}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {status === 'error' && (
-            <div className="space-y-2">
-              <Link href="/auth/login">
-                <Button className="w-full">
-                  Back to Login
-                </Button>
-              </Link>
-              <Link href="/auth/register">
-                <Button variant="outline" className="w-full">
-                  Create Account
-                </Button>
-              </Link>
-            </div>
-          )}
-
-          {status === 'success' && (
-            <Link href="/dashboard">
-              <Button className="w-full">
-                Continue to Dashboard
-              </Button>
-            </Link>
-          )}
-        </CardContent>
-      </Card>
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="text-center space-y-4">
+        <Loader2 className="h-8 w-8 text-white/80 animate-spin mx-auto" />
+        <p className="text-white/80 font-light">{message}</p>
+      </div>
     </div>
   )
 }
@@ -123,13 +86,11 @@ function AuthCallbackContent() {
 export default function AuthCallbackPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Card className="w-full max-w-md">
-          <CardContent className="p-6 text-center">
-            <Loader2 className="mx-auto h-8 w-8 animate-spin text-blue-600 mb-4" />
-            <p>Loading...</p>
-          </CardContent>
-        </Card>
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="text-center space-y-4">
+          <Loader2 className="h-8 w-8 text-white/80 animate-spin mx-auto" />
+          <p className="text-white/80 font-light">loading...</p>
+        </div>
       </div>
     }>
       <AuthCallbackContent />
