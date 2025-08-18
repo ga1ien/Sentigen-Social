@@ -1,10 +1,14 @@
 "use client"
 
+import { useState } from "react";
 import { GlassCard, GlassCardContent, GlassCardDescription, GlassCardHeader, GlassCardTitle } from "@/components/zyyn/glass-card";
+import { AuthModal } from "@/components/zyyn/auth-modal";
 import { ArrowRight, Bot, Calendar, BarChart3, Users, Zap, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 export default function HomePage() {
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<"signin" | "signup">("signin");
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation */}
@@ -15,18 +19,24 @@ export default function HomePage() {
               zyyn
             </Link>
             <div className="flex items-center gap-4">
-              <Link
-                href="/auth/login"
+              <button
+                onClick={() => {
+                  setAuthMode("signin");
+                  setAuthModalOpen(true);
+                }}
                 className="px-4 py-2 text-sm text-white/70 hover:text-white transition-colors"
               >
                 sign in
-              </Link>
-              <Link
-                href="/auth/register"
+              </button>
+              <button
+                onClick={() => {
+                  setAuthMode("signup");
+                  setAuthModalOpen(true);
+                }}
                 className="px-4 py-2 text-sm bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl hover:bg-white/15 transition-all text-white/90"
               >
                 get started
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -45,17 +55,20 @@ export default function HomePage() {
           </h1>
 
           <p className="text-xl md:text-2xl text-white/60 font-light max-w-2xl mx-auto">
-            the future of being seen
+            create at the speed of thought
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
-            <Link
-              href="/auth/register"
+            <button
+              onClick={() => {
+                setAuthMode("signup");
+                setAuthModalOpen(true);
+              }}
               className="group px-8 py-3 bg-white/15 backdrop-blur-sm border border-white/30 rounded-2xl hover:bg-white/20 transition-all flex items-center gap-2 text-white"
             >
               start creating
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </button>
             <Link
               href="#features"
               className="px-8 py-3 text-white/70 hover:text-white transition-colors"
@@ -164,13 +177,16 @@ export default function HomePage() {
             <p className="text-lg text-white/60 mb-8 max-w-2xl mx-auto">
               join thousands of creators using zyyn to amplify their voice and grow their audience
             </p>
-            <Link
-              href="/auth/register"
+            <button
+              onClick={() => {
+                setAuthMode("signup");
+                setAuthModalOpen(true);
+              }}
               className="inline-flex items-center gap-2 px-8 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-2xl hover:bg-white/25 transition-all text-white"
             >
               get started free
               <ArrowRight className="w-4 h-4" />
-            </Link>
+            </button>
           </GlassCard>
         </div>
       </section>
@@ -192,6 +208,13 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        defaultMode={authMode}
+      />
     </div>
   );
 }

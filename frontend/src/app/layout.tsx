@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "zyyn",
-  description: "the future of being seen",
+  description: "create at the speed of thought",
 };
 
 export default function RootLayout({

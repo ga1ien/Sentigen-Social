@@ -18,7 +18,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1).optional(),
     NEXT_PUBLIC_API_URL: z.string().default("https://sentigen-social-production.up.railway.app"),
     NEXT_PUBLIC_APP_NAME: z.string().default("zyyn"),
-    NEXT_PUBLIC_APP_DESCRIPTION: z.string().default("the future of being seen"),
+    NEXT_PUBLIC_APP_DESCRIPTION: z.string().default("create at the speed of thought"),
     NEXT_PUBLIC_ENABLE_ANALYTICS: z.string().default("true").transform((val) => val === "true"),
     NEXT_PUBLIC_ENABLE_AI_GENERATION: z.string().default("true").transform((val) => val === "true"),
     NEXT_PUBLIC_ENABLE_SCHEDULING: z.string().default("true").transform((val) => val === "true"),
