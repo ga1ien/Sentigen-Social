@@ -16,13 +16,23 @@ api.interceptors.request.use(
   async (config) => {
     try {
       const supabase = createClient()
-      const { data: { session } } = await supabase.auth.getSession()
+
+      // Get the current session - this should always work if user is logged in
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession()
 
       if (session?.access_token) {
         config.headers.Authorization = `Bearer ${session.access_token}`
+      } else {
+        // Try to refresh the session if it's expired
+        const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession()
+        if (refreshData?.session?.access_token) {
+          config.headers.Authorization = `Bearer ${refreshData.session.access_token}`
+        } else {
+          console.warn('No valid session for API request to:', config.url)
+        }
       }
     } catch (error) {
-      console.warn('Failed to get auth token:', error)
+      console.error('Failed to get auth token:', error)
       // Continue without token - let backend handle unauthorized requests
     }
 

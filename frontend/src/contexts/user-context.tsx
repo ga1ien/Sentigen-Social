@@ -38,23 +38,65 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    // Get initial user
-    refreshUser().finally(() => setLoading(false))
+    let mounted = true
+
+    // Get initial session
+    const initializeAuth = async () => {
+      try {
+        // First try to get the session from storage
+        const { data: { session }, error } = await supabase.auth.getSession()
+
+        if (mounted) {
+          if (error) {
+            console.error('Error getting session:', error)
+            setUser(null)
+          } else if (session?.user) {
+            setUser(session.user)
+          } else {
+            // If no session, try to get user
+            const { data: { user } } = await supabase.auth.getUser()
+            if (user && mounted) {
+              setUser(user)
+            }
+          }
+          setLoading(false)
+        }
+      } catch (error) {
+        console.error('Error initializing auth:', error)
+        if (mounted) {
+          setUser(null)
+          setLoading(false)
+        }
+      }
+    }
+
+    initializeAuth()
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        if (event === 'SIGNED_OUT' || !session) {
+        if (!mounted) return
+
+        // Only update if there's an actual change
+        if (event === 'SIGNED_OUT') {
           setUser(null)
-        } else if (session?.user) {
+        } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+          if (session?.user) {
+            setUser(session.user)
+          }
+        } else if (event === 'USER_UPDATED' && session?.user) {
           setUser(session.user)
         }
-        setLoading(false)
+
+        // Don't set loading to false here as it can cause flicker
       }
     )
 
-    return () => subscription.unsubscribe()
-  }, [supabase.auth])
+    return () => {
+      mounted = false
+      subscription.unsubscribe()
+    }
+  }, []) // Remove supabase.auth dependency to prevent re-initialization
 
   return (
     <UserContext.Provider value={{ user, loading, signOut, refreshUser }}>
