@@ -108,44 +108,76 @@ class UserAuthService:
             return None
 
     async def _validate_supabase_token(self, token: str) -> Optional[str]:
-        """Validate Supabase JWT token using service client (works with both legacy and new JWT systems)"""
+        """Validate Supabase JWT token using service client"""
         try:
             print("Validating token with Supabase service client...")
 
-            # Use the service client to validate the token
-            # This automatically handles both legacy HS256 and new RS256/ES256 tokens
+            # Method 1: Try creating a temporary client with the user token to validate it
             try:
-                response = self.supabase_client.service_client.auth.get_user(token)
-                print(f"Supabase auth response: {type(response)}")
+                from supabase import create_client
 
-                # Handle the response format
-                if hasattr(response, "user") and response.user:
-                    user_id = response.user.id
+                # Create a temporary client with the user's token
+                temp_client = create_client(
+                    self.supabase_client.url,
+                    self.supabase_client.anon_key,
+                    options={"auth": {"auto_refresh_token": False}},
+                )
+
+                # Set the session manually
+                temp_client.auth.set_session({"access_token": token, "token_type": "bearer"})
+
+                # Try to get the user - if this succeeds, the token is valid
+                user_response = temp_client.auth.get_user()
+
+                if user_response and hasattr(user_response, "user") and user_response.user:
+                    user_id = user_response.user.id
                     print(f"✅ Token validated successfully, user ID: {user_id}")
                     return user_id
-                elif isinstance(response, dict) and response.get("user"):
-                    user_id = response["user"].get("id")
+                elif isinstance(user_response, dict) and user_response.get("user"):
+                    user_id = user_response["user"].get("id")
                     print(f"✅ Token validated successfully, user ID: {user_id}")
                     return user_id
-                else:
-                    print(f"❌ Invalid response format: {response}")
-                    return None
 
             except Exception as e:
-                print(f"❌ Service client validation failed: {e}")
+                print(f"❌ Temporary client validation failed: {e}")
 
-                # For debugging, let's also try with different error handling
-                try:
-                    # Some versions of the client might need different handling
-                    user_data = self.supabase_client.service_client.auth.admin.get_user_by_access_token(token)
-                    if user_data and hasattr(user_data, "user") and user_data.user:
-                        user_id = user_data.user.id
-                        print(f"✅ Token validated via admin method, user ID: {user_id}")
-                        return user_id
-                except Exception as e2:
-                    print(f"❌ Admin validation also failed: {e2}")
+            # Method 2: Use service client admin methods
+            try:
+                # Try admin method to get user by JWT
+                admin_response = self.supabase_client.service_client.auth.admin.get_user_by_access_token(token)
 
-                return None
+                if admin_response and hasattr(admin_response, "user") and admin_response.user:
+                    user_id = admin_response.user.id
+                    print(f"✅ Token validated via admin method, user ID: {user_id}")
+                    return user_id
+
+            except Exception as e:
+                print(f"❌ Admin validation failed: {e}")
+
+            # Method 3: Manual JWT validation (fallback)
+            try:
+                # Import JWT library for manual validation
+                from jose import jwt
+
+                # Get the JWT secret from environment - use legacy secret for now
+                jwt_secret = os.getenv(
+                    "JWT_SECRET",
+                    "AMo8kf6/8Q8tBgpl4gBjQNuTJslL6/YMaSnnUWwdTXVggoAxCxFJeiKH2r3m0O+95xYfR1p6Q4IWfSRrl64yyg==",
+                )
+
+                # Try to decode with HS256 (legacy format)
+                payload = jwt.decode(token, jwt_secret, algorithms=["HS256"], options={"verify_exp": True})
+
+                user_id = payload.get("sub")
+                if user_id:
+                    print(f"✅ Token validated via manual JWT decode, user ID: {user_id}")
+                    return user_id
+
+            except Exception as e:
+                print(f"❌ Manual JWT validation failed: {e}")
+
+            print("❌ All validation methods failed")
+            return None
 
         except Exception as e:
             print(f"❌ Token validation error: {e}")
