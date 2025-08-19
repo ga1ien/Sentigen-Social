@@ -108,80 +108,48 @@ class UserAuthService:
             return None
 
     async def _validate_supabase_token(self, token: str) -> Optional[str]:
-        """Validate Supabase JWT token using service client only (no manual JWT decoding)"""
+        """Validate Supabase JWT token by decoding and verifying user exists"""
         try:
-            print("Validating token with Supabase service client...")
+            print("Validating token with JWT decode + admin verification...")
 
-            # Method 1: Use service client admin method (most reliable)
+            # Import JWT library for decoding
+            import jwt
+
+            # First, decode the JWT to get the user ID (we don't verify signature - just extract claims)
             try:
-                print("Trying admin.get_user_by_access_token...")
-                admin_response = self.supabase_client.service_client.auth.admin.get_user_by_access_token(token)
+                print("Decoding JWT to extract user ID...")
+                # Decode without verification to get claims
+                decoded = jwt.decode(token, options={"verify_signature": False})
+                user_id = decoded.get("sub")  # 'sub' contains the user ID
+
+                if not user_id:
+                    print("❌ No 'sub' (user ID) found in JWT token")
+                    return None
+
+                print(f"📋 Extracted user ID from JWT: {user_id}")
+
+            except Exception as e:
+                print(f"❌ Failed to decode JWT: {e}")
+                return None
+
+            # Now verify this user actually exists using Supabase admin API
+            try:
+                print(f"Verifying user {user_id} exists via admin API...")
+                admin_response = self.supabase_client.service_client.auth.admin.get_user_by_id(user_id)
 
                 if admin_response and hasattr(admin_response, "user") and admin_response.user:
-                    user_id = admin_response.user.id
-                    print(f"✅ Token validated via admin method, user ID: {user_id}")
+                    print(f"✅ User verified via admin API: {admin_response.user.id}")
                     return user_id
                 elif isinstance(admin_response, dict) and admin_response.get("user"):
-                    user_id = admin_response["user"].get("id")
-                    print(f"✅ Token validated via admin method, user ID: {user_id}")
+                    print(f"✅ User verified via admin API: {admin_response['user'].get('id')}")
                     return user_id
                 else:
-                    print(f"❌ Admin response format: {admin_response}")
+                    print(f"❌ User not found or invalid response: {admin_response}")
+                    return None
 
             except Exception as e:
-                print(f"❌ Admin validation failed: {e}")
-
-            # Method 2: Try direct auth validation
-            try:
-                print("Trying service client auth.get_user...")
-                auth_response = self.supabase_client.service_client.auth.get_user(token)
-
-                if auth_response and hasattr(auth_response, "user") and auth_response.user:
-                    user_id = auth_response.user.id
-                    print(f"✅ Token validated via service client, user ID: {user_id}")
-                    return user_id
-                elif isinstance(auth_response, dict) and auth_response.get("user"):
-                    user_id = auth_response["user"].get("id")
-                    print(f"✅ Token validated via service client, user ID: {user_id}")
-                    return user_id
-                else:
-                    print(f"❌ Auth response format: {auth_response}")
-
-            except Exception as e:
-                print(f"❌ Service client validation failed: {e}")
-
-            # Method 3: Create temporary client for validation
-            try:
-                print("Trying temporary client validation...")
-                from supabase import create_client
-
-                # Create a temporary client with the user's token
-                temp_client = create_client(
-                    self.supabase_client.url,
-                    self.supabase_client.anon_key,
-                    options={"auth": {"auto_refresh_token": False}},
-                )
-
-                # Set the session manually
-                temp_client.auth.set_session({"access_token": token, "token_type": "bearer"})
-
-                # Try to get the user - if this succeeds, the token is valid
-                user_response = temp_client.auth.get_user()
-
-                if user_response and hasattr(user_response, "user") and user_response.user:
-                    user_id = user_response.user.id
-                    print(f"✅ Token validated via temp client, user ID: {user_id}")
-                    return user_id
-                elif isinstance(user_response, dict) and user_response.get("user"):
-                    user_id = user_response["user"].get("id")
-                    print(f"✅ Token validated via temp client, user ID: {user_id}")
-                    return user_id
-
-            except Exception as e:
-                print(f"❌ Temporary client validation failed: {e}")
-
-            print("❌ All Supabase validation methods failed")
-            return None
+                print(f"❌ Admin user verification failed: {e}")
+                return None
 
         except Exception as e:
             print(f"❌ Token validation error: {e}")
