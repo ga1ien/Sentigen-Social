@@ -43,7 +43,7 @@ class UserAuthService:
         self.security = HTTPBearer()
 
         # We use Supabase service client for auth validation - no manual JWT decoding needed
-        print("Using Supabase service client for JWT validation (modern approach)")
+        print("Using Supabase service client for JWT validation (modern approach - v2.0)")
 
     async def authenticate_user(self, token: str) -> Optional[UserContext]:
         """Authenticate user using Supabase service client (modern approach)"""
