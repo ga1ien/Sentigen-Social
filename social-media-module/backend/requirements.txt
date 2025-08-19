@@ -40,6 +40,7 @@ aiofiles==24.1.0
 
 # Authentication & Security
 python-jose[cryptography]==3.3.0
+PyJWT==2.10.1
 python-multipart==0.0.9
 
 # Utilities
@@ -57,4 +58,4 @@ pandas==2.2.3
 # Development Tools
 black==24.10.0
 isort==5.13.2
-mypy==1.13.0python-jose[cryptography]==3.5.0
+mypy==1.13.0
