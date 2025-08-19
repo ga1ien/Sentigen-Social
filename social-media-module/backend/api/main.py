@@ -41,6 +41,7 @@ from core.db_optimizer import get_connection_optimizer, get_db_optimizer
 # Load and validate configuration
 from core.env_config import AppConfig, get_config
 from core.response_optimizer import PaginatedResponse, PaginationParams, get_response_optimizer
+
 try:
     from database.supabase_client import SupabaseClient
 except ModuleNotFoundError:
@@ -272,7 +273,7 @@ async def get_db() -> SupabaseClient:
 
 
 # Health check endpoint
-@app.get("/health", response_model=HealthCheckResponse)
+@app.get("/health", response_model=HealthCheckResponse)  # Force deploy v2.1
 async def health_check():
     """Health check endpoint."""
     db_connected = False
