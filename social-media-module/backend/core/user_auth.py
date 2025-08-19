@@ -125,45 +125,53 @@ class UserAuthService:
             return None
 
     async def _validate_supabase_token(self, token: str) -> Optional[str]:
-        """Validate Supabase JWT token"""
+        """Validate Supabase JWT token - supports both legacy (HS256) and new (RS256) systems"""
         try:
-            # First try to decode the Supabase JWT with the secret
+            # First, inspect the token to determine its algorithm
             try:
-                # Use the Supabase JWT secret to validate the token
-                print(f"Attempting to decode JWT with secret: {self.jwt_secret[:10]}...")
+                header = jwt.get_unverified_header(token)
+                algorithm = header.get("alg", "HS256")
+                print(f"Token algorithm detected: {algorithm}")
+            except Exception as e:
+                print(f"Could not parse token header: {e}")
+                algorithm = "HS256"  # fallback
 
-                # Supabase JWTs use HS256 algorithm
-                payload = jwt.decode(
-                    token,
-                    self.jwt_secret,
-                    algorithms=["HS256"],
-                    options={
-                        "verify_signature": True,
-                        "verify_exp": True,
-                        "verify_nbf": False,
-                        "verify_iat": False,
-                        "verify_aud": False,
-                    },
-                )
-
-                # Supabase stores user ID in 'sub' claim
-                user_id = payload.get("sub")
-                print(f"JWT decoded successfully, payload: {payload}")
-                print(f"User ID from token (sub): {user_id}")
-
-                if user_id:
-                    return user_id
-            except JWTError as e:
-                print(f"JWT decode error: {e}")
-                print(f"Token first 50 chars: {token[:50]}...")
-                # Try without signature verification as a diagnostic
+            # Try legacy HS256 validation first (for backward compatibility)
+            if algorithm == "HS256":
                 try:
-                    unverified = jwt.decode(token, options={"verify_signature": False})
-                    print(f"Unverified payload: {unverified}")
-                    print(f"Token algorithm: {jwt.get_unverified_header(token).get('alg')}")
-                except Exception as e2:
-                    print(f"Cannot decode even without verification: {e2}")
-                pass
+                    print(f"Attempting HS256 decode with legacy secret: {self.jwt_secret[:10]}...")
+
+                    payload = jwt.decode(
+                        token,
+                        self.jwt_secret,
+                        algorithms=["HS256"],
+                        options={
+                            "verify_signature": True,
+                            "verify_exp": True,
+                            "verify_nbf": False,
+                            "verify_iat": False,
+                            "verify_aud": False,
+                        },
+                    )
+
+                    user_id = payload.get("sub")
+                    print(f"HS256 JWT decoded successfully, user ID: {user_id}")
+                    if user_id:
+                        return user_id
+
+                except JWTError as e:
+                    print(f"HS256 JWT decode failed: {e}")
+
+            # Try new RS256/ES256 system - fall back to Supabase client validation
+            print(f"Falling back to Supabase client validation for algorithm: {algorithm}")
+
+            # Decode without verification to get payload info
+            try:
+                unverified = jwt.decode(token, options={"verify_signature": False})
+                print(f"Unverified payload: {unverified}")
+                print(f"Token kid (key ID): {header.get('kid', 'none')}")
+            except Exception as e2:
+                print(f"Cannot decode even without verification: {e2}")
 
             # Fallback: Use Supabase client to validate token
             client_for_auth = None
