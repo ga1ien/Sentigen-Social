@@ -46,16 +46,31 @@ class UserAuthService:
         print("Using Supabase service client for JWT validation (modern approach - v2.0)")
 
     async def authenticate_user(self, token: str) -> Optional[UserContext]:
-        """Authenticate user using Supabase service client (modern approach)"""
+        """Authenticate user using hybrid approach: try current method, fallback to GPT-5 method"""
         try:
-            print(f"Authenticating token with Supabase service client: {token[:20]}..." if len(token) > 20 else token)
+            print(f"Authenticating token with hybrid approach: {token[:20]}..." if len(token) > 20 else token)
 
-            # Use Supabase service client to validate the token - this handles all JWT verification
+            # Method 1: Try current Supabase service client approach
             user_id = await self._validate_supabase_token(token)
 
             if not user_id:
-                print("Token validation failed - no user ID returned")
-                return None
+                print("❌ Current method failed, trying GPT-5's direct API method...")
+                
+                # Method 2: Try GPT-5's direct Supabase API approach
+                from .alternative_auth import GPT5AuthService
+                gpt5_auth = GPT5AuthService()
+                
+                try:
+                    verified_user = await gpt5_auth._validate_supabase_token(token)
+                    if verified_user and verified_user.get("id"):
+                        print("✅ GPT-5 method succeeded!")
+                        user_id = verified_user["id"]
+                    else:
+                        print("❌ Both authentication methods failed")
+                        return None
+                except Exception as e:
+                    print(f"❌ GPT-5 method also failed: {e}")
+                    return None
 
             # Get user details from database
             user = await self.supabase_client.get_user(user_id)

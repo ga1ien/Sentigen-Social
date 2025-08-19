@@ -30,6 +30,7 @@ from api.avatar_api import router as avatar_router
 
 # Import API routes
 from api.content_research_api import router as content_research_router
+from api.gpt5_auth_endpoint import router as gpt5_auth_router
 from api.media_storage_api import router as media_storage_router
 from api.research_tools_api import router as research_tools_router
 from api.research_video_api import router as research_video_router
@@ -254,6 +255,7 @@ app.include_router(social_posting_router)
 app.include_router(content_research_router)
 app.include_router(media_storage_router)
 app.include_router(research_tools_router)
+app.include_router(gpt5_auth_router, prefix="/api")
 
 
 # Import authentication service
