@@ -12,7 +12,6 @@ from typing import Any, Dict, List, Optional
 
 from fastapi import Depends, HTTPException, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import JWTError, jwt
 
 # Add parent directories to path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
@@ -42,36 +41,20 @@ class UserAuthService:
     def __init__(self):
         self.supabase_client = SupabaseClient()
         self.security = HTTPBearer()
-        self.jwt_secret = os.getenv("JWT_SECRET", "your-secret-key")
 
-        # Log JWT secret status for debugging
-        if self.jwt_secret == "your-secret-key":
-            print("WARNING: JWT_SECRET not set in environment, using default (will fail)")
-        else:
-            print(f"JWT_SECRET loaded from environment: {self.jwt_secret[:10]}...")
+        # We use Supabase service client for auth validation - no manual JWT decoding needed
+        print("Using Supabase service client for JWT validation (modern approach)")
 
     async def authenticate_user(self, token: str) -> Optional[UserContext]:
-        """Authenticate user from JWT token or Supabase session"""
+        """Authenticate user using Supabase service client (modern approach)"""
         try:
-            print(f"Authenticating token: {token[:20]}..." if len(token) > 20 else token)
+            print(f"Authenticating token with Supabase service client: {token[:20]}..." if len(token) > 20 else token)
 
-            # Try to decode JWT token first
-            try:
-                payload = jwt.decode(token, self.jwt_secret, algorithms=["HS256"])
-                # Supabase uses the 'sub' claim for the user ID
-                user_id = (
-                    payload.get("sub") or payload.get("user_id") or (payload.get("user_metadata") or {}).get("sub")
-                )
-                print(f"Got user_id from JWT decode: {user_id} (sub={payload.get('sub')})")
-            except JWTError as e:
-                print(f"JWT decode failed: {e}, trying Supabase validation")
-                user_id = None
-
-            # If we couldn't determine the user_id from the direct decode, fall back
-            if not user_id:
-                user_id = await self._validate_supabase_token(token)
+            # Use Supabase service client to validate the token - this handles all JWT verification
+            user_id = await self._validate_supabase_token(token)
 
             if not user_id:
+                print("Token validation failed - no user ID returned")
                 return None
 
             # Get user details from database
@@ -125,86 +108,47 @@ class UserAuthService:
             return None
 
     async def _validate_supabase_token(self, token: str) -> Optional[str]:
-        """Validate Supabase JWT token - supports both legacy (HS256) and new (RS256) systems"""
+        """Validate Supabase JWT token using service client (works with both legacy and new JWT systems)"""
         try:
-            # First, inspect the token to determine its algorithm
-            try:
-                header = jwt.get_unverified_header(token)
-                algorithm = header.get("alg", "HS256")
-                print(f"Token algorithm detected: {algorithm}")
-            except Exception as e:
-                print(f"Could not parse token header: {e}")
-                algorithm = "HS256"  # fallback
+            print("Validating token with Supabase service client...")
 
-            # Try legacy HS256 validation first (for backward compatibility)
-            if algorithm == "HS256":
+            # Use the service client to validate the token
+            # This automatically handles both legacy HS256 and new RS256/ES256 tokens
+            try:
+                response = self.supabase_client.service_client.auth.get_user(token)
+                print(f"Supabase auth response: {type(response)}")
+
+                # Handle the response format
+                if hasattr(response, "user") and response.user:
+                    user_id = response.user.id
+                    print(f"✅ Token validated successfully, user ID: {user_id}")
+                    return user_id
+                elif isinstance(response, dict) and response.get("user"):
+                    user_id = response["user"].get("id")
+                    print(f"✅ Token validated successfully, user ID: {user_id}")
+                    return user_id
+                else:
+                    print(f"❌ Invalid response format: {response}")
+                    return None
+
+            except Exception as e:
+                print(f"❌ Service client validation failed: {e}")
+
+                # For debugging, let's also try with different error handling
                 try:
-                    print(f"Attempting HS256 decode with legacy secret: {self.jwt_secret[:10]}...")
-
-                    payload = jwt.decode(
-                        token,
-                        self.jwt_secret,
-                        algorithms=["HS256"],
-                        options={
-                            "verify_signature": True,
-                            "verify_exp": True,
-                            "verify_nbf": False,
-                            "verify_iat": False,
-                            "verify_aud": False,
-                        },
-                    )
-
-                    user_id = payload.get("sub")
-                    print(f"HS256 JWT decoded successfully, user ID: {user_id}")
-                    if user_id:
+                    # Some versions of the client might need different handling
+                    user_data = self.supabase_client.service_client.auth.admin.get_user_by_access_token(token)
+                    if user_data and hasattr(user_data, "user") and user_data.user:
+                        user_id = user_data.user.id
+                        print(f"✅ Token validated via admin method, user ID: {user_id}")
                         return user_id
+                except Exception as e2:
+                    print(f"❌ Admin validation also failed: {e2}")
 
-                except JWTError as e:
-                    print(f"HS256 JWT decode failed: {e}")
+                return None
 
-            # Try new RS256/ES256 system - fall back to Supabase client validation
-            print(f"Falling back to Supabase client validation for algorithm: {algorithm}")
-
-            # Decode without verification to get payload info
-            try:
-                unverified = jwt.decode(token, options={"verify_signature": False})
-                print(f"Unverified payload: {unverified}")
-                print(f"Token kid (key ID): {header.get('kid', 'none')}")
-            except Exception as e2:
-                print(f"Cannot decode even without verification: {e2}")
-
-            # Fallback: Use Supabase client to validate token
-            client_for_auth = None
-            if hasattr(self.supabase_client, "anon_client") and self.supabase_client.anon_client:
-                client_for_auth = self.supabase_client.anon_client
-            else:
-                client_for_auth = self.supabase_client.service_client
-
-            try:
-                response = client_for_auth.auth.get_user(token)
-                # Handle both SDK object and dict-like responses
-                if response is not None:
-                    user_obj = getattr(response, "user", None) or (
-                        response.get("user") if isinstance(response, dict) else None
-                    )
-                    if user_obj:
-                        user_id_from_resp = getattr(user_obj, "id", None) or user_obj.get("id")
-                        if user_id_from_resp:
-                            return user_id_from_resp
-            except Exception as e:
-                print(f"Supabase client validation error: {e}")
-                pass
-
-            # Last resort: Try to decode without verification (development only)
-            try:
-                payload = jwt.decode(token, options={"verify_signature": False})
-                return payload.get("sub")
-            except Exception:
-                pass
-
-            return None
         except Exception as e:
-            print(f"Supabase token validation error: {e}")
+            print(f"❌ Token validation error: {e}")
             return None
 
     async def get_user_workspaces(self, user_id: str) -> List[Dict[str, Any]]:
