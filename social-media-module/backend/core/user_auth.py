@@ -108,12 +108,51 @@ class UserAuthService:
             return None
 
     async def _validate_supabase_token(self, token: str) -> Optional[str]:
-        """Validate Supabase JWT token using service client"""
+        """Validate Supabase JWT token using service client only (no manual JWT decoding)"""
         try:
             print("Validating token with Supabase service client...")
 
-            # Method 1: Try creating a temporary client with the user token to validate it
+            # Method 1: Use service client admin method (most reliable)
             try:
+                print("Trying admin.get_user_by_access_token...")
+                admin_response = self.supabase_client.service_client.auth.admin.get_user_by_access_token(token)
+
+                if admin_response and hasattr(admin_response, "user") and admin_response.user:
+                    user_id = admin_response.user.id
+                    print(f"✅ Token validated via admin method, user ID: {user_id}")
+                    return user_id
+                elif isinstance(admin_response, dict) and admin_response.get("user"):
+                    user_id = admin_response["user"].get("id")
+                    print(f"✅ Token validated via admin method, user ID: {user_id}")
+                    return user_id
+                else:
+                    print(f"❌ Admin response format: {admin_response}")
+
+            except Exception as e:
+                print(f"❌ Admin validation failed: {e}")
+
+            # Method 2: Try direct auth validation
+            try:
+                print("Trying service client auth.get_user...")
+                auth_response = self.supabase_client.service_client.auth.get_user(token)
+
+                if auth_response and hasattr(auth_response, "user") and auth_response.user:
+                    user_id = auth_response.user.id
+                    print(f"✅ Token validated via service client, user ID: {user_id}")
+                    return user_id
+                elif isinstance(auth_response, dict) and auth_response.get("user"):
+                    user_id = auth_response["user"].get("id")
+                    print(f"✅ Token validated via service client, user ID: {user_id}")
+                    return user_id
+                else:
+                    print(f"❌ Auth response format: {auth_response}")
+
+            except Exception as e:
+                print(f"❌ Service client validation failed: {e}")
+
+            # Method 3: Create temporary client for validation
+            try:
+                print("Trying temporary client validation...")
                 from supabase import create_client
 
                 # Create a temporary client with the user's token
@@ -131,52 +170,17 @@ class UserAuthService:
 
                 if user_response and hasattr(user_response, "user") and user_response.user:
                     user_id = user_response.user.id
-                    print(f"✅ Token validated successfully, user ID: {user_id}")
+                    print(f"✅ Token validated via temp client, user ID: {user_id}")
                     return user_id
                 elif isinstance(user_response, dict) and user_response.get("user"):
                     user_id = user_response["user"].get("id")
-                    print(f"✅ Token validated successfully, user ID: {user_id}")
+                    print(f"✅ Token validated via temp client, user ID: {user_id}")
                     return user_id
 
             except Exception as e:
                 print(f"❌ Temporary client validation failed: {e}")
 
-            # Method 2: Use service client admin methods
-            try:
-                # Try admin method to get user by JWT
-                admin_response = self.supabase_client.service_client.auth.admin.get_user_by_access_token(token)
-
-                if admin_response and hasattr(admin_response, "user") and admin_response.user:
-                    user_id = admin_response.user.id
-                    print(f"✅ Token validated via admin method, user ID: {user_id}")
-                    return user_id
-
-            except Exception as e:
-                print(f"❌ Admin validation failed: {e}")
-
-            # Method 3: Manual JWT validation (fallback)
-            try:
-                # Import JWT library for manual validation
-                from jose import jwt
-
-                # Get the JWT secret from environment - use legacy secret for now
-                jwt_secret = os.getenv(
-                    "JWT_SECRET",
-                    "AMo8kf6/8Q8tBgpl4gBjQNuTJslL6/YMaSnnUWwdTXVggoAxCxFJeiKH2r3m0O+95xYfR1p6Q4IWfSRrl64yyg==",
-                )
-
-                # Try to decode with HS256 (legacy format)
-                payload = jwt.decode(token, jwt_secret, algorithms=["HS256"], options={"verify_exp": True})
-
-                user_id = payload.get("sub")
-                if user_id:
-                    print(f"✅ Token validated via manual JWT decode, user ID: {user_id}")
-                    return user_id
-
-            except Exception as e:
-                print(f"❌ Manual JWT validation failed: {e}")
-
-            print("❌ All validation methods failed")
+            print("❌ All Supabase validation methods failed")
             return None
 
         except Exception as e:
