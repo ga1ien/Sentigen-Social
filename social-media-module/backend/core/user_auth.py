@@ -109,50 +109,85 @@ class UserAuthService:
 
     async def _validate_supabase_token(self, token: str) -> Optional[str]:
         """Validate Supabase JWT token by decoding and verifying user exists"""
+        import logging
+        import os
+
+        import jwt
+        from gotrue.errors import APIError as GotrueApiError
+
+        logger = logging.getLogger(__name__)
+        logger.setLevel(logging.INFO)
+
         try:
-            print("Validating token with JWT decode + admin verification...")
+            logger.info("🔍 Starting token validation with JWT decode + admin verification")
 
-            # Import JWT library for decoding
-            import jwt
-
-            # First, decode the JWT to get the user ID (we don't verify signature - just extract claims)
+            # Step 1: Decode JWT to get user_id without verifying signature
             try:
-                print("Decoding JWT to extract user ID...")
-                # Decode without verification to get claims
-                decoded = jwt.decode(token, options={"verify_signature": False})
-                user_id = decoded.get("sub")  # 'sub' contains the user ID
+                logger.info("📋 Step 1: Decoding JWT to extract user ID...")
+                decoded_token = jwt.decode(token, options={"verify_signature": False})
+                user_id = decoded_token.get("sub")
 
                 if not user_id:
-                    print("❌ No 'sub' (user ID) found in JWT token")
+                    logger.error("❌ JWT decoding failed: 'sub' claim missing from token")
+                    logger.error(f"Token payload: {decoded_token}")
                     return None
 
-                print(f"📋 Extracted user ID from JWT: {user_id}")
+                logger.info(f"✅ Step 1 Success: Extracted user ID: {user_id}")
+                logger.info(
+                    f"Token details - iss: {decoded_token.get('iss')}, exp: {decoded_token.get('exp')}, email: {decoded_token.get('email')}"
+                )
 
-            except Exception as e:
-                print(f"❌ Failed to decode JWT: {e}")
+            except jwt.PyJWTError as e:
+                logger.error(f"❌ JWT Decoding Error: {e}", exc_info=True)
                 return None
 
-            # Now verify this user actually exists using Supabase admin API
+            # Step 2: Verify environment variables
+            logger.info("🔧 Step 2: Checking Supabase environment configuration...")
+            supabase_url = os.getenv("SUPABASE_URL")
+            service_key = os.getenv("SUPABASE_SERVICE_KEY")
+
+            logger.info(f"SUPABASE_URL present: {bool(supabase_url)}")
+            logger.info(f"SUPABASE_SERVICE_KEY present: {bool(service_key)}")
+            logger.info(f"Service key length: {len(service_key) if service_key else 0}")
+
+            if service_key:
+                logger.info(f"Service key prefix: {service_key[:30]}...")
+                logger.info(f"Service key suffix: ...{service_key[-10:]}")
+
+            # Step 3: Verify the user with Supabase Admin API
             try:
-                print(f"Verifying user {user_id} exists via admin API...")
+                logger.info(f"🔍 Step 3: Verifying user {user_id} via Supabase Admin API...")
+                logger.info(f"Using Supabase URL: {supabase_url}")
+
                 admin_response = self.supabase_client.service_client.auth.admin.get_user_by_id(user_id)
 
                 if admin_response and hasattr(admin_response, "user") and admin_response.user:
-                    print(f"✅ User verified via admin API: {admin_response.user.id}")
+                    logger.info(
+                        f"✅ Step 3 Success: User verified - {admin_response.user.email} (ID: {admin_response.user.id})"
+                    )
                     return user_id
                 elif isinstance(admin_response, dict) and admin_response.get("user"):
-                    print(f"✅ User verified via admin API: {admin_response['user'].get('id')}")
+                    user_email = admin_response["user"].get("email", "unknown")
+                    logger.info(f"✅ Step 3 Success: User verified - {user_email} (ID: {user_id})")
                     return user_id
                 else:
-                    print(f"❌ User not found or invalid response: {admin_response}")
+                    logger.error(f"❌ Step 3 Failed: Unexpected admin response format: {admin_response}")
                     return None
 
+            except GotrueApiError as e:
+                # THIS IS THE KEY ERROR WE'RE LOOKING FOR!
+                logger.error(f"❌ SUPABASE GOTRUE API ERROR: {e}", exc_info=True)
+                logger.error(f"Error message: {getattr(e, 'message', str(e))}")
+                logger.error(f"Error status: {getattr(e, 'status', 'unknown')}")
+                logger.error("🚨 This indicates an issue with SUPABASE_SERVICE_KEY or API permissions!")
+                return None
             except Exception as e:
-                print(f"❌ Admin user verification failed: {e}")
+                logger.error(f"❌ Step 3 Failed - Unexpected admin API error: {e}", exc_info=True)
+                logger.error(f"Exception type: {type(e).__name__}")
                 return None
 
         except Exception as e:
-            print(f"❌ Token validation error: {e}")
+            logger.error(f"❌ Unexpected token validation error: {e}", exc_info=True)
             return None
 
     async def get_user_workspaces(self, user_id: str) -> List[Dict[str, Any]]:

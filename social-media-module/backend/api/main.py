@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional
 from uuid import UUID
 
 import structlog
-from fastapi import BackgroundTasks, Depends, FastAPI, File, HTTPException, UploadFile
+from fastapi import BackgroundTasks, Depends, FastAPI, File, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
@@ -270,6 +270,204 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
 async def get_db() -> SupabaseClient:
     """Get database client."""
     return app.state.db
+
+
+# Debug endpoints for authentication troubleshooting
+@app.get("/debug/auth-flow")
+async def debug_auth_flow(authorization: str = Header(None)):
+    """Step-by-step authentication debugging per AI recommendations"""
+    import os
+    import traceback
+    from datetime import datetime
+
+    import jwt
+
+    debug_info = {"timestamp": datetime.now().isoformat(), "step": "start", "success": False, "error": None}
+
+    try:
+        # Step 1: Check Authorization header
+        debug_info["step"] = "header_check"
+        if not authorization:
+            debug_info["error"] = "No Authorization header present"
+            return JSONResponse(content=debug_info, status_code=400)
+
+        if not authorization.startswith("Bearer "):
+            debug_info["error"] = "Authorization header doesn't start with 'Bearer '"
+            return JSONResponse(content=debug_info, status_code=400)
+
+        token = authorization.split(" ")[1]
+        debug_info["token_length"] = len(token)
+        debug_info["token_prefix"] = token[:20] + "..."
+
+        # Step 2: JWT Decode
+        debug_info["step"] = "jwt_decode"
+        try:
+            decoded = jwt.decode(token, options={"verify_signature": False})
+            debug_info["jwt_decode_success"] = True
+            debug_info["user_id"] = decoded.get("sub")
+            debug_info["email"] = decoded.get("email")
+            debug_info["exp"] = decoded.get("exp")
+            debug_info["iss"] = decoded.get("iss")
+        except Exception as e:
+            debug_info["jwt_decode_error"] = str(e)
+            return JSONResponse(content=debug_info, status_code=400)
+
+        # Step 3: Environment Variables
+        debug_info["step"] = "env_check"
+        debug_info["supabase_url"] = os.getenv("SUPABASE_URL")
+        debug_info["has_service_key"] = bool(os.getenv("SUPABASE_SERVICE_KEY"))
+        service_key = os.getenv("SUPABASE_SERVICE_KEY", "")
+        debug_info["service_key_length"] = len(service_key)
+        if service_key:
+            debug_info["service_key_prefix"] = service_key[:30] + "..."
+            debug_info["service_key_suffix"] = "..." + service_key[-10:]
+
+        # Step 4: Supabase Client Test
+        debug_info["step"] = "supabase_client_test"
+        from supabase import create_client
+
+        from core.supabase_client import SupabaseClient
+
+        try:
+            client = SupabaseClient()
+            debug_info["supabase_client_created"] = True
+        except Exception as e:
+            debug_info["supabase_client_error"] = str(e)
+            return JSONResponse(content=debug_info, status_code=500)
+
+        # Step 5: Admin API Test
+        debug_info["step"] = "admin_api_test"
+        user_id = decoded.get("sub")
+        try:
+            admin_response = client.service_client.auth.admin.get_user_by_id(user_id)
+            debug_info["admin_api_success"] = True
+            debug_info["user_found"] = bool(admin_response.user)
+            if admin_response.user:
+                debug_info["verified_email"] = admin_response.user.email
+            debug_info["success"] = True
+        except Exception as e:
+            debug_info["admin_api_error"] = str(e)
+            debug_info["admin_api_traceback"] = traceback.format_exc()
+
+        return JSONResponse(content=debug_info, status_code=200)
+
+    except Exception as e:
+        debug_info["unexpected_error"] = str(e)
+        debug_info["traceback"] = traceback.format_exc()
+        return JSONResponse(content=debug_info, status_code=500)
+
+
+@app.get("/debug/supabase-connection")
+async def debug_supabase_connection():
+    """Test Supabase Admin API connectivity (Gemini's recommendation)"""
+    import os
+    import traceback
+    from datetime import datetime
+
+    from gotrue.errors import APIError as GotrueApiError
+
+    debug_info = {"timestamp": datetime.now().isoformat()}
+
+    try:
+        from supabase import create_client
+
+        from core.supabase_client import SupabaseClient
+
+        supabase_url = os.getenv("SUPABASE_URL")
+        service_key = os.getenv("SUPABASE_SERVICE_KEY")
+
+        debug_info["env_vars"] = {
+            "supabase_url_present": bool(supabase_url),
+            "service_key_present": bool(service_key),
+            "service_key_length": len(service_key) if service_key else 0,
+        }
+
+        # Test 1: Client creation
+        try:
+            client = SupabaseClient()
+            debug_info["client_creation"] = {"success": True}
+        except Exception as e:
+            debug_info["client_creation"] = {"success": False, "error": str(e)}
+            return JSONResponse(content=debug_info, status_code=500)
+
+        # Test 2: Admin API call with known user
+        try:
+            test_user_id = "6ec57fe0-6ffe-4662-9a17-20311fe525f5"  # Your user ID
+            admin_response = client.service_client.auth.admin.get_user_by_id(test_user_id)
+            debug_info["admin_api_test"] = {
+                "success": True,
+                "user_found": bool(admin_response.user),
+                "user_email": admin_response.user.email if admin_response.user else None,
+            }
+        except GotrueApiError as e:
+            debug_info["admin_api_test"] = {
+                "success": False,
+                "gotrue_error": str(e),
+                "error_message": getattr(e, "message", str(e)),
+                "error_status": getattr(e, "status", "unknown"),
+            }
+        except Exception as e:
+            debug_info["admin_api_test"] = {
+                "success": False,
+                "unexpected_error": str(e),
+                "traceback": traceback.format_exc(),
+            }
+
+        return JSONResponse(content=debug_info, status_code=200)
+
+    except Exception as e:
+        debug_info["unexpected_error"] = str(e)
+        debug_info["traceback"] = traceback.format_exc()
+        return JSONResponse(content=debug_info, status_code=500)
+
+
+@app.get("/debug/alternative-auth")
+async def debug_alternative_auth(authorization: str = Header(None)):
+    """Test GPT-5's alternative auth method using direct Supabase API"""
+    import os
+    from datetime import datetime
+
+    import httpx
+
+    if not authorization or not authorization.startswith("Bearer "):
+        return {"error": "No valid Authorization header"}
+
+    token = authorization.split(" ")[1]
+    results = {"timestamp": datetime.now().isoformat()}
+
+    # GPT-5's recommended method: Direct Supabase auth API
+    try:
+        supabase_url = os.getenv("SUPABASE_URL")
+        anon_key = os.getenv("SUPABASE_ANON_KEY")
+
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "apikey": anon_key,
+                "Accept": "application/json",
+            }
+
+            response = await client.get(f"{supabase_url}/auth/v1/user", headers=headers)
+
+            if response.status_code == 200:
+                user_data = response.json()
+                results["direct_api_method"] = {
+                    "success": True,
+                    "user_id": user_data.get("id"),
+                    "email": user_data.get("email"),
+                    "status_code": response.status_code,
+                }
+            else:
+                results["direct_api_method"] = {
+                    "success": False,
+                    "status_code": response.status_code,
+                    "error": response.text,
+                }
+
+    except Exception as e:
+        results["direct_api_method"] = {"success": False, "error": str(e)}
+
+    return results
 
 
 # Health check endpoint
